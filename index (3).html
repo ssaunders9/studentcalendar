@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Week Scheduler</title>
+    <link rel="stylesheet" href="calendar.css?v=38">
+</head>
+<body>
+    <div id="app">
+        <!-- Sidebar -->
+        <aside id="sidebar">
+            <div id="sidebar-header">
+                <h1>Week Scheduler</h1>
+            </div>
+
+            <!-- Course Input -->
+            <section id="course-section">
+                <h2>📚 Courses</h2>
+                <form id="course-form" autocomplete="off">
+                    <div class="form-row">
+                        <label for="course-code" class="sr-only">Course code</label>
+                        <input type="text" id="course-code" placeholder="e.g. CHE 101" required aria-label="Course code">
+                        <label for="course-name" class="sr-only">Course name</label>
+                        <input type="text" id="course-name" placeholder="Course name" required aria-label="Course name">
+                    </div>
+                    <div class="form-row">
+                        <label for="course-days" class="sr-only">Schedule days</label>
+                        <select id="course-days" aria-label="Schedule days">
+                            <option value="MWF">Mon/Wed/Fri</option>
+                            <option value="TTh">Tue/Thu</option>
+                            <option value="MW">Mon/Wed</option>
+                            <option value="M">Monday only</option>
+                            <option value="T">Tuesday only</option>
+                            <option value="W">Wednesday only</option>
+                            <option value="Th">Thursday only</option>
+                            <option value="F">Friday only</option>
+                            <option value="MTWThF">Every day</option>
+                        </select>
+                    </div>
+                    <div class="form-row time-row">
+                        <label for="course-start" class="sr-only">Start time</label>
+                        <input type="time" id="course-start" value="09:00" required aria-label="Start time">
+                        <span aria-hidden="true">to</span>
+                        <label for="course-end" class="sr-only">End time</label>
+                        <input type="time" id="course-end" value="09:50" required aria-label="End time">
+                    </div>
+                    <div class="form-row">
+                        <label>Difficulty:</label>
+                        <div class="difficulty-selector">
+                            <label class="diff-option">
+                                <input type="radio" name="difficulty" value="easy"> 🟢 Easy
+                            </label>
+                            <label class="diff-option">
+                                <input type="radio" name="difficulty" value="medium" checked> 🟡 Medium
+                            </label>
+                            <label class="diff-option">
+                                <input type="radio" name="difficulty" value="hard"> 🔴 Hard
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <label for="course-credits" class="sr-only">Credits</label>
+                        <input type="number" id="course-credits" placeholder="Credits" min="1" max="6" value="3" required aria-label="Credits">
+                        <label for="course-mode" class="sr-only">Course type</label>
+                        <select id="course-mode" aria-label="Course type">
+                            <option value="lecture">📖 Lecture</option>
+                            <option value="lab">🔬 Lab</option>
+                            <option value="studio">🎨 Studio</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <label for="course-location" class="sr-only">Location</label>
+                        <input type="text" id="course-location" placeholder="Location (e.g. Sloan 150)" aria-label="Location">
+                    </div>
+                    <button type="submit" id="add-course-btn">➕ Add Course</button>
+                </form>
+                <div id="course-list"></div>
+            </section>
+
+            <!-- Work Toggle -->
+            <section id="work-section">
+                <h2>💼 Work</h2>
+                <label class="toggle-row">
+                    <input type="checkbox" id="work-toggle">
+                    <span>I work outside of school</span>
+                </label>
+                <div id="work-details" class="hidden">
+                    <div class="form-row">
+                        <label for="work-hours">I plan to work</label>
+                        <input type="number" id="work-hours" min="0" max="80" value="15" style="width:60px" aria-label="Planned work hours per week">
+                        <span>hours each week</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quick Add -->
+            <section id="quick-add-section">
+                <h2>⚡ Quick Add</h2>
+                <div class="quick-buttons">
+                    <button class="quick-btn meal" data-type="meal">🍽️ Meal Block</button>
+                    <button class="quick-btn sleep" data-type="sleep">😴 Sleep</button>
+                    <button class="quick-btn care" data-type="care">🚿 Personal Care</button>
+                    <button class="quick-btn study" data-type="study">📖 Study Block</button>
+                    <button class="quick-btn office" data-type="office">🏫 Office Hours</button>
+                    <button class="quick-btn exercise" data-type="exercise">🏃 Exercise</button>
+                    <button class="quick-btn club" data-type="club">🏛️ Club/Activity</button>
+                    <button class="quick-btn work" data-type="work">💼 Work Shift</button>
+                    <button class="quick-btn free" data-type="free">🎮 Free Time</button>
+                </div>
+            </section>
+
+            <!-- Wellness Check -->
+            <section id="wellness-section">
+                <h2>💚 Wellness Check</h2>
+                <button type="button" id="wellness-btn">🔍 Run Check-In</button>
+                <div id="wellness-results" class="hidden" role="status" aria-live="polite" aria-atomic="true"></div>
+            </section>
+
+            <!-- Save/Load -->
+            <section id="save-section">
+                <h2>💾 Save & Load</h2>
+                <div class="save-buttons">
+                    <button type="button" id="export-btn">📥 Export</button>
+                    <label for="import-file" class="import-label">📤 Import</label>
+                    <input type="file" id="import-file" accept=".json" hidden>
+                </div>
+                <button type="button" id="print-btn" class="print-btn">🖨️ Print View</button>
+                <button type="button" id="clear-btn" class="clear-btn">🗑️ Clear All</button>
+            </section>
+        </aside>
+
+        <!-- Main Calendar -->
+        <main id="calendar-main">
+            <div id="calendar-header">
+                <button id="prev-week" title="Previous week" aria-label="Previous week">◀</button>
+                <h2 id="week-label" aria-live="polite"></h2>
+                <button id="next-week" title="Next week" aria-label="Next week">▶</button>
+                <button id="today-btn" aria-label="Go to today">Today</button>
+            </div>
+            <div id="calendar-grid-wrapper">
+                <div id="calendar-grid" role="grid" aria-label="Weekly calendar">
+                    <div id="time-axis" role="presentation"></div>
+                    <div id="days-container" role="rowgroup"></div>
+                    <div id="events-layer" aria-label="Scheduled events"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Event Edit Modal -->
+    <div id="event-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal-content">
+            <h3 id="modal-title">Edit Event</h3>
+            <div class="form-row">
+                <input type="text" id="event-title" placeholder="Event title" required>
+            </div>
+            <div class="form-row">
+                <select id="event-type">
+                    <option value="class">📚 Class</option>
+                    <option value="meal">🍽️ Meal</option>
+                    <option value="sleep">😴 Sleep</option>
+                    <option value="work">💼 Work</option>
+                    <option value="club">🏛️ Club</option>
+                    <option value="study">📖 Study</option>
+                    <option value="office">🏫 Office Hours</option>
+                    <option value="exercise">🏃 Exercise</option>
+                    <option value="care">🚿 Personal Care</option>
+                    <option value="free">🎮 Free Time</option>
+                    <option value="other">📌 Other</option>
+                </select>
+            </div>
+            <div class="form-row time-row">
+                <input type="time" id="event-start" required>
+                <span>to</span>
+                <input type="time" id="event-end" required>
+            </div>
+            <div class="form-row">
+                <input type="text" id="event-location" placeholder="Location (optional)">
+            </div>
+            <div class="form-row">
+                <textarea id="event-notes" placeholder="Notes (optional)" rows="2"></textarea>
+            </div>
+            <div class="modal-actions">
+                <button type="button" id="delete-event-btn" class="danger-btn">🗑️ Delete</button>
+                <button type="button" id="cancel-event-btn">Cancel</button>
+                <button type="button" id="save-event-btn">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="calendar.js?v=39"></script>
+</body>
+</html>
