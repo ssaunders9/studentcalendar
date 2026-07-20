@@ -76,6 +76,15 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
+/* Skip link */
+.skip-link {
+    position: absolute; top: -100px; left: 8px;
+    background: var(--brand); color: #fff; padding: 8px 16px;
+    border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+    z-index: 1000; font-weight: 600; text-decoration: none;
+}
+.skip-link:focus { top: 0; }
+
 #app { display: flex; height: 100vh; }
 
 /* ================================================================
@@ -140,7 +149,7 @@ body {
     outline: none; border-color: var(--sidebar-focus);
     box-shadow: 0 0 0 3px rgba(129,140,248,.15);
 }
-.form-row input::placeholder { color: #5A5C78; }
+.form-row input::placeholder { color: #7A7C98; }
 .form-row select option { background: #1E1F32; color: #D8DAE8; }
 
 .time-row { flex-wrap: nowrap; }
@@ -162,7 +171,9 @@ body {
     background: #2A2C50; border-color: var(--sidebar-focus);
     box-shadow: 0 0 0 2px rgba(129,140,248,.12);
 }
-.diff-option input { accent-color: var(--sidebar-focus); }
+/* Fieldset reset */
+fieldset.form-row { border: none; padding: 0; margin: 0 0 10px; }
+fieldset.form-row legend { font-size: 0.76rem; color: var(--sidebar-heading); margin-bottom: 4px; }
 
 /* Buttons */
 button {
@@ -337,7 +348,7 @@ button:active { transform: scale(0.97); }
 }
 #calendar-header button:hover { background: var(--surface-200); color: var(--text-primary); }
 #today-btn {
-    color: var(--brand) !important; border-color: var(--brand-light) !important;
+    color: #3D4DC7 !important; border-color: var(--brand-light) !important;
     background: #F5F6FF !important;
 }
 #today-btn:hover { background: var(--brand-light) !important; }
@@ -360,7 +371,7 @@ button:active { transform: scale(0.97); }
     display: flex; align-items: flex-start; justify-content: flex-end;
     padding: 0 10px 0 0;
     font-size: 0.68rem; font-weight: 600;
-    color: var(--text-muted);
+    color: var(--text-secondary);
     position: relative; top: -7px; letter-spacing: -0.1px;
 }
 
@@ -390,7 +401,7 @@ button:active { transform: scale(0.97); }
     gap: 1px;
 }
 .day-header small {
-    font-size: 0.65rem; font-weight: 400; color: var(--text-muted);
+    font-size: 0.65rem; font-weight: 400; color: var(--text-secondary);
 }
 .day-column.today .day-header {
     background: var(--brand-light);
@@ -472,12 +483,14 @@ button:active { transform: scale(0.97); }
     font-size: 0.55rem; opacity: 0.5;
 }
 .lock-toast {
-    position: absolute; bottom: 100%; left: 0; right: 0;
-    background: #1E2030; color: #F0F1FF; font-size: 0.68rem;
-    padding: 5px 8px; border-radius: 4px; text-align: center;
-    z-index: 30; pointer-events: none; white-space: nowrap;
+    position: absolute;
+    background: #1E2030; color: #F0F1FF; font-size: 0.72rem;
+    padding: 8px 12px; border-radius: 6px; text-align: center;
+    z-index: 30; pointer-events: none; white-space: normal;
+    word-wrap: break-word; overflow-wrap: break-word;
     animation: toastIn 0.2s ease;
-    box-shadow: 0 2px 8px rgba(0,0,0,.3);
+    box-shadow: 0 2px 10px rgba(0,0,0,.35);
+    line-height: 1.5;
 }
 @keyframes toastIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 .event-block.conflict {
@@ -490,7 +503,7 @@ button:active { transform: scale(0.97); }
 /* Resize handle */
 .event-block .resize-handle {
     position: absolute; bottom: 0; left: 0; right: 0;
-    height: 7px; cursor: ns-resize; background: transparent;
+    height: 12px; cursor: ns-resize; background: transparent;
     border-radius: 0 0 7px 7px;
 }
 .event-block .resize-handle:hover { background: rgba(0,0,0,.06); }
@@ -498,11 +511,11 @@ button:active { transform: scale(0.97); }
 /* Delete button on event */
 .event-delete-btn {
     position: absolute; top: 2px; right: 2px;
-    width: 18px; height: 18px;
+    width: 28px; height: 28px;
     display: flex; align-items: center; justify-content: center;
     background: transparent; color: inherit;
     border: none; border-radius: 3px;
-    font-size: 0.85rem; font-weight: 700; line-height: 1;
+    font-size: 0.95rem; font-weight: 700; line-height: 1;
     cursor: pointer; opacity: 0; padding: 0;
     transition: opacity 0.12s, background 0.12s;
 }
@@ -563,6 +576,15 @@ button:active { transform: scale(0.97); }
 .modal-content textarea { resize: vertical; }
 
 .modal-actions { display: flex; gap: 10px; margin-top: 20px; justify-content: flex-end; }
+.modal-close-btn {
+    position: absolute; top: 12px; right: 16px;
+    background: none; border: none; font-size: 1.3rem;
+    color: var(--text-secondary); cursor: pointer;
+    padding: 4px 8px; border-radius: 4px; line-height: 1;
+}
+.modal-close-btn:hover { background: var(--surface-100); }
+.modal-content { position: relative; }
+
 .modal-actions button { padding: 9px 20px; }
 #save-event-btn {
     background: var(--brand); color: #fff; font-weight: 600;
@@ -633,4 +655,12 @@ button:focus-visible, .import-label:focus-visible, select:focus-visible, input:f
     :root { --hour-h: 38px; }
     #now-line { display: none; }
     @page { size: landscape; margin: 0.5cm; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
 }
