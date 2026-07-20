@@ -692,37 +692,39 @@ button:focus-visible, .import-label:focus-visible, select:focus-visible, input:f
 
 @media print {
     body { background: #fff; overflow: visible; height: auto; font-size: 8pt; }
-    #app { display: block; height: auto; }
+    #app { display: block; height: auto; width: 100%; }
     #sidebar { display: none !important; }
-    #calendar-main { width: 100%; overflow: visible; height: auto; }
+    #calendar-main { width: 100%; overflow: visible; height: auto; display: block; }
     #calendar-header { padding: 2px 0; border-bottom: 1px solid #000; }
     #calendar-header button { display: none; }
     #calendar-header h2 { font-size: 0.85rem; }
     #calendar-grid-wrapper { overflow: visible; height: auto; }
+    #calendar-grid { display: flex; width: 100%; }
+    #days-container { display: flex; flex: 1; }
+    .day-column { flex: 1; min-width: 0; }
     .event-block {
         print-color-adjust: exact; -webkit-print-color-adjust: exact;
-        font-size: 5.5pt; padding: 1px 3px; border-radius: 2px; line-height: 1.1;
+        font-size: 5pt; padding: 0 2px; border-radius: 2px; line-height: 1.1;
     }
-    .event-block .event-title { font-size: 5.5pt; }
-    .event-block .event-time, .event-block .event-location { font-size: 4.5pt; }
-    .event-block::before { content: '☐ '; font-size: 7pt; }
+    .event-block .event-title { font-size: 5pt; }
+    .event-block .event-time, .event-block .event-location { font-size: 4pt; }
+    .event-block::before { content: '☐ '; font-size: 6pt; }
     .event-block .event-delete-btn,
     .event-block .resize-handle,
     .event-block.locked::after { display: none !important; }
-    .day-column { min-width: 45px; }
-    .day-header { height: 22px; font-size: 6pt; }
-    .day-header small { font-size: 5pt; }
-    :root { --hour-h: 24px; --time-w: 32px; }
-    .time-label { font-size: 5.5pt; }
-    .hour-slot { height: 24px; }
+    .day-header { height: 20px; font-size: 5.5pt; }
+    .day-header small { font-size: 4.5pt; }
+    :root { --hour-h: 20px; --time-w: 28px; }
+    .time-label { font-size: 5pt; }
+    .hour-slot { height: 20px; }
     #now-line { display: none; }
     .print-only { display: block !important; }
     #print-wellness {
-        padding: 4px 0; border-top: 1px solid #ccc; margin-top: 4px;
-        font-size: 6.5pt; line-height: 1.2;
+        padding: 3px 0; border-top: 1px solid #ccc; margin-top: 3px;
+        font-size: 6pt; line-height: 1.2;
     }
     .skip-link, .modal, .lock-toast { display: none !important; }
-    @page { size: landscape; margin: 0.3cm; }
+    @page { size: landscape; margin: 0.25cm; }
 }
 
 .print-only { display: none; }
