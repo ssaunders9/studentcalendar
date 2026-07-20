@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Week Scheduler</title>
-    <link rel="stylesheet" href="calendar.css?v=38">
+    <link rel="stylesheet" href="calendar.css?v=46">
 </head>
 <body>
+    <a href="#calendar-main" class="skip-link">Skip to calendar</a>
     <div id="app">
         <!-- Sidebar -->
         <aside id="sidebar">
@@ -16,7 +17,7 @@
 
             <!-- Course Input -->
             <section id="course-section">
-                <h2>📚 Courses</h2>
+                <h2><span aria-hidden="true">📚</span> Courses</h2>
                 <form id="course-form" autocomplete="off">
                     <div class="form-row">
                         <label for="course-code" class="sr-only">Course code</label>
@@ -45,8 +46,8 @@
                         <label for="course-end" class="sr-only">End time</label>
                         <input type="time" id="course-end" value="09:50" required aria-label="End time">
                     </div>
-                    <div class="form-row">
-                        <label>Difficulty:</label>
+                    <fieldset class="form-row">
+                        <legend>Difficulty</legend>
                         <div class="difficulty-selector">
                             <label class="diff-option">
                                 <input type="radio" name="difficulty" value="easy"> 🟢 Easy
@@ -58,7 +59,7 @@
                                 <input type="radio" name="difficulty" value="hard"> 🔴 Hard
                             </label>
                         </div>
-                    </div>
+                    </fieldset>
                     <div class="form-row">
                         <label for="course-credits" class="sr-only">Credits</label>
                         <input type="number" id="course-credits" placeholder="Credits" min="1" max="6" value="3" required aria-label="Credits">
@@ -80,7 +81,7 @@
 
             <!-- Work Toggle -->
             <section id="work-section">
-                <h2>💼 Work</h2>
+                <h2><span aria-hidden="true">💼</span> Work</h2>
                 <label class="toggle-row">
                     <input type="checkbox" id="work-toggle">
                     <span>I work outside of school</span>
@@ -96,7 +97,7 @@
 
             <!-- Quick Add -->
             <section id="quick-add-section">
-                <h2>⚡ Quick Add</h2>
+                <h2><span aria-hidden="true">⚡</span> Quick Add</h2>
                 <div class="quick-buttons">
                     <button class="quick-btn meal" data-type="meal">🍽️ Meal Block</button>
                     <button class="quick-btn sleep" data-type="sleep">😴 Sleep</button>
@@ -112,14 +113,14 @@
 
             <!-- Wellness Check -->
             <section id="wellness-section">
-                <h2>💚 Wellness Check</h2>
+                <h2><span aria-hidden="true">💚</span> Wellness Check</h2>
                 <button type="button" id="wellness-btn">🔍 Run Check-In</button>
                 <div id="wellness-results" class="hidden" role="status" aria-live="polite" aria-atomic="true"></div>
             </section>
 
             <!-- Save/Load -->
             <section id="save-section">
-                <h2>💾 Save & Load</h2>
+                <h2><span aria-hidden="true">💾</span> Save & Load</h2>
                 <div class="save-buttons">
                     <button type="button" id="export-btn">📥 Export</button>
                     <label for="import-file" class="import-label">📤 Import</label>
@@ -132,30 +133,34 @@
 
         <!-- Main Calendar -->
         <main id="calendar-main">
-            <div id="calendar-header">
+            <nav id="calendar-header" aria-label="Calendar navigation">
                 <button id="prev-week" title="Previous week" aria-label="Previous week">◀</button>
                 <h2 id="week-label" aria-live="polite"></h2>
                 <button id="next-week" title="Next week" aria-label="Next week">▶</button>
                 <button id="today-btn" aria-label="Go to today">Today</button>
-            </div>
+            </nav>
             <div id="calendar-grid-wrapper">
                 <div id="calendar-grid" role="grid" aria-label="Weekly calendar">
                     <div id="time-axis" role="presentation"></div>
-                    <div id="days-container" role="rowgroup"></div>
-                    <div id="events-layer" aria-label="Scheduled events"></div>
+                    <div id="days-container"></div>
+                    <div id="events-layer"></div>
                 </div>
             </div>
         </main>
     </div>
 
     <!-- Event Edit Modal -->
-    <div id="event-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div id="event-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-desc">
         <div class="modal-content">
             <h3 id="modal-title">Edit Event</h3>
+            <p id="modal-desc" class="sr-only">Edit the event details below. Press Escape to close.</p>
+            <button type="button" class="modal-close-btn" aria-label="Close dialog">×</button>
             <div class="form-row">
+                <label for="event-title" class="sr-only">Event title</label>
                 <input type="text" id="event-title" placeholder="Event title" required>
             </div>
             <div class="form-row">
+                <label for="event-type" class="sr-only">Event type</label>
                 <select id="event-type">
                     <option value="class">📚 Class</option>
                     <option value="meal">🍽️ Meal</option>
@@ -171,14 +176,18 @@
                 </select>
             </div>
             <div class="form-row time-row">
+                <label for="event-start" class="sr-only">Start time</label>
                 <input type="time" id="event-start" required>
-                <span>to</span>
+                <span aria-hidden="true">to</span>
+                <label for="event-end" class="sr-only">End time</label>
                 <input type="time" id="event-end" required>
             </div>
             <div class="form-row">
+                <label for="event-location" class="sr-only">Location</label>
                 <input type="text" id="event-location" placeholder="Location (optional)">
             </div>
             <div class="form-row">
+                <label for="event-notes" class="sr-only">Notes</label>
                 <textarea id="event-notes" placeholder="Notes (optional)" rows="2"></textarea>
             </div>
             <div class="modal-actions">
@@ -189,6 +198,6 @@
         </div>
     </div>
 
-    <script src="calendar.js?v=39"></script>
+    <script src="calendar.js?v=47"></script>
 </body>
 </html>
