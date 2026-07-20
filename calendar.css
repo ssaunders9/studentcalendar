@@ -716,6 +716,7 @@ button:focus-visible, .import-label:focus-visible, select:focus-visible, input:f
         font-size: 9pt; padding: 1px 4px; border-radius: 2px; line-height: 1.2;
     }
     .event-block .event-title { font-size: 9pt; }
+    .event-block .event-title::before { content: '☐ '; }
     .event-block .event-time { font-size: 8pt; opacity: 0.85; }
     .event-block .event-location { font-size: 7pt; }
     .event-block .event-delete-btn,

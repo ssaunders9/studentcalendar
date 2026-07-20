@@ -421,7 +421,7 @@ class CalendarApp {
 
         // Content
         const timeStr = this._formatTimeRange(ev.startHour, ev.endHour);
-        let html = `<div class="event-title">☐ ${this._escHtml(ev.title)} <span class="event-time">${timeStr}</span></div>`;
+        let html = `<div class="event-title">${this._escHtml(ev.title)} <span class="event-time">${timeStr}</span></div>`;
         if (ev.location) {
             html += `<div class="event-location">📍 ${this._escHtml(ev.location)}</div>`;
         }
