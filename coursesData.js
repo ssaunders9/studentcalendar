@@ -2524,6 +2524,16 @@ const COURSE_CATALOG = [
         "location": "CUE 418"
       },
       {
+        "section": "04",
+        "days": [
+          2,
+          4
+        ],
+        "startTime": "12:45",
+        "endTime": "14:00",
+        "location": "SPRK 223"
+      },
+      {
         "section": "05",
         "days": [
           1,
@@ -2532,6 +2542,16 @@ const COURSE_CATALOG = [
         "startTime": "13:30",
         "endTime": "14:45",
         "location": "CUE 409"
+      },
+      {
+        "section": "06",
+        "days": [
+          2,
+          4
+        ],
+        "startTime": "15:45",
+        "endTime": "17:00",
+        "location": "TODD 411"
       },
       {
         "section": "07",
@@ -2552,6 +2572,16 @@ const COURSE_CATALOG = [
         "startTime": "12:05",
         "endTime": "13:20",
         "location": "CUE 209"
+      },
+      {
+        "section": "09",
+        "days": [
+          2,
+          4
+        ],
+        "startTime": "09:10",
+        "endTime": "10:25",
+        "location": "TODD 220"
       }
     ],
     "labCredits": 1
