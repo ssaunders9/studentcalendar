@@ -255,7 +255,7 @@ const COURSE_CATALOG = [
   {
     "code": "BIOLOGY 106",
     "name": "Introductory Biology: Organismal Biology",
-    "credits": 4,
+    "credits": 3,
     "mode": "lecture",
     "sections": [
       {
@@ -659,7 +659,7 @@ const COURSE_CATALOG = [
   {
     "code": "BIOLOGY 120",
     "name": "Biology of Plants",
-    "credits": 4,
+    "credits": 3,
     "mode": "lecture",
     "sections": [
       {
