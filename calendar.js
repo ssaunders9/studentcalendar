@@ -1165,6 +1165,134 @@ class CalendarApp {
         return 0;
     }
 
+    // Shared wellness checks — used by both sidebar and print
+    _getWellnessChecks() {
+        const checks = [];
+
+        // Tally hours
+        let mealH = 0, sleepH = 0, studyH = 0, classH = 0, workH = 0;
+        let exerciseH = 0, freeH = 0, clubH = 0, careH = 0;
+        const dailyMeals = new Array(7).fill(0);
+        for (const ev of this.events) {
+            const d = ev.endHour - ev.startHour;
+            if (ev.type === 'meal') { mealH += d; dailyMeals[ev.day] += d; }
+            else if (ev.type === 'sleep') sleepH += d;
+            else if (ev.type === 'study' || ev.type === 'office') studyH += d;
+            else if (ev.type === 'class') classH += d;
+            else if (ev.type === 'work') workH += d;
+            else if (ev.type === 'exercise') exerciseH += d;
+            else if (ev.type === 'free') freeH += d;
+            else if (ev.type === 'club') clubH += d;
+            else if (ev.type === 'care') careH += d;
+        }
+
+        // Expected study: lecture × 2, studio × 1, lab × 0
+        let expectedStudy = 0;
+        for (const c of this.courses) {
+            const cr = c.credits || 3;
+            if ((c.mode || 'lecture') === 'lecture') expectedStudy += cr * 2;
+            else if (c.mode === 'studio') expectedStudy += cr * 1;
+        }
+
+        const totalCredits = this.courses.reduce((s, c) => s + (c.credits || 3), 0);
+        const busyHours = classH + workH + studyH;
+
+        // Meals
+        const avgMeal = mealH / 7;
+        if (avgMeal < 1.0) checks.push({ label: 'Meals', level: 'bad' });
+        else if (avgMeal < 1.5) checks.push({ label: 'Meals', level: 'warn' });
+        else checks.push({ label: 'Meals', level: 'good' });
+
+        // Sleep
+        const avgSleep = sleepH / 7;
+        if (avgSleep < 6 || avgSleep > 10) checks.push({ label: 'Sleep', level: 'bad' });
+        else if (avgSleep < 7) checks.push({ label: 'Sleep', level: 'warn' });
+        else checks.push({ label: 'Sleep', level: 'good' });
+
+        // Study
+        if (totalCredits > 0) {
+            if (studyH >= expectedStudy * 0.9) checks.push({ label: 'Study', level: 'good' });
+            else if (studyH >= expectedStudy * 0.5) checks.push({ label: 'Study', level: 'warn' });
+            else checks.push({ label: 'Study', level: 'bad' });
+        } else {
+            checks.push({ label: 'Study', level: 'good' });
+        }
+
+        // Work
+        if (this.workSettings.active) {
+            const planned = this.workSettings.plannedHours;
+            if (workH >= planned * 0.9) checks.push({ label: 'Work', level: 'good' });
+            else if (workH >= planned * 0.5) checks.push({ label: 'Work', level: 'warn' });
+            else checks.push({ label: 'Work', level: 'bad' });
+        } else {
+            checks.push({ label: 'Work', level: 'good' });
+        }
+
+        // Credits
+        if (totalCredits > 18) checks.push({ label: 'Credits', level: 'warn' });
+        else if (totalCredits >= 12) checks.push({ label: 'Credits', level: 'good' });
+        else if (totalCredits > 0) checks.push({ label: 'Credits', level: 'warn' });
+        else checks.push({ label: 'Credits', level: 'good' });
+
+        // Busy load
+        if (busyHours > 70) checks.push({ label: 'Load', level: 'bad' });
+        else if (busyHours > 55) checks.push({ label: 'Load', level: 'warn' });
+        else checks.push({ label: 'Load', level: 'good' });
+
+        // Exercise
+        if (exerciseH < 1) checks.push({ label: 'Exercise', level: 'warn' });
+        else checks.push({ label: 'Exercise', level: 'good' });
+
+        // Clubs
+        if (clubH < 1) checks.push({ label: 'Clubs', level: 'bad' });
+        else if (clubH < 3) checks.push({ label: 'Clubs', level: 'warn' });
+        else checks.push({ label: 'Clubs', level: 'good' });
+
+        // Personal care
+        const lowCareDays = Array.from({length:7}, (_,d) => d).filter(d =>
+            this.events.filter(ev => ev.day === d && ev.type === 'care')
+                .reduce((s, ev) => s + (ev.endHour - ev.startHour), 0) < 0.5
+        ).length;
+        if (lowCareDays >= 3) checks.push({ label: 'Self-care', level: 'bad' });
+        else if (lowCareDays > 0) checks.push({ label: 'Self-care', level: 'warn' });
+        else checks.push({ label: 'Self-care', level: 'good' });
+
+        // Late-night academic
+        const academicTypes = ['class', 'study', 'office'];
+        const lateCount = this.events.filter(ev =>
+            ev.day < 5 && academicTypes.includes(ev.type) && ev.endHour > 21
+        ).length;
+        if (lateCount > 0) checks.push({ label: 'Late study', level: 'warn' });
+        else checks.push({ label: 'No lates', level: 'good' });
+
+        // Marathon sessions
+        const hasMarathon = this.events.some(ev =>
+            (ev.type === 'study' || ev.type === 'office') && (ev.endHour - ev.startHour) > 2
+        );
+        if (hasMarathon) checks.push({ label: 'Marathon', level: 'warn' });
+        else checks.push({ label: 'Paced', level: 'good' });
+
+        // Free time on weekdays
+        const lowFreeCount = Array.from({length:5}, (_,d) => d).filter(d =>
+            this.events.filter(ev => ev.day === d && ev.type === 'free')
+                .reduce((s, ev) => s + (ev.endHour - ev.startHour), 0) < 1.5
+        ).length;
+        if (lowFreeCount >= 3) checks.push({ label: 'Free time', level: 'bad' });
+        else if (lowFreeCount > 0) checks.push({ label: 'Free time', level: 'warn' });
+        else checks.push({ label: 'Free time', level: 'good' });
+
+        // Conflicts
+        let conflictCount = 0;
+        for (let i = 0; i < this.events.length; i++)
+            for (let j = i + 1; j < this.events.length; j++)
+                if (this.events[i].day === this.events[j].day && this.events[i].startHour < this.events[j].endHour && this.events[j].startHour < this.events[i].endHour)
+                    conflictCount++;
+        if (conflictCount > 0) checks.push({ label: `${conflictCount} conflicts`, level: 'bad' });
+        else checks.push({ label: 'No conflicts', level: 'good' });
+
+        return checks;
+    }
+
     _runWellnessCheck() {
         const results = [];
         const dayNames = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -1482,78 +1610,11 @@ class CalendarApp {
         const el = document.getElementById('print-wellness');
         if (!el) { this.HOUR_HEIGHT = savedHourH; return; }
 
-        // Quick wellness summary
-        const totalCredits = this.courses.reduce((s, c) => s + (c.credits || 3), 0);
-        // Expected outside-study: lecture × 2, studio × 1, lab × 0
-        let expectedStudy = 0;
-        for (const c of this.courses) {
-            const cr = c.credits || 3;
-            const mode = c.mode || 'lecture';
-            if (mode === 'lecture') expectedStudy += cr * 2;
-            else if (mode === 'studio') expectedStudy += cr * 1;
-            // lab = 0
-        }
-        let workH = 0, mealH = 0, sleepH = 0, studyH = 0, classH = 0, freeH = 0;
-        let exerciseH = 0, clubH = 0, careH = 0;
-        for (const ev of this.events) {
-            const d = ev.endHour - ev.startHour;
-            if (ev.type === 'work') workH += d;
-            if (ev.type === 'meal') mealH += d;
-            if (ev.type === 'sleep') sleepH += d;
-            if (ev.type === 'study' || ev.type === 'office') studyH += d;
-            if (ev.type === 'class') classH += d;
-            if (ev.type === 'free') freeH += d;
-            if (ev.type === 'exercise') exerciseH += d;
-            if (ev.type === 'club') clubH += d;
-            if (ev.type === 'care') careH += d;
-        }
-
-        // Late-night academic check
-        const academicTypes = ['class', 'study', 'office'];
-        const lateNight = this.events.filter(ev =>
-            ev.day < 5 && academicTypes.includes(ev.type) && ev.endHour > 21
-        );
-
-        // Free time check (weekdays)
-        let lowFreeDays = 0;
-        for (let d = 0; d < 5; d++) {
-            const fh = this.events.filter(ev => ev.day === d && ev.type === 'free')
-                .reduce((s, ev) => s + (ev.endHour - ev.startHour), 0);
-            if (fh < 1.5) lowFreeDays++;
-        }
-
-        // Marathon study check — any study/office block >2h
-        let marathon = false;
-        for (const ev of this.events) {
-            if ((ev.type === 'study' || ev.type === 'office') && (ev.endHour - ev.startHour) > 2) {
-                marathon = true; break;
-            }
-        }
-
-        // Busy hours check
-        const busyHours = classH + workH + studyH;
-
-        let conflicts = 0;
-        for (let i = 0; i < this.events.length; i++)
-            for (let j = i + 1; j < this.events.length; j++)
-                if (this.events[i].day === this.events[j].day && this.events[i].startHour < this.events[j].endHour && this.events[j].startHour < this.events[i].endHour)
-                    conflicts++;
-
-        el.innerHTML = [
-            mealH >= 10 ? '<span style="color:#2E7D32;">✓ Meals</span>' : '<span style="color:#991B1B;">⚠ Meals</span>',
-            sleepH >= 49 ? '<span style="color:#2E7D32;">✓ Sleep</span>' : '<span style="color:#991B1B;">⚠ Sleep</span>',
-            (totalCredits === 0 || studyH >= expectedStudy * 0.9) ? '<span style="color:#2E7D32;">✓ Study</span>' : '<span style="color:#991B1B;">⚠ Study</span>',
-            (!this.workSettings.active || workH >= this.workSettings.plannedHours * 0.9) ? '<span style="color:#2E7D32;">✓ Work</span>' : '<span style="color:#991B1B;">⚠ Work</span>',
-            totalCredits <= 18 ? '<span style="color:#2E7D32;">✓ Credits</span>' : '<span style="color:#991B1B;">⚠ Credits</span>',
-            busyHours <= 55 ? '<span style="color:#2E7D32;">✓ Load</span>' : '<span style="color:#991B1B;">⚠ Overloaded</span>',
-            exerciseH >= 2 ? '<span style="color:#2E7D32;">✓ Exercise</span>' : '<span style="color:#991B1B;">⚠ Exercise</span>',
-            clubH >= 3 ? '<span style="color:#2E7D32;">✓ Clubs</span>' : '<span style="color:#991B1B;">⚠ Clubs</span>',
-            careH >= 3.5 ? '<span style="color:#2E7D32;">✓ Self-care</span>' : '<span style="color:#991B1B;">⚠ Self-care</span>',
-            lateNight.length === 0 ? '<span style="color:#2E7D32;">✓ No lates</span>' : '<span style="color:#991B1B;">⚠ Late study</span>',
-            !marathon ? '<span style="color:#2E7D32;">✓ Paced</span>' : '<span style="color:#991B1B;">⚠ Marathon</span>',
-            lowFreeDays < 3 ? '<span style="color:#2E7D32;">✓ Free time</span>' : '<span style="color:#991B1B;">⚠ Free time</span>',
-            conflicts === 0 ? '<span style="color:#2E7D32;">✓ No conflicts</span>' : `<span style="color:#991B1B;">⚠ ${conflicts} conflicts</span>`,
-        ].join(' &nbsp;|&nbsp; ') + ' &nbsp;|&nbsp; <em>☐ = done</em>';
+        // Use the same wellness check logic as the sidebar
+        const checks = this._getWellnessChecks();
+        el.innerHTML = checks.map(c =>
+            `<span style="color:${c.level === 'good' ? '#2E7D32' : c.level === 'warn' ? '#B45309' : '#991B1B'};">${c.level === 'good' ? '✓' : '⚠'} ${c.label}</span>`
+        ).join(' &nbsp;|&nbsp; ') + ' &nbsp;|&nbsp; <em>☐ = done</em>';
 
         // Restore after print
         setTimeout(() => {
