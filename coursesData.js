@@ -3737,12 +3737,20 @@ const COURSE_CATALOG = [
       },
       {
         "section": "21",
-        "days": [
-          3
-        ],
-        "startTime": "08:45",
-        "endTime": "11:35",
-        "location": "CUE 409"
+        "meetings": [
+          {
+            "days": [3],
+            "startTime": "08:45",
+            "endTime": "09:35",
+            "location": "CUE 409"
+          },
+          {
+            "days": [3],
+            "startTime": "09:45",
+            "endTime": "11:35",
+            "location": "CUE 409"
+          }
+        ]
       },
       {
         "section": "22",

@@ -502,9 +502,10 @@ class CalendarApp {
         for (const c of matches) {
             const sections = c.sections || [{ section: '', days: [], startTime: '', endTime: '', location: '' }];
             for (const s of sections) {
+                const timeDesc = this._meetingsToString(this._normalizeMeetings(s));
                 const label = s.section
-                    ? `${c.code}-${s.section} — ${this._daysToString(s.days || [])} ${s.startTime}-${s.endTime}`
-                    : `${c.code} — ${this._daysToString(s.days || [])} ${s.startTime}-${s.endTime}`;
+                    ? `${c.code}-${s.section} — ${timeDesc}`
+                    : `${c.code} — ${timeDesc}`;
                 const div = document.createElement('div');
                 div.className = 'catalog-item';
                 div.innerHTML = `<label><input type="radio" name="catalog-course" data-code="${c.code}" data-section="${s.section||''}" data-has-labs="${c.labs ? '1' : '0'}"> ${label}</label>`;
@@ -525,6 +526,25 @@ class CalendarApp {
     _daysToString(days) {
         const names = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
         return days.map(d => names[d]).join('/') || 'TBA';
+    }
+
+    // Format one or more meetings into a readable string
+    _meetingsToString(meetings) {
+        if (!meetings || meetings.length === 0) return 'TBA';
+        return meetings.map(m =>
+            `${this._daysToString(m.days || [])} ${m.startTime}-${m.endTime}`
+        ).join(', ');
+    }
+
+    // Normalize a section/lab object to always have a meetings array
+    _normalizeMeetings(section) {
+        if (!section) return [];
+        if (section.meetings && section.meetings.length > 0) return section.meetings;
+        // Legacy format: days/startTime/endTime/location directly on section
+        if (section.days && section.startTime) {
+            return [{ days: section.days, startTime: section.startTime, endTime: section.endTime, location: section.location || '' }];
+        }
+        return [];
     }
 
     _openCourseModal() {
@@ -560,15 +580,18 @@ class CalendarApp {
         if (!course) return null;
         const section = (course.sections || []).find(s => s.section === sectionId) ||
                         { section: '', days: course.days, startTime: course.startTime, endTime: course.endTime, location: course.location };
+        const sectionMeetings = this._normalizeMeetings(section);
 
         // Also get selected lab section if applicable
         let labSection = null;
+        let labMeetings = null;
         if (course.labs && course.labs.length > 0) {
             const labVal = this.els.courseLabSelect.value;
             labSection = course.labs.find(l => l.section === labVal) || null;
+            if (labSection) labMeetings = this._normalizeMeetings(labSection);
         }
 
-        return { course, section, labSection };
+        return { course, section, sectionMeetings, labSection, labMeetings };
     }
 
     _onCatalogRadioChange() {
@@ -585,7 +608,7 @@ class CalendarApp {
                 for (const lab of course.labs) {
                     const opt = document.createElement('option');
                     opt.value = lab.section;
-                    opt.textContent = `Lab ${lab.section} — ${this._daysToString(lab.days)} ${lab.startTime}-${lab.endTime}`;
+                    opt.textContent = `Lab ${lab.section} — ${this._meetingsToString(this._normalizeMeetings(lab))}`;
                     select.appendChild(opt);
                 }
             }
@@ -597,7 +620,7 @@ class CalendarApp {
     // ═══════════════════════════════════════════
     _addCourse() {
         const difficulty = document.querySelector('input[name="c-difficulty"]:checked')?.value || 'medium';
-        let code, name, credits, mode, days, startTime, endTime, location;
+        let code, name, credits, mode, days, startTime, endTime, location, meetings;
 
         const catalog = this._getSelectedCatalogCourse();
         if (catalog && !this.els.courseNotListed.checked) {
@@ -611,9 +634,7 @@ class CalendarApp {
             name = catalog.course.name;
             credits = catalog.course.credits;
             mode = catalog.course.mode || 'lecture';
-            days = catalog.section.days || [];
-            startTime = catalog.section.startTime;
-            endTime = catalog.section.endTime;
+            meetings = catalog.sectionMeetings || [];
             location = catalog.section.location || '';
         } else {
             // Manual entry
@@ -626,14 +647,13 @@ class CalendarApp {
             startTime = this.els.courseStart.value;
             endTime = this.els.courseEnd.value;
             location = this.els.courseLocation.value.trim();
+            meetings = [{ days, startTime, endTime, location }];
         }
 
         const course = {
             id: ++this.eventIdCounter,
-            code, name, days, startTime, endTime,
-            startHour: this._timeToDecimal(startTime),
-            endHour: this._timeToDecimal(endTime),
-            location, difficulty, credits, mode,
+            code, name, meetings, location,
+            difficulty, credits, mode,
         };
 
         this.courses.push(course);
@@ -645,11 +665,7 @@ class CalendarApp {
                 id: ++this.eventIdCounter,
                 code: catalog.course.code + ' Lab',
                 name: catalog.course.name + ' Lab',
-                days: catalog.labSection.days,
-                startTime: catalog.labSection.startTime,
-                endTime: catalog.labSection.endTime,
-                startHour: this._timeToDecimal(catalog.labSection.startTime),
-                endHour: this._timeToDecimal(catalog.labSection.endTime),
+                meetings: catalog.labMeetings || [],
                 location: catalog.labSection.location || '',
                 difficulty,
                 credits: catalog.course.labCredits || 1,
@@ -665,21 +681,24 @@ class CalendarApp {
 
     _scheduleCourse(course) {
         const eventsToAdd = [];
-        for (const day of course.days) {
-            const event = {
-                id: ++this.eventIdCounter,
-                title: `${course.code}: ${course.name}`,
-                type: 'class',
-                difficulty: course.difficulty,
-                day,
-                startHour: course.startHour,
-                endHour: course.endHour,
-                location: course.location,
-                courseId: course.id,
-                notes: '',
-                locked: true,
-            };
-            eventsToAdd.push(event);
+        const meetings = course.meetings || [];
+        for (const mtg of meetings) {
+            for (const day of (mtg.days || [])) {
+                const event = {
+                    id: ++this.eventIdCounter,
+                    title: `${course.code}: ${course.name}`,
+                    type: 'class',
+                    difficulty: course.difficulty,
+                    day,
+                    startHour: this._timeToDecimal(mtg.startTime),
+                    endHour: this._timeToDecimal(mtg.endTime),
+                    location: mtg.location || course.location || '',
+                    courseId: course.id,
+                    notes: '',
+                    locked: true,
+                };
+                eventsToAdd.push(event);
+            }
         }
 
         // Check conflicts before adding
@@ -738,11 +757,12 @@ class CalendarApp {
         for (const c of this.courses) {
             const modeLabel = modeLabels[c.mode] || '';
             const creditsStr = (c.credits || 3) + 'cr';
+            const timeStr = this._meetingsToString(c.meetings);
             html += `
                 <div class="course-item ${this._getDeptClass(c.code)}">
                     <div class="course-info">
                         <div class="course-code">${this._escHtml(c.code)}</div>
-                        <div class="course-meta">${modeLabel} ${creditsStr} · ${this._escHtml(c.name)} · ${c.startTime}–${c.endTime}</div>
+                        <div class="course-meta">${modeLabel} ${creditsStr} · ${this._escHtml(c.name)} · ${timeStr}</div>
                     </div>
                     <button class="remove-course" data-course-id="${c.id}" title="Remove course">✕</button>
                 </div>`;
