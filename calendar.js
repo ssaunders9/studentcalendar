@@ -675,17 +675,18 @@ class CalendarApp {
             meetings = [{ days, startTime, endTime, location }];
         }
 
+        // Check if this exact course code is already added
+        const dup = this.courses.find(c => c.code === code);
+        if (dup) {
+            alert(`${code} is already in your schedule. Remove it first before adding again.`);
+            return;
+        }
+
         const course = {
             id: ++this.eventIdCounter,
             code, name, meetings, location,
             difficulty, credits, mode,
         };
-
-        // Check if this exact course + section combo is already added
-        const dup = this.courses.find(c => c.code === course.code);
-        if (dup) {
-            if (!confirm(`${course.code} is already in your schedule. Add it again?`)) return;
-        }
 
         this.courses.push(course);
         this._scheduleCourse(course);
