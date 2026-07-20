@@ -169,11 +169,7 @@ class CalendarApp {
             // Check if click was on a locked course event
             const lockBlock = e.target.closest('.event-block.locked');
             if (lockBlock) {
-                const msg = document.createElement('div');
-                msg.className = 'lock-toast';
-                msg.textContent = '🔒 Course schedule — remove & re-add to change time';
-                lockBlock.appendChild(msg);
-                setTimeout(() => msg.remove(), 2500);
+                this._showLockToast(lockBlock);
                 return;
             }
 
@@ -205,11 +201,26 @@ class CalendarApp {
                 this._openModal(eventId);
             } else if (e.key === 'Delete' || e.key === 'Backspace') {
                 e.preventDefault();
-                this.events = this.events.filter(ev => ev.id !== eventId);
-                this._renderAll();
+                if (confirm('Delete this event?')) {
+                    this.events = this.events.filter(ev => ev.id !== eventId);
+                    this._renderAll();
+                }
             } else if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
                 e.preventDefault();
                 this._navigateEventFocus(eventId, e.key === 'ArrowRight' ? 1 : -1);
+            }
+        });
+
+        // Keyboard: Enter on empty gridcell creates new event
+        this.els.daysContainer.addEventListener('keydown', e => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                const cell = e.target.closest('.hour-slot');
+                if (cell) {
+                    e.preventDefault();
+                    const day = parseInt(cell.dataset.day);
+                    const hour = parseInt(cell.dataset.hour);
+                    this._openModalForNew(day, hour);
+                }
             }
         });
 
@@ -217,6 +228,38 @@ class CalendarApp {
         this.els.modal.addEventListener('click', e => {
             if (e.target === this.els.modal) this._closeModal();
         });
+
+        // Modal close button
+        const closeBtn = this.els.modal.querySelector('.modal-close-btn');
+        if (closeBtn) closeBtn.addEventListener('click', () => this._closeModal());
+
+        // Focus trap in modal
+        this.els.modal.addEventListener('keydown', e => {
+            if (e.key !== 'Tab' || this.els.modal.classList.contains('hidden')) return;
+            const focusable = this.els.modal.querySelectorAll(
+                'input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+            );
+            if (focusable.length === 0) return;
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+            if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+            else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        });
+    }
+
+    // Show a lock toast above a course event block
+    _showLockToast(block) {
+        const msg = document.createElement('div');
+        msg.className = 'lock-toast';
+        msg.setAttribute('role', 'alert');
+        msg.textContent = 'Course schedule — remove and re-add to change time';
+        const blockRect = block.getBoundingClientRect();
+        const layerRect = this.els.eventsLayer.getBoundingClientRect();
+        msg.style.left = (blockRect.left - layerRect.left) + 'px';
+        msg.style.top = (blockRect.top - layerRect.top - 30) + 'px';
+        msg.style.width = Math.max(blockRect.width, 200) + 'px';
+        this.els.eventsLayer.appendChild(msg);
+        setTimeout(() => msg.remove(), 2500);
     }
 
     // Navigate focus to next/previous event in tab order
@@ -273,12 +316,12 @@ class CalendarApp {
             date.setDate(date.getDate() + d);
             const dateStr = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
             const isToday = (date.toDateString() === today.toDateString());
-            html += `<div class="day-column${isToday ? ' today' : ''}" data-day="${d}" role="columnheader" aria-label="${dayNames[d]} ${dateStr}">`;
-            html += `<div class="day-header">${dayNames[d]}<br><small>${dateStr}</small></div>`;
+            html += `<div class="day-column${isToday ? ' today' : ''}" data-day="${d}">`;
+            html += `<div class="day-header" role="columnheader" aria-label="${dayNames[d]} ${dateStr}">${dayNames[d]}<br><small>${dateStr}</small></div>`;
             // Hour slots
             for (let h = this.GRID_START; h < this.GRID_END; h++) {
                 const hourLabel = h === 0 ? '12 AM' : h < 12 ? `${h} AM` : h === 12 ? '12 PM' : `${h - 12} PM`;
-                html += `<div class="hour-slot" data-day="${d}" data-hour="${h}" role="gridcell" aria-label="${dayNames[d]} ${hourLabel}"></div>`;
+                html += `<div class="hour-slot" data-day="${d}" data-hour="${h}" role="gridcell" tabindex="-1" aria-label="${dayNames[d]} ${dateStr} ${hourLabel}"></div>`;
             }
             html += '</div>';
         }
@@ -345,7 +388,7 @@ class CalendarApp {
             html += `<div class="event-location">📍 ${this._escHtml(ev.location)}</div>`;
         }
         // Quick-delete button
-        html += '<button class="event-delete-btn" title="Delete event">×</button>';
+        html += '<button class="event-delete-btn" title="Delete event" aria-label="Delete event">×</button>';
         el.innerHTML = html;
 
         // Delete button click handler
@@ -614,7 +657,11 @@ class CalendarApp {
             if (!ev) return;
 
             // Locked events (scheduled from courses) can't be dragged or resized
-            if (ev.locked) return;
+            if (ev.locked) {
+                e.preventDefault(); // suppress click so new-event modal doesn't open
+                this._showLockToast(eventBlock);
+                return;
+            }
 
             // Check if resize handle
             if (target.closest('.resize-handle')) {
@@ -726,6 +773,7 @@ class CalendarApp {
     // ═══════════════════════════════════════════
     _openModalForNew(day, hour) {
         if (this._suppressModal) return;
+        this._modalTrigger = document.activeElement;
         this._editingEventId = null;
         const startH = Math.floor(hour);
         const startM = Math.round((hour - startH) * 60);
@@ -752,6 +800,7 @@ class CalendarApp {
 
     _openModal(eventId) {
         if (this._suppressModal) return;
+        this._modalTrigger = document.activeElement;
         const ev = this.events.find(ev => ev.id === eventId);
         if (!ev) return;
 
@@ -781,6 +830,8 @@ class CalendarApp {
         this.els.modal.classList.add('hidden');
         this._editingEventId = null;
         this._pendingDay = -1;
+        // Restore focus to the element that triggered the modal
+        if (this._modalTrigger) { this._modalTrigger.focus(); this._modalTrigger = null; }
     }
 
     _saveEventFromModal() {
@@ -1199,12 +1250,9 @@ class CalendarApp {
         const file = e.target.files[0];
         if (!file) return;
 
-        console.log('[import] Reading file:', file.name);
-
         const reader = new FileReader();
 
         reader.onerror = () => {
-            console.error('[import] File read error');
             alert('Failed to read file. Make sure it is a valid JSON file.');
             e.target.value = '';
         };
@@ -1212,14 +1260,11 @@ class CalendarApp {
         reader.onload = (ev) => {
             try {
                 const raw = ev.target.result;
-                console.log('[import] File loaded, parsing JSON...');
                 const data = JSON.parse(raw);
 
                 if (!data.events || !Array.isArray(data.events)) {
                     throw new Error('File does not contain a valid schedule (missing events array).');
                 }
-
-                console.log('[import] Found', data.events.length, 'events,', (data.courses || []).length, 'courses');
 
                 // Validate event fields
                 for (const ev of data.events) {
@@ -1237,8 +1282,6 @@ class CalendarApp {
                 this.workSettings = data.workSettings || { active: false, plannedHours: 15 };
                 this.eventIdCounter = Math.max(data.eventIdCounter || 0, this.events.length);
 
-                console.log('[import] State set, events:', this.events.length, 'courses:', this.courses.length);
-
                 // Restore work toggle UI
                 if (this.workSettings.active) {
                     this.els.workToggle.checked = true;
@@ -1250,7 +1293,6 @@ class CalendarApp {
                 }
 
                 this._renderAll();
-                console.log('[import] Render complete, events in DOM:', this.els.eventsLayer.children.length);
             } catch (err) {
                 console.error('[import] Failed:', err);
                 alert('Could not import file: ' + err.message);
