@@ -43,6 +43,11 @@ add('BIO ENG 210','Bioengineering Problem Solving',3,'lecture',[{'section':'01',
 add('BIO ENG 305','Bioengineering Ethics and Professional Development',3,'lecture',[{'section':'01','days':[0,2,4],'startTime':'10:10','endTime':'11:00','location':'WEGN 205'}])
 add('BIO ENG 310','Bioengineering Transport Phenomena',3,'lecture',[{'section':'01','days':[0,2,4],'startTime':'15:10','endTime':'16:00','location':'WEGN G070C'}])
 add('BIO ENG 315','Thermodynamics and Kinetics in Biological Systems',3,'lecture',[{'section':'01','days':[1,3],'startTime':'12:05','endTime':'13:20','location':'WEGN 205'}])
+add('BIO ENG 410','Bioengineering Capstone Project I',3,'lecture',[{'section':'01','meetings':[{'days':[1,3],'startTime':'09:10','endTime':'10:00','location':'SEH 205'},{'days':[1,3],'startTime':'10:10','endTime':'11:25','location':'SEH 205'}]}])
+add('BIO ENG 420','Mechanics of Biological Materials',3,'lecture',[{'section':'01','days':[1,3],'startTime':'14:55','endTime':'16:10','location':'WEGN 205'}])
+add('BIO ENG 430','Bioinstrumentation',3,'lecture',[{'section':'01','meetings':[{'days':[0,2],'startTime':'14:10','endTime':'15:00','location':'WEGN 205'},{'days':[0],'startTime':'15:10','endTime':'18:00','location':'WEGN 205'}]}])
+add('BIO ENG 475','Biochemical Engineering',3,'lecture',[{'section':'01','days':[1,3],'startTime':'12:05','endTime':'13:20','location':'WEGN G070C'}])
+add('BIO ENG 476','Applied Molecular and Cellular Bioengineering',3,'lecture',[{'section':'01','days':[0,2,4],'startTime':'11:10','endTime':'12:00','location':'WLSH 4'}])
 
 # BIOLOGY
 add('BIOLOGY 102','Exploring Biology',3,'lecture',[{'section':'01','days':[0,2,4],'startTime':'10:10','endTime':'11:00','location':'TODD 116'}],

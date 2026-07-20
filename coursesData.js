@@ -115,6 +115,122 @@ const COURSE_CATALOG = [
     ]
   },
   {
+    "code": "BIO ENG 410",
+    "name": "Bioengineering Capstone Project I",
+    "credits": 3,
+    "mode": "lecture",
+    "sections": [
+      {
+        "section": "01",
+        "meetings": [
+          {
+            "days": [
+              1,
+              3
+            ],
+            "startTime": "09:10",
+            "endTime": "10:00",
+            "location": "SEH 205"
+          },
+          {
+            "days": [
+              1,
+              3
+            ],
+            "startTime": "10:10",
+            "endTime": "11:25",
+            "location": "SEH 205"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "code": "BIO ENG 420",
+    "name": "Mechanics of Biological Materials",
+    "credits": 3,
+    "mode": "lecture",
+    "sections": [
+      {
+        "section": "01",
+        "days": [
+          1,
+          3
+        ],
+        "startTime": "14:55",
+        "endTime": "16:10",
+        "location": "WEGN 205"
+      }
+    ]
+  },
+  {
+    "code": "BIO ENG 430",
+    "name": "Bioinstrumentation",
+    "credits": 3,
+    "mode": "lecture",
+    "sections": [
+      {
+        "section": "01",
+        "meetings": [
+          {
+            "days": [
+              0,
+              2
+            ],
+            "startTime": "14:10",
+            "endTime": "15:00",
+            "location": "WEGN 205"
+          },
+          {
+            "days": [
+              0
+            ],
+            "startTime": "15:10",
+            "endTime": "18:00",
+            "location": "WEGN 205"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "code": "BIO ENG 475",
+    "name": "Biochemical Engineering",
+    "credits": 3,
+    "mode": "lecture",
+    "sections": [
+      {
+        "section": "01",
+        "days": [
+          1,
+          3
+        ],
+        "startTime": "12:05",
+        "endTime": "13:20",
+        "location": "WEGN G070C"
+      }
+    ]
+  },
+  {
+    "code": "BIO ENG 476",
+    "name": "Applied Molecular and Cellular Bioengineering",
+    "credits": 3,
+    "mode": "lecture",
+    "sections": [
+      {
+        "section": "01",
+        "days": [
+          0,
+          2,
+          4
+        ],
+        "startTime": "11:10",
+        "endTime": "12:00",
+        "location": "WLSH 4"
+      }
+    ]
+  },
+  {
     "code": "BIOLOGY 102",
     "name": "Exploring Biology",
     "credits": 3,

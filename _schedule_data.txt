@@ -343,3 +343,107 @@ PHYSICS 211/212: Added missing sections (04, 14 for 211; 04 for 212).
   All single blocks — flat format.
 PHYSICS 205/206: Labs are 2h40m on TU,TH — flat format.
 All other physics courses: single meetings — flat format.
+
+
+================================================================================
+BIOLOGY — Pullman Fall 2026
+================================================================================
+
+BIOLOGY 102 [BSCI] Exploring Biology
+--------------------------------------------------------------------------------
+$01 04056 4 M,W,F 10:10-11:00 TODD 116 — L Carloye 400/362
+
+01 Lab 04057 0 TU 9:10-12:00 EAST 166 — 36/36
+02 Lab 04058 0 TU 9:10-12:00 EAST 192 — 36/36
+03 Lab 04059 0 TU 12:05-2:55 EAST 166 — 36/36
+04 Lab 04060 0 TU 12:05-2:55 EAST 192 — 36/36
+05 Lab 04061 0 TU 2:55-5:45 EAST 166 — 36/36
+06 Lab 04062 0 TU 2:55-5:45 EAST 192 — 36/36
+08 Lab 04064 0 W 12:10-3:00 EAST 166 — 36/36
+10 Lab 04066 0 W 3:10-6:00 EAST 166 — 36/36
+12 Lab 05606 0 TH 9:10-12:00 EAST 166 — 36/17
+13 Lab 05607 0 TH 12:05-2:55 EAST 166 — 36/21
+14 Lab 05608 0 TH 2:55-5:45 EAST 166 — 36/36
+
+ALL single blocks — flat format.
+
+BIOLOGY 105 [BSCI] Hands-on Biology: A Laboratory Experience
+--------------------------------------------------------------------------------
+$01 04067 1 TH 7:10-10:00 EAST 166 — L Carloye 36/4
+Single block — flat format (mode='lab').
+
+BIOLOGY 106 [BSCI] Introductory Biology: Organismal Biology
+--------------------------------------------------------------------------------
+$01 04068 4 M,W,F 11:10-12:00 TODD 116 — L Carloye 532/404
+
+01 Lab 04069 0 TU 9:10-12:00 EAST G0088 — 23/24
+02 Lab 04070 0 TU 9:10-12:00 EAST G0082 — 23/24
+03 Lab 04071 0 TU 12:05-2:55 EAST G0088 — 23/26
+04 Lab 04072 0 TU 12:05-2:55 EAST G0082 — 28/28
+05 Lab 04073 0 TU 2:55-5:45 EAST G0088 — 23/24
+06 Lab 04074 0 TU 2:55-5:45 EAST G0082 — 23/26
+07 Lab 04075 0 TU 7:10-10:00 EAST G0088 — 23/11
+09 Lab 04077 0 W 12:10-3:00 EAST G0088 — 23/22
+10 Lab 04078 0 W 12:10-3:00 EAST G0082 — 23/22
+11 Lab 04079 0 W 3:10-6:00 EAST G0088 — 23/24
+12 Lab 04080 0 W 3:10-6:00 EAST G0082 — 23/23
+13 Lab 04081 0 W 7:10-10:00 EAST G0088 — 23/10
+14 Lab 04082 0 TH 9:10-12:00 EAST G0088 — 23/23
+15 Lab 04083 0 TH 9:10-12:00 EAST G0082 — 23/13
+16 Lab 04084 0 TH 12:05-2:55 EAST G0088 — 23/25
+17 Lab 04085 0 TH 12:05-2:55 EAST G0082 — 23/24
+18 Lab 04086 0 TH 2:55-5:45 EAST G0088 — 23/22
+19 Lab 04087 0 TH 2:55-5:45 EAST G0082 — 23/19
+20 Lab 04088 0 TH 7:10-10:00 EAST G0088 — 23/14
+
+ALL single blocks — flat format.
+
+BIOLOGY 107 [BSCI] Introductory Biology: Cell Biology and Genetics
+--------------------------------------------------------------------------------
+$01 03045 4 M,W,F 1:10-2:00 TODD 116 — J Hinz 506/461
+
+01 Lab 03046 0 TU 9:10-12:00 MCOY 152 — 26/26
+02 Lab 03047 0 TU 9:10-12:00 MCOY 153 — 22/22
+03 Lab 03048 0 TU 12:05-2:55 MCOY 152 — 26/26
+04 Lab 03049 0 TU 12:05-2:55 MCOY 153 — 22/22
+05 Lab 03050 0 TU 2:55-5:45 MCOY 152 — 26/26
+06 Lab 03051 0 TU 2:55-5:45 MCOY 153 — 22/22
+07 Lab 03052 0 TU 7:10-10:00 MCOY 152 — 26/26
+08 Lab 03054 0 TU 7:10-10:00 MCOY 153 — 22/22
+09 Lab 03053 0 W 3:10-6:00 MCOY 152 — 26/26
+10 Lab 03055 0 W 3:10-6:00 MCOY 153 — 22/22
+11 Lab 03056 0 W 7:10-10:00 MCOY 152 — 26/21
+12 Lab 05041 0 W 7:10-10:00 MCOY 153 — 22/13
+13 Lab 03057 0 TH 9:10-12:00 MCOY 152 — 26/26
+14 Lab 03058 0 TH 9:10-12:00 MCOY 153 — 22/22
+15 Lab 03059 0 TH 12:05-2:55 MCOY 152 — 26/26
+16 Lab 03060 0 TH 12:05-2:55 MCOY 153 — 22/22
+17 Lab 03061 0 TH 2:55-5:45 MCOY 152 — 26/26
+18 Lab 03062 0 TH 2:55-5:45 MCOY 153 — 22/22
+19 Lab 03063 0 TH 7:10-10:00 MCOY 152 — 26/16
+20 Lab 04308 0 TH 7:10-10:00 MCOY 153 — 22/3
+21 Lab 06023 0 F 3:10-6:00 MCOY 152 — 26/26
+
+ALL single blocks — flat format.
+
+BIOLOGY 120 [BSCI] Biology of Plants
+--------------------------------------------------------------------------------
+$01 04090 4 M,W,F 10:10-11:00 CARP 102 — S Ritchie 90/58
+
+01 Lab 04091 0 TU 9:10-12:00 EAST G0099 — 24/12
+02 Lab 04092 0 TU 2:55-5:45 EAST G0099 — 24/24
+03 Lab 04093 0 TU 7:05-9:55 EAST G0099 — 24/10
+04 Lab 04094 0 TH 2:55-5:45 EAST G0099 — 24/12
+
+ALL single blocks — flat format.
+
+BIOLOGY 140 [BSCI] The Power of Food, The Science of Nutrition
+--------------------------------------------------------------------------------
+01 04095 3 TU,TH 1:30-2:45 TODD 116 — N Ankrah 539/141
+No labs — flat format.
+
+================================================================================
+BIOLOGY SUMMARY
+================================================================================
+All biology labs are single ~2h50m blocks — NO same-day splits.
+Flat dict format with days array is correct.
