@@ -1531,30 +1531,20 @@ class CalendarApp {
                     conflicts++;
 
         el.innerHTML = [
-            `<strong>Credits:</strong> ${totalCredits}cr`,
-            `<strong>Class:</strong> ${classH.toFixed(0)}h`,
-            `<strong>Study:</strong> ${studyH.toFixed(0)}h`,
-            `<strong>Work:</strong> ${workH.toFixed(0)}h`,
-            `<strong>Sleep:</strong> ${sleepH.toFixed(0)}h`,
-            `<strong>Meals:</strong> ${mealH.toFixed(0)}h`,
-            `<strong>Exercise:</strong> ${exerciseH.toFixed(0)}h`,
-            `<strong>Clubs:</strong> ${clubH.toFixed(0)}h`,
-            `<strong>Self-care:</strong> ${careH.toFixed(0)}h`,
-            `<strong>Free:</strong> ${freeH.toFixed(0)}h`,
-            mealH < 10 ? '<span style="color:#991B1B;">⚠ Meals</span>' : '<span style="color:#2E7D32;">✓ Meals</span>',
-            sleepH < 49 ? '<span style="color:#991B1B;">⚠ Sleep</span>' : '<span style="color:#2E7D32;">✓ Sleep</span>',
-            studyH < totalCredits * 1.5 ? '<span style="color:#991B1B;">⚠ Study</span>' : '<span style="color:#2E7D32;">✓ Study</span>',
-            this.workSettings.active && workH > 20 ? '<span style="color:#991B1B;">⚠ Work &gt;20h</span>' : '',
-            totalCredits > 18 ? '<span style="color:#991B1B;">⚠ Credits &gt;18</span>' : '',
-            busyHours > 55 ? '<span style="color:#991B1B;">⚠ Overloaded</span>' : '',
-            exerciseH < 2 ? '<span style="color:#991B1B;">⚠ Exercise</span>' : '<span style="color:#2E7D32;">✓ Exercise</span>',
-            clubH < 3 ? '<span style="color:#991B1B;">⚠ Clubs</span>' : '<span style="color:#2E7D32;">✓ Clubs</span>',
-            careH < 3.5 ? '<span style="color:#991B1B;">⚠ Self-care</span>' : '<span style="color:#2E7D32;">✓ Self-care</span>',
-            lateNight.length > 0 ? '<span style="color:#991B1B;">⚠ Late study</span>' : '<span style="color:#2E7D32;">✓ No lates</span>',
-            marathon ? '<span style="color:#991B1B;">⚠ Marathon</span>' : '<span style="color:#2E7D32;">✓ Paced</span>',
-            lowFreeDays >= 3 ? '<span style="color:#991B1B;">⚠ Free time</span>' : '<span style="color:#2E7D32;">✓ Free time</span>',
-            conflicts > 0 ? `<span style="color:#991B1B;">⚠ ${conflicts} conflicts</span>` : '<span style="color:#2E7D32;">✓ No conflicts</span>',
-        ].filter(Boolean).join(' &nbsp;|&nbsp; ') + ' &nbsp;|&nbsp; <em>☐ = done</em>';
+            mealH >= 10 ? '<span style="color:#2E7D32;">✓ Meals</span>' : '<span style="color:#991B1B;">⚠ Meals</span>',
+            sleepH >= 49 ? '<span style="color:#2E7D32;">✓ Sleep</span>' : '<span style="color:#991B1B;">⚠ Sleep</span>',
+            studyH >= totalCredits * 2 ? '<span style="color:#2E7D32;">✓ Study</span>' : '<span style="color:#991B1B;">⚠ Study</span>',
+            (!this.workSettings.active || workH <= 20) ? '<span style="color:#2E7D32;">✓ Work</span>' : '<span style="color:#991B1B;">⚠ Work</span>',
+            totalCredits <= 18 ? '<span style="color:#2E7D32;">✓ Credits</span>' : '<span style="color:#991B1B;">⚠ Credits</span>',
+            busyHours <= 55 ? '<span style="color:#2E7D32;">✓ Load</span>' : '<span style="color:#991B1B;">⚠ Overloaded</span>',
+            exerciseH >= 2 ? '<span style="color:#2E7D32;">✓ Exercise</span>' : '<span style="color:#991B1B;">⚠ Exercise</span>',
+            clubH >= 3 ? '<span style="color:#2E7D32;">✓ Clubs</span>' : '<span style="color:#991B1B;">⚠ Clubs</span>',
+            careH >= 3.5 ? '<span style="color:#2E7D32;">✓ Self-care</span>' : '<span style="color:#991B1B;">⚠ Self-care</span>',
+            lateNight.length === 0 ? '<span style="color:#2E7D32;">✓ No lates</span>' : '<span style="color:#991B1B;">⚠ Late study</span>',
+            !marathon ? '<span style="color:#2E7D32;">✓ Paced</span>' : '<span style="color:#991B1B;">⚠ Marathon</span>',
+            lowFreeDays < 3 ? '<span style="color:#2E7D32;">✓ Free time</span>' : '<span style="color:#991B1B;">⚠ Free time</span>',
+            conflicts === 0 ? '<span style="color:#2E7D32;">✓ No conflicts</span>' : `<span style="color:#991B1B;">⚠ ${conflicts} conflicts</span>`,
+        ].join(' &nbsp;|&nbsp; ') + ' &nbsp;|&nbsp; <em>☐ = done</em>';
 
         // Restore after print
         setTimeout(() => {
