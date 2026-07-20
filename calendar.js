@@ -1484,6 +1484,15 @@ class CalendarApp {
 
         // Quick wellness summary
         const totalCredits = this.courses.reduce((s, c) => s + (c.credits || 3), 0);
+        // Expected outside-study: lecture × 2, studio × 1, lab × 0
+        let expectedStudy = 0;
+        for (const c of this.courses) {
+            const cr = c.credits || 3;
+            const mode = c.mode || 'lecture';
+            if (mode === 'lecture') expectedStudy += cr * 2;
+            else if (mode === 'studio') expectedStudy += cr * 1;
+            // lab = 0
+        }
         let workH = 0, mealH = 0, sleepH = 0, studyH = 0, classH = 0, freeH = 0;
         let exerciseH = 0, clubH = 0, careH = 0;
         for (const ev of this.events) {
@@ -1533,7 +1542,7 @@ class CalendarApp {
         el.innerHTML = [
             mealH >= 10 ? '<span style="color:#2E7D32;">✓ Meals</span>' : '<span style="color:#991B1B;">⚠ Meals</span>',
             sleepH >= 49 ? '<span style="color:#2E7D32;">✓ Sleep</span>' : '<span style="color:#991B1B;">⚠ Sleep</span>',
-            (totalCredits === 0 || studyH >= totalCredits * 2) ? '<span style="color:#2E7D32;">✓ Study</span>' : '<span style="color:#991B1B;">⚠ Study</span>',
+            (totalCredits === 0 || studyH >= expectedStudy * 0.9) ? '<span style="color:#2E7D32;">✓ Study</span>' : '<span style="color:#991B1B;">⚠ Study</span>',
             (!this.workSettings.active || workH >= this.workSettings.plannedHours * 0.9) ? '<span style="color:#2E7D32;">✓ Work</span>' : '<span style="color:#991B1B;">⚠ Work</span>',
             totalCredits <= 18 ? '<span style="color:#2E7D32;">✓ Credits</span>' : '<span style="color:#991B1B;">⚠ Credits</span>',
             busyHours <= 55 ? '<span style="color:#2E7D32;">✓ Load</span>' : '<span style="color:#991B1B;">⚠ Overloaded</span>',
