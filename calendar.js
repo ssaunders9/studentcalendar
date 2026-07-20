@@ -391,6 +391,7 @@ class CalendarApp {
         if (ev.locked) el.classList.add('locked');
         el.dataset.eventId = ev.id;
         el.setAttribute('tabindex', '0');
+        el.setAttribute('role', 'button');
         const conflictLabel = ev._conflict ? ' ⚠ CONFLICT' : '';
         el.setAttribute('aria-label', `${ev.title}, ${this._formatTimeRange(ev.startHour, ev.endHour)}${ev.location ? ', ' + ev.location : ''}${conflictLabel}`);
 
