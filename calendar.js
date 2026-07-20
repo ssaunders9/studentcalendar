@@ -70,6 +70,7 @@ class CalendarApp {
             courseList: id('course-list'),
             confirmCourseBtn: id('confirm-course-btn'),
             cancelCourseBtn: id('cancel-course-btn'),
+            courseModalMsg: id('course-modal-msg'),
             courseModal: id('course-modal'),
 
             // Work
@@ -588,6 +589,8 @@ class CalendarApp {
         this.els.courseEnd.value = '09:50';
         this.els.courseDays.value = 'MWF';
         document.querySelector('input[name="c-difficulty"][value="medium"]').checked = true;
+        this.els.courseModalMsg.classList.add('hidden');
+        this.els.courseModalMsg.textContent = '';
         this.els.courseModal.classList.remove('hidden');
         this.els.coursePrefix.focus();
     }
@@ -678,7 +681,8 @@ class CalendarApp {
         // Check if this exact course code is already added
         const dup = this.courses.find(c => c.code === code);
         if (dup) {
-            alert(`${code} is already in your schedule. Remove it first before adding again.`);
+            this.els.courseModalMsg.textContent = `${code} is already in your schedule. Remove it first, then add again.`;
+            this.els.courseModalMsg.classList.remove('hidden');
             return;
         }
 
