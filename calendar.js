@@ -1414,17 +1414,20 @@ class CalendarApp {
                 if (this.events[i].day === this.events[j].day && this.events[i].startHour < this.events[j].endHour && this.events[j].startHour < this.events[i].endHour)
                     conflicts++;
 
-        el.innerHTML = `
-            <strong>Courses:</strong> ${this.courses.length} (${totalCredits}cr) &nbsp;|&nbsp;
-            <strong>Class:</strong> ${classH.toFixed(0)}h &nbsp;|&nbsp;
-            <strong>Study:</strong> ${studyH.toFixed(0)}h &nbsp;|&nbsp;
-            <strong>Work:</strong> ${workH.toFixed(0)}h &nbsp;|&nbsp;
-            <strong>Sleep:</strong> ${sleepH.toFixed(0)}h &nbsp;|&nbsp;
-            <strong>Meals:</strong> ${mealH.toFixed(0)}h &nbsp;|&nbsp;
-            <strong>Free:</strong> ${freeH.toFixed(0)}h
-            ${conflicts > 0 ? ` &nbsp;|&nbsp; <span style="color:#991B1B;">⚠ ${conflicts} conflict(s)</span>` : ''}
-            &nbsp;|&nbsp; <em>☐ = check off as completed</em>
-        `;
+        el.innerHTML = [
+            `<strong>Credits:</strong> ${totalCredits}cr`,
+            `<strong>Class:</strong> ${classH.toFixed(0)}h`,
+            `<strong>Study:</strong> ${studyH.toFixed(0)}h`,
+            `<strong>Work:</strong> ${workH.toFixed(0)}h`,
+            `<strong>Sleep:</strong> ${sleepH.toFixed(0)}h`,
+            `<strong>Meals:</strong> ${mealH.toFixed(0)}h`,
+            `<strong>Free:</strong> ${freeH.toFixed(0)}h`,
+            mealH < 10 ? '<span style="color:#991B1B;">⚠ Meals</span>' : '<span style="color:#2E7D32;">✓ Meals</span>',
+            sleepH < 49 ? '<span style="color:#991B1B;">⚠ Sleep</span>' : '<span style="color:#2E7D32;">✓ Sleep</span>',
+            studyH < totalCredits * 1.5 ? '<span style="color:#991B1B;">⚠ Study</span>' : '<span style="color:#2E7D32;">✓ Study</span>',
+            this.workSettings.active && totalWorkHours > 20 ? '<span style="color:#991B1B;">⚠ Work >20h</span>' : '',
+            conflicts > 0 ? `<span style="color:#991B1B;">⚠ ${conflicts} conflicts</span>` : '<span style="color:#2E7D32;">✓ No conflicts</span>',
+        ].filter(Boolean).join(' &nbsp;|&nbsp; ') + ' &nbsp;|&nbsp; <em>☐ = done</em>';
     }
 
     _exportData() {
