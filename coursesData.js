@@ -2892,47 +2892,95 @@ const COURSE_CATALOG = [
     "sections": [
       {
         "section": "01",
-        "days": [
-          0,
-          2,
-          4
-        ],
-        "startTime": "12:10",
-        "endTime": "13:00",
-        "location": "WEBS 16"
+        "meetings": [
+          {
+            "days": [
+              0,
+              2,
+              4
+            ],
+            "startTime": "12:10",
+            "endTime": "13:00",
+            "location": "WEBS 16"
+          },
+          {
+            "days": [
+              4
+            ],
+            "startTime": "15:10",
+            "endTime": "16:25",
+            "location": "WEBS 16"
+          }
+        ]
       },
       {
         "section": "02",
-        "days": [
-          0,
-          2,
-          4
-        ],
-        "startTime": "09:10",
-        "endTime": "10:00",
-        "location": "WEBS 16"
+        "meetings": [
+          {
+            "days": [
+              0,
+              2,
+              4
+            ],
+            "startTime": "09:10",
+            "endTime": "10:00",
+            "location": "WEBS 16"
+          },
+          {
+            "days": [
+              3
+            ],
+            "startTime": "14:55",
+            "endTime": "16:10",
+            "location": "WEBS 16"
+          }
+        ]
       },
       {
         "section": "03",
-        "days": [
-          0,
-          2,
-          4
-        ],
-        "startTime": "12:10",
-        "endTime": "13:00",
-        "location": "WEBS 16"
+        "meetings": [
+          {
+            "days": [
+              0,
+              2,
+              4
+            ],
+            "startTime": "12:10",
+            "endTime": "13:00",
+            "location": "WEBS 16"
+          },
+          {
+            "days": [
+              2
+            ],
+            "startTime": "15:10",
+            "endTime": "16:25",
+            "location": "WEBS 16"
+          }
+        ]
       },
       {
         "section": "04",
-        "days": [
-          0,
-          2,
-          4
-        ],
-        "startTime": "09:10",
-        "endTime": "10:00",
-        "location": "WEBS 16"
+        "meetings": [
+          {
+            "days": [
+              0,
+              2,
+              4
+            ],
+            "startTime": "09:10",
+            "endTime": "10:00",
+            "location": "WEBS 16"
+          },
+          {
+            "days": [
+              1
+            ],
+            "startTime": "14:55",
+            "endTime": "16:10",
+            "location": "WEBS 16"
+          }
+        ]
       }
     ]
   },
@@ -3043,6 +3091,15 @@ const COURSE_CATALOG = [
         "location": "WEBS 432"
       },
       {
+        "section": "04",
+        "days": [
+          1
+        ],
+        "startTime": "12:05",
+        "endTime": "14:45",
+        "location": "WEBS 422"
+      },
+      {
         "section": "05",
         "days": [
           1
@@ -3077,6 +3134,15 @@ const COURSE_CATALOG = [
         "startTime": "15:10",
         "endTime": "18:00",
         "location": "WEBS 432"
+      },
+      {
+        "section": "14",
+        "days": [
+          2
+        ],
+        "startTime": "15:10",
+        "endTime": "18:00",
+        "location": "WEBS 422"
       },
       {
         "section": "16",
@@ -3130,6 +3196,15 @@ const COURSE_CATALOG = [
         "startTime": "12:05",
         "endTime": "14:45",
         "location": "WEBS 441"
+      },
+      {
+        "section": "04",
+        "days": [
+          2
+        ],
+        "startTime": "12:10",
+        "endTime": "15:00",
+        "location": "WEBS 449"
       },
       {
         "section": "05",

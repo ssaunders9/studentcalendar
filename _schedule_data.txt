@@ -190,3 +190,66 @@ NOT SPLIT (single blocks):
   - CHEM 348 (all labs)
   - CHEM 222 (Quantitative Analysis Lab)
   - CHEM 333 (Physical Chemistry Lab)
+
+
+================================================================================
+MATH — Pullman Fall 2026
+================================================================================
+
+MATH 171 [QUAN] Calculus I
+--------------------------------------------------------------------------------
+$01 02253 4 M,W,F 10:10-11:00 SPRK G0045 — J Martin 252/233 (First-Year Focus)
+$02 02254 4 M,W,F 12:10-1:00 CUE 203 — D Nichols 245/105
+$03 02255 4 M,W,F 2:10-3:00 CUE 203 — J Martin 200/58 (First-Year Focus)
+
+01 Lab 02256 0 M,W 5:10-6:25 NEIL 101W — 30/5 (reserved Engineering)
+02 Lab 02257 0 TU,TH 9:10-10:25 TODD 303 — 30/29 (reserved Engineering)
+03 Lab 02258 0 TU 4:20-5:35; TH 4:20-5:35 CUE 416 — 30/22 (reserved Engineering)
+04 Lab 02259 0 W 2:10-3:25; F 2:10-3:25 WEBS B0012 — 30/30
+05 Lab 02366 0 W,F 3:45-5:00 COLL 135 — 30/21
+06 Lab 02260 0 TU 2:55-4:10; TH 2:55-4:10 TODD 226 — 30/18 (reserved Engineering)
+07 Lab 02261 0 TU 1:30-2:45; TH 1:30-2:45 SLOA 167 — 30/29 (reserved Engineering)
+08 Lab 02262 0 W,F 9:10-10:25 DAGG 232 — 30/5
+09 Lab 02384 0 W 7:45-9:00; F 7:45-9:00 COLL 135 — 30/5
+10 Lab 02263 0 TU,TH 12:05-1:20 COLL 135 — 30/30
+11 Lab 02264 0 M,W 5:10-6:25 TODD 220 — 30/19
+12 Lab 02375 0 TU,TH 5:45-7:00 TODD 234 — 30/5 (reserved Engineering)
+13 Lab 02265 0 W,F 11:10-12:25 SLOA 167 — 30/23
+14 Lab 02266 0 TU,TH 10:35-11:50 SLOA 5 — 30/28 (reserved Engineering)
+15 Lab 02391 0 TU,TH 7:45-9:00 TODD 301 — 30/7
+16 Lab 02267 0 W,F 12:45-2:00 TODD 411 — 30/13
+17 Lab 02385 0 M,W 10:10-11:25 NEIL 101W — 30/7
+18 Lab 05517 0 TU 1:30-2:45; TH 1:30-2:45 TODD 234 — 30/24
+20 Lab 06356 0 TU,TH 9:10-10:25 NEIL 101W — 30/24
+21 Lab 06409 0 TU 10:35-11:50; TH 10:35-11:50 NEIL 101W — 30/22
+22 Lab 06410 0 TU 12:05-1:20; TH 12:05-1:20 NEIL 101W — 30/30
+
+NOTE: MATH 171 labs are two-day recitations. Semicolons separate DIFFERENT DAYS,
+not same-day splits. Flat dicts with days array are correct.
+
+MATH 172 Calculus II
+--------------------------------------------------------------------------------
+$01 02302 4 M,W,F 9:10-10:00 TDAD 276 — E Remaley 175/114
+$02 02303 4 M,W,F 1:10-2:00 TDAD 276 — J Martin 125/101
+
+01 Lab 02304 0 TU 7:45-9:00; TH 7:45-9:00 NEIL 101W — 32/18
+02 Lab 02305 0 W 2:10-3:25; F 2:10-3:25 TODD 234 — 32/32
+03 Lab 05822 0 TU 9:10-10:25; TH 9:10-10:25 CUE 418 — 30/30
+04 Lab 02306 0 W 12:45-2:00; F 12:45-2:00 SPRK 223 — 32/9
+05 Lab 02376 0 TU 1:30-2:45; TH 1:30-2:45 CUE 409 — 32/32
+06 Lab 02307 0 W 3:45-5:00; F 3:45-5:00 TODD 411 — 32/26
+07 Lab 02308 0 TU 10:35-11:50; TH 10:35-11:50 FLMA 150 — 32/31
+08 Lab 02309 0 TU 12:05-1:20; TH 12:05-1:20 CUE 209 — 32/32
+09 Lab 05812 0 W 9:10-10:25; F 9:10-10:25 TODD 220 — 30/5
+
+MATH 182 Honors Calculus II
+--------------------------------------------------------------------------------
+$01 06188 4 M,W,F 9:10-10:00 FLMA 150 — 18/5
+01 Lab 06187 0 TU,TH 9:10-10:25 WEBS B0008 — 18/5
+
+================================================================================
+MATH SUMMARY
+================================================================================
+All MATH labs are two-day recitation/tutorial blocks (NO same-day splits).
+Flat dict format with days array is correct — no split_lab needed.
+MATH 172: added missing labs 04, 06, 09 (were not in original catalog).
