@@ -21,7 +21,7 @@
     --work:         #FF7043;
     --club:         #26C6DA;
     --study:        #42A5F5;
-    --exercise:     #EC407A;
+    --exercise:     #FF7043;  /* deep coral — distinct from conflict red */
     --free:         #9E9E9E;
     --other:        #78909C;
 
@@ -32,23 +32,23 @@
     --surface-200:  #E4E7F0;
 
     /* Sidebar */
-    --sidebar-bg:        #1B1C2B;
-    --sidebar-surface:   #242538;
-    --sidebar-border:    #2E2F44;
-    --sidebar-text:      #B8BACC;
-    --sidebar-heading:   #8E90A8;
-    --sidebar-input-bg:  #1E1F32;
-    --sidebar-input-bdr: #363852;
-    --sidebar-focus:     #818CF8;
+    --sidebar-bg:        #2D3237;
+    --sidebar-surface:   #363C42;
+    --sidebar-border:    #454B52;
+    --sidebar-text:      #C4C9CE;
+    --sidebar-heading:   #8E959C;
+    --sidebar-input-bg:  #262A2F;
+    --sidebar-input-bdr: #454B52;
+    --sidebar-focus:     #C41230;
 
     /* Text */
-    --text-primary:   #1E2030;
-    --text-secondary: #6B6F82;
-    --text-muted:     #9A9DB2;
+    --text-primary:   #1E2022;
+    --text-secondary: #5E6A71;
+    --text-muted:     #8A959B;
 
     /* Borders */
-    --border:         #E4E7F0;
-    --border-light:   #EEF0F6;
+    --border:         #DDE0E3;
+    --border-light:   #EDEFF1;
 
     /* Shadows */
     --shadow-sm:   0 1px 2px rgba(0,0,0,.04);
@@ -62,9 +62,10 @@
     --radius-lg:   14px;
 
     /* Brand */
-    --brand:       #5B6AF0;
-    --brand-light: #E8EAFF;
-    --brand-dark:  #3D4DC7;
+    /* Brand — WSU Crimson */
+    --brand:       #981E32;
+    --brand-light: #F8E8EB;
+    --brand-dark:  #7A1828;
 }
 
 html, body { height: 100%; overflow: hidden; }
@@ -104,7 +105,7 @@ body {
 
 #sidebar-header {
     padding: 20px 22px 16px;
-    background: linear-gradient(135deg, #1F2040 0%, #1B1C2B 100%);
+    background: linear-gradient(135deg, #3D4247 0%, #2D3237 100%);
     border-bottom: 1px solid var(--sidebar-border);
     position: sticky; top: 0; z-index: 5;
 }
@@ -147,7 +148,7 @@ body {
 .form-row select:focus,
 .form-row textarea:focus {
     outline: none; border-color: var(--sidebar-focus);
-    box-shadow: 0 0 0 3px rgba(129,140,248,.15);
+    box-shadow: 0 0 0 3px rgba(196,18,48,.15);
 }
 .form-row input::placeholder { color: #7A7C98; }
 .form-row select option { background: #1E1F32; color: #D8DAE8; }
@@ -169,7 +170,7 @@ body {
 .diff-option:hover { border-color: #4A4C6A; }
 .diff-option:has(input:checked) {
     background: #2A2C50; border-color: var(--sidebar-focus);
-    box-shadow: 0 0 0 2px rgba(129,140,248,.12);
+    box-shadow: 0 0 0 2px rgba(196,18,48,.12);
 }
 /* Fieldset reset */
 fieldset.form-row { border: none; padding: 0; margin: 0 0 10px; }
@@ -183,14 +184,22 @@ button {
 }
 button:active { transform: scale(0.97); }
 
+#add-course-btn {
+    width: 100%;
+    background: linear-gradient(135deg, var(--sidebar-focus), #6D73E8);
+    color: #fff; padding: 10px; font-weight: 600; margin-top: 0;
+    box-shadow: 0 2px 8px rgba(152,30,50,.25);
+}
+#add-course-btn:hover { box-shadow: 0 4px 14px rgba(152,30,50,.35); transform: translateY(-1px); }
+
 #add-course-btn, #apply-work-btn {
     width: 100%;
     background: linear-gradient(135deg, var(--sidebar-focus), #6D73E8);
     color: #fff; padding: 10px; font-weight: 600; margin-top: 6px;
-    box-shadow: 0 2px 8px rgba(129,140,248,.25);
+    box-shadow: 0 2px 8px rgba(152,30,50,.25);
 }
 #add-course-btn:hover, #apply-work-btn:hover {
-    box-shadow: 0 4px 14px rgba(129,140,248,.35); transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(152,30,50,.35); transform: translateY(-1px);
 }
 
 /* Quick Add */
@@ -213,8 +222,8 @@ button:active { transform: scale(0.97); }
 .quick-btn.study:hover    { background: #1C2A44; }
 .quick-btn.office   { background: #281A38; color: #CE93D8; border-color: #3A2650; }
 .quick-btn.office:hover   { background: #322044; }
-.quick-btn.exercise { background: #301A26; color: #F48FB1; border-color: #422636; }
-.quick-btn.exercise:hover { background: #3A2030; }
+.quick-btn.exercise { background: #2E1E18; color: #FFAB91; border-color: #422A22; }
+.quick-btn.exercise:hover { background: #38241E; }
 .quick-btn.care     { background: #1A2E30; color: #80CBC4; border-color: #264044; }
 .quick-btn.care:hover     { background: #203840; }
 .quick-btn.free     { background: #26262E; color: #B0B0C0; border-color: #363644; }
@@ -234,6 +243,36 @@ button:active { transform: scale(0.97); }
 
 /* Course list */
 #course-list { margin-top: 10px; }
+
+.course-catalog-list {
+    max-height: 200px; overflow-y: auto;
+    margin-bottom: 10px; border: 1px solid var(--border);
+    border-radius: var(--radius-sm); background: var(--surface-0);
+}
+.catalog-item {
+    padding: 7px 10px; border-bottom: 1px solid var(--border-light);
+    font-size: 0.82rem; color: var(--text-primary);
+}
+.catalog-item:hover { background: var(--surface-50); }
+.catalog-item label { cursor: pointer; display: flex; align-items: center; gap: 8px; font-weight: 400; }
+.catalog-item input[type="radio"] { margin: 0; accent-color: var(--brand); }
+
+#course-prefix {
+    border: 1px solid var(--border); background: var(--surface-0);
+    color: var(--text-primary); font-size: 0.85rem;
+}
+
+#course-manual { margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border-light); }
+#course-manual input, #course-manual select { border: 1px solid var(--border); background: #fff; color: var(--text-primary); font-size: 0.85rem; padding: 8px 10px; }
+#course-manual input:focus, #course-manual select:focus { border-color: var(--brand); outline: none; box-shadow: 0 0 0 3px rgba(152,30,50,.12); }
+#course-manual .time-row input { flex: 0 1 115px; }
+
+/* Override dark sidebar styles inside course modal */
+#course-modal .toggle-row { background: transparent; border: none; padding: 0; }
+#course-modal fieldset.form-row { border: none; padding: 0; margin-bottom: 12px; }
+#course-modal fieldset.form-row legend { font-size: 0.82rem; color: var(--text-primary); font-weight: 600; margin-bottom: 6px; }
+#course-modal .difficulty-selector .diff-option { background: var(--surface-100); border: 1px solid var(--border); color: var(--text-primary); }
+#course-modal .difficulty-selector .diff-option:has(input:checked) { background: var(--brand-light); border-color: var(--brand); color: var(--brand-dark); }
 .course-item {
     display: flex; align-items: center; justify-content: space-between;
     padding: 10px 12px; margin-bottom: 6px; border-radius: var(--radius-sm);
@@ -246,15 +285,25 @@ button:active { transform: scale(0.97); }
 .course-item .course-code { font-weight: 700; color: #E0E2F2; }
 .course-item .course-meta { font-size: 0.71rem; color: var(--sidebar-heading); margin-top: 2px; }
 .course-item .remove-course {
-    background: none; color: #EF5350; padding: 4px 8px;
+    background: none; color: #F87171; padding: 4px 8px;
     font-size: 0.85rem; border-radius: 4px; opacity: 0.7;
     transition: opacity 0.15s, background 0.15s;
 }
 .course-item:hover .remove-course { opacity: 1; }
 .course-item .remove-course:hover { background: #3A2028; }
-.course-item.easy    { border-left: 3px solid var(--class-easy); }
-.course-item.medium  { border-left: 3px solid var(--class-medium); }
-.course-item.hard    { border-left: 3px solid var(--class-hard); }
+/* Department colours for sidebar course list */
+.course-item.dept-bioeng   { border-left: 3px solid #4CAF50; }
+.course-item.dept-che      { border-left: 3px solid #2196F3; }
+.course-item.dept-ce       { border-left: 3px solid #FF9800; }
+.course-item.dept-engr     { border-left: 3px solid #9C27B0; }
+.course-item.dept-me       { border-left: 3px solid #F44336; }
+.course-item.dept-mse      { border-left: 3px solid #009688; }
+.course-item.dept-cpts     { border-left: 3px solid #00BCD4; }
+.course-item.dept-ee       { border-left: 3px solid #FFC107; }
+.course-item.dept-math     { border-left: 3px solid #3F51B5; }
+.course-item.dept-physics  { border-left: 3px solid #607D8B; }
+.course-item.dept-chem     { border-left: 3px solid #E91E63; }
+.course-item.dept-default  { border-left: 3px solid #999; }
 
 /* Save section */
 .save-buttons { display: flex; gap: 8px; }
@@ -341,15 +390,15 @@ button:active { transform: scale(0.97); }
     color: var(--text-primary); letter-spacing: -0.2px;
 }
 #calendar-header button {
-    background: var(--surface-100); color: var(--text-secondary);
+    background: var(--surface-100); color: var(--text-primary);
     padding: 7px 16px; font-size: 0.84rem; font-weight: 600;
     border: 1px solid var(--border-light);
     border-radius: var(--radius-sm); transition: all 0.15s;
 }
 #calendar-header button:hover { background: var(--surface-200); color: var(--text-primary); }
 #today-btn {
-    color: #3D4DC7 !important; border-color: var(--brand-light) !important;
-    background: #F5F6FF !important;
+    color: var(--brand-dark) !important; border-color: var(--brand-light) !important;
+    background: var(--brand-light) !important;
 }
 #today-btn:hover { background: var(--brand-light) !important; }
 
@@ -407,7 +456,7 @@ button:active { transform: scale(0.97); }
     background: var(--brand-light);
     color: var(--brand-dark); font-weight: 700;
 }
-.day-column.today .day-header small { color: var(--brand); }
+.day-column.today .day-header small { color: var(--brand-dark); }
 
 /* Hour slots */
 .hour-slot {
@@ -417,7 +466,7 @@ button:active { transform: scale(0.97); }
     transition: background 0.1s;
 }
 .hour-slot:nth-child(even) { background: rgba(0,0,0,.006); }
-.hour-slot:hover { background: rgba(91,106,240,.05) !important; }
+.hour-slot:hover { background: rgba(152,30,50,.05) !important; }
 
 /* Events Layer */
 #events-layer {
@@ -470,7 +519,7 @@ button:active { transform: scale(0.97); }
 .event-block.type-work          { background: #FBE9E7; color: #4A1A0A; border-left-color: var(--work); }
 .event-block.type-club          { background: #E0F7FA; color: #0A3038; border-left-color: var(--club); }
 .event-block.type-study         { background: #E3F0FD; color: #0A1A4A; border-left-color: var(--study); }
-.event-block.type-exercise      { background: #FCE4EC; color: #4A0A1A; border-left-color: var(--exercise); }
+.event-block.type-exercise      { background: #FBE9E7; color: #3E1510; border-left-color: var(--exercise); }
 .event-block.type-care           { background: #E0F2F1; color: #1A302E; border-left-color: #26A69A; }
 .event-block.type-free          { background: #F0F0F2; color: #3A3A40; border-left-color: var(--free); }
 .event-block.type-other         { background: #ECEFF1; color: #2A3035; border-left-color: var(--other); }
@@ -571,7 +620,7 @@ button:active { transform: scale(0.97); }
 .modal-content select:focus,
 .modal-content textarea:focus {
     outline: none; border-color: var(--brand);
-    box-shadow: 0 0 0 3px rgba(91,106,240,.12);
+    box-shadow: 0 0 0 3px rgba(152,30,50,.12);
 }
 .modal-content textarea { resize: vertical; }
 
@@ -588,16 +637,16 @@ button:active { transform: scale(0.97); }
 .modal-actions button { padding: 9px 20px; }
 #save-event-btn {
     background: var(--brand); color: #fff; font-weight: 600;
-    box-shadow: 0 2px 8px rgba(91,106,240,.25);
+    box-shadow: 0 2px 8px rgba(152,30,50,.25);
 }
 #save-event-btn:hover { background: var(--brand-dark); }
 #cancel-event-btn {
-    background: var(--surface-100); color: var(--text-secondary);
+    background: var(--surface-100); color: var(--text-primary);
     border: 1px solid var(--border-light);
 }
 #cancel-event-btn:hover { background: var(--surface-200); }
 .danger-btn {
-    background: #FEE2E2 !important; color: #DC2626 !important;
+    background: #FEE2E2 !important; color: #991B1B !important;
     font-weight: 600 !important; margin-right: auto;
 }
 .danger-btn:hover { background: #FECACA !important; }
@@ -642,20 +691,41 @@ button:focus-visible, .import-label:focus-visible, select:focus-visible, input:f
    ================================================================ */
 
 @media print {
-    body { background: #fff; overflow: visible; height: auto; }
+    body { background: #fff; overflow: visible; height: auto; font-size: 9pt; }
     #app { display: block; height: auto; }
     #sidebar { display: none !important; }
     #calendar-main { width: 100%; overflow: visible; height: auto; }
-    #calendar-header { padding: 8px 0; border-bottom: 1px solid #000; }
+    #calendar-header { padding: 4px 0; border-bottom: 1px solid #000; }
     #calendar-header button { display: none; }
-    #calendar-header h2 { font-size: 1.2rem; }
+    #calendar-header h2 { font-size: 1rem; }
     #calendar-grid-wrapper { overflow: visible; height: auto; }
-    .event-block { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
-    .day-column { min-width: 55px; }
-    :root { --hour-h: 38px; }
+    .event-block {
+        print-color-adjust: exact; -webkit-print-color-adjust: exact;
+        font-size: 6.5pt; padding: 1px 4px; border-radius: 3px;
+    }
+    .event-block::before {
+        content: '☐ '; font-size: 8pt;
+    }
+    .event-block .event-delete-btn,
+    .event-block .resize-handle,
+    .event-block.locked::after { display: none !important; }
+    .day-column { min-width: 50px; }
+    .day-header { height: 30px; font-size: 7pt; }
+    .day-header small { font-size: 5.5pt; }
+    :root { --hour-h: 30px; --time-w: 40px; }
+    .time-label { font-size: 6pt; }
     #now-line { display: none; }
-    @page { size: landscape; margin: 0.5cm; }
+    .print-only { display: block !important; }
+    #print-wellness {
+        padding: 6px 0; border-top: 1px solid #ccc; margin-top: 8px;
+        font-size: 7.5pt; line-height: 1.3;
+    }
+    #print-wellness strong { font-weight: 700; }
+    .skip-link, .modal, .lock-toast, #events-layer .event-delete-btn { display: none !important; }
+    @page { size: landscape; margin: 0.4cm; }
 }
+
+.print-only { display: none; }
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
