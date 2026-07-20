@@ -701,10 +701,12 @@ class CalendarApp {
             }
         }
 
-        // Check conflicts before adding
+        // Check conflicts: new events vs existing AND new events vs each other
+        const allEvents = [...this.events];
         const conflicts = [];
+        const seenPairs = new Set();
         for (const ev of eventsToAdd) {
-            const overlapping = this.events.filter(e =>
+            const overlapping = allEvents.filter(e =>
                 e.day === ev.day &&
                 e.startHour < ev.endHour &&
                 ev.startHour < e.endHour
@@ -712,12 +714,24 @@ class CalendarApp {
             if (overlapping.length > 0) {
                 conflicts.push({ event: ev, overlapping });
             }
+            // Add this event to allEvents so subsequent new events check against it too
+            allEvents.push(ev);
         }
 
-        if (conflicts.length > 0) {
-            const msg = conflicts.map(c =>
-                `${c.event.title} conflicts with ${c.overlapping.map(o => o.title).join(', ')}`
-            ).join('\n');
+        // Deduplicate: same pair of event titles shouldn't appear twice
+        const unique = [];
+        for (const c of conflicts) {
+            for (const o of c.overlapping) {
+                const key = [c.event.title, o.title].sort().join('||');
+                if (!seenPairs.has(key)) {
+                    seenPairs.add(key);
+                    unique.push(`${c.event.title} ⇄ ${o.title}`);
+                }
+            }
+        }
+
+        if (unique.length > 0) {
+            const msg = unique.join('\n');
             if (!confirm(`⚠️ Schedule conflict:\n\n${msg}\n\nAdd anyway?`)) return;
         }
 
