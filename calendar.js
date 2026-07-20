@@ -52,7 +52,13 @@ class CalendarApp {
             calendarGrid: id('calendar-grid'),
 
             // Course form
-            courseForm: id('course-form'),
+            addCourseBtn: id('add-course-btn'),
+            coursePrefix: id('course-prefix'),
+            courseCatalogList: id('course-catalog-list'),
+            courseLabSection: id('course-lab-section'),
+            courseLabSelect: id('course-lab-select'),
+            courseNotListed: id('course-not-listed'),
+            courseManual: id('course-manual'),
             courseCode: id('course-code'),
             courseName: id('course-name'),
             courseDays: id('course-days'),
@@ -62,6 +68,9 @@ class CalendarApp {
             courseCredits: id('course-credits'),
             courseMode: id('course-mode'),
             courseList: id('course-list'),
+            confirmCourseBtn: id('confirm-course-btn'),
+            cancelCourseBtn: id('cancel-course-btn'),
+            courseModal: id('course-modal'),
 
             // Work
             workToggle: id('work-toggle'),
@@ -107,7 +116,15 @@ class CalendarApp {
     // ═══════════════════════════════════════════
     _bindEvents() {
         // Course form
-        this.els.courseForm.addEventListener('submit', e => { e.preventDefault(); this._addCourse(); });
+        this._populatePrefixes();
+        this.els.addCourseBtn.addEventListener('click', () => this._openCourseModal());
+        this.els.coursePrefix.addEventListener('change', () => this._filterCatalogCourses());
+        this.els.courseNotListed.addEventListener('change', () => this._toggleManualEntry());
+        this.els.confirmCourseBtn.addEventListener('click', () => this._addCourse());
+        this.els.cancelCourseBtn.addEventListener('click', () => this._closeCourseModal());
+        this.els.courseModal.addEventListener('click', e => { if (e.target === this.els.courseModal) this._closeCourseModal(); });
+        const courseCloseBtn = this.els.courseModal.querySelector('.modal-close-btn');
+        if (courseCloseBtn) courseCloseBtn.addEventListener('click', () => this._closeCourseModal());
 
         // Work
         this.els.workToggle.addEventListener('change', () => this._toggleWork());
@@ -127,7 +144,10 @@ class CalendarApp {
         // Save/Load
         this.els.exportBtn.addEventListener('click', () => this._exportData());
         this.els.importFile.addEventListener('change', e => this._importData(e));
-        this.els.printBtn.addEventListener('click', () => window.print());
+        this.els.printBtn.addEventListener('click', () => {
+            try { this._preparePrint(); } catch(e) {}
+            setTimeout(() => window.print(), 100);
+        });
         this.els.clearBtn.addEventListener('click', () => this._clearAll());
 
         // Modal
@@ -160,33 +180,19 @@ class CalendarApp {
         window.addEventListener('mousemove', e => this._onDragMove(e));
         window.addEventListener('mouseup', e => this._onDragEnd(e));
 
-        // Click on events layer (for creating on empty slots)
-        this.els.eventsLayer.addEventListener('click', e => {
+        // Double-click on calendar grid: edit event, or create new on empty space
+        this.els.calendarGrid.addEventListener('dblclick', e => {
             if (!e.isTrusted) return;
-            if (this._justDragged) { this._justDragged = false; return; }
-            this._dragMoved = false;
-
-            // Check if click was on a locked course event
-            const lockBlock = e.target.closest('.event-block.locked');
-            if (lockBlock) {
-                this._showLockToast(lockBlock);
-                return;
-            }
-
-            // Check if click was on any event block
-            if (e.target.closest('.event-block')) return;
-            // Click on empty space → create
-            const { day, hour } = this._mouseToGrid(e);
-            if (day >= 0 && day < 7 && hour >= this.GRID_START && hour < this.GRID_END) {
-                this._openModalForNew(day, hour);
-            }
-        });
-
-        // Click on event blocks (for editing)
-        this.els.eventsLayer.addEventListener('dblclick', e => {
+            this._justDragged = false;
             const block = e.target.closest('.event-block');
             if (block && block.dataset.eventId) {
                 this._openModal(parseInt(block.dataset.eventId));
+                return;
+            }
+            // Double-click on empty space → create new event
+            const { day, hour } = this._mouseToGrid(e);
+            if (day >= 0 && day < 7 && hour >= this.GRID_START && hour < this.GRID_END) {
+                this._openModalForNew(day, hour);
             }
         });
 
@@ -317,11 +323,11 @@ class CalendarApp {
             const dateStr = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
             const isToday = (date.toDateString() === today.toDateString());
             html += `<div class="day-column${isToday ? ' today' : ''}" data-day="${d}">`;
-            html += `<div class="day-header" role="columnheader" aria-label="${dayNames[d]} ${dateStr}">${dayNames[d]}<br><small>${dateStr}</small></div>`;
+            html += `<div class="day-header" aria-label="${dayNames[d]} ${dateStr}">${dayNames[d]}<br><small>${dateStr}</small></div>`;
             // Hour slots
             for (let h = this.GRID_START; h < this.GRID_END; h++) {
                 const hourLabel = h === 0 ? '12 AM' : h < 12 ? `${h} AM` : h === 12 ? '12 PM' : `${h - 12} PM`;
-                html += `<div class="hour-slot" data-day="${d}" data-hour="${h}" role="gridcell" tabindex="-1" aria-label="${dayNames[d]} ${dateStr} ${hourLabel}"></div>`;
+                html += `<div class="hour-slot" data-day="${d}" data-hour="${h}" tabindex="-1" aria-label="${dayNames[d]} ${dateStr} ${hourLabel}"></div>`;
             }
             html += '</div>';
         }
@@ -366,7 +372,6 @@ class CalendarApp {
         if (ev.locked) el.classList.add('locked');
         el.dataset.eventId = ev.id;
         el.setAttribute('tabindex', '0');
-        el.setAttribute('role', 'button');
         const conflictLabel = ev._conflict ? ' ⚠ CONFLICT' : '';
         el.setAttribute('aria-label', `${ev.title}, ${this._formatTimeRange(ev.startHour, ev.endHour)}${ev.location ? ', ' + ev.location : ''}${conflictLabel}`);
 
@@ -460,47 +465,194 @@ class CalendarApp {
     }
 
     // ═══════════════════════════════════════════
+    //  COURSE CATALOG
+    // ═══════════════════════════════════════════
+    _populatePrefixes() {
+        const select = this.els.coursePrefix;
+        if (!select || typeof COURSE_CATALOG === 'undefined') return;
+        const prefixes = [...new Set(COURSE_CATALOG.map(c => c.code.replace(/\s+\d+.*$/, '')))].sort();
+        for (const p of prefixes) {
+            const opt = document.createElement('option');
+            opt.value = p;
+            opt.textContent = p;
+            select.appendChild(opt);
+        }
+    }
+
+    _filterCatalogCourses() {
+        const prefix = this.els.coursePrefix.value;
+        const list = this.els.courseCatalogList;
+        list.innerHTML = '';
+        if (!prefix || typeof COURSE_CATALOG === 'undefined') return;
+
+        const matches = COURSE_CATALOG.filter(c => c.code.startsWith(prefix));
+        if (matches.length === 0) {
+            list.innerHTML = '<p style="color:#888;font-size:0.8rem;">No courses found for this prefix.</p>';
+            return;
+        }
+
+        for (const c of matches) {
+            const sections = c.sections || [{ section: '', days: [], startTime: '', endTime: '', location: '' }];
+            for (const s of sections) {
+                const label = s.section
+                    ? `${c.code}-${s.section} — ${this._daysToString(s.days || [])} ${s.startTime}-${s.endTime}`
+                    : `${c.code} — ${this._daysToString(s.days || [])} ${s.startTime}-${s.endTime}`;
+                const div = document.createElement('div');
+                div.className = 'catalog-item';
+                div.innerHTML = `<label><input type="radio" name="catalog-course" data-code="${c.code}" data-section="${s.section||''}" data-has-labs="${c.labs ? '1' : '0'}"> ${label}</label>`;
+                list.appendChild(div);
+
+        // Listen for radio changes to show/hide lab selector
+        list.querySelectorAll('input[name="catalog-course"]').forEach(radio => {
+            radio.addEventListener('change', () => this._onCatalogRadioChange());
+        });
+            }
+        }
+    }
+
+    _toggleManualEntry() {
+        this.els.courseManual.classList.toggle('hidden', !this.els.courseNotListed.checked);
+    }
+
+    _daysToString(days) {
+        const names = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+        return days.map(d => names[d]).join('/') || 'TBA';
+    }
+
+    _openCourseModal() {
+        this.els.coursePrefix.value = '';
+        this.els.courseCatalogList.innerHTML = '';
+        this.els.courseLabSection.classList.add('hidden');
+        this.els.courseLabSelect.innerHTML = '';
+        this.els.courseNotListed.checked = false;
+        this.els.courseManual.classList.add('hidden');
+        this.els.courseCode.value = '';
+        this.els.courseName.value = '';
+        this.els.courseCredits.value = '3';
+        this.els.courseMode.value = 'lecture';
+        this.els.courseLocation.value = '';
+        this.els.courseStart.value = '09:00';
+        this.els.courseEnd.value = '09:50';
+        this.els.courseDays.value = 'MWF';
+        document.querySelector('input[name="c-difficulty"][value="medium"]').checked = true;
+        this.els.courseModal.classList.remove('hidden');
+        this.els.coursePrefix.focus();
+    }
+
+    _closeCourseModal() {
+        this.els.courseModal.classList.add('hidden');
+    }
+
+    _getSelectedCatalogCourse() {
+        const checked = this.els.courseCatalogList.querySelector('input[name="catalog-course"]:checked');
+        if (!checked) return null;
+        const code = checked.dataset.code;
+        const sectionId = checked.dataset.section;
+        const course = COURSE_CATALOG.find(c => c.code === code);
+        if (!course) return null;
+        const section = (course.sections || []).find(s => s.section === sectionId) ||
+                        { section: '', days: course.days, startTime: course.startTime, endTime: course.endTime, location: course.location };
+
+        // Also get selected lab section if applicable
+        let labSection = null;
+        if (course.labs && course.labs.length > 0) {
+            const labVal = this.els.courseLabSelect.value;
+            labSection = course.labs.find(l => l.section === labVal) || null;
+        }
+
+        return { course, section, labSection };
+    }
+
+    _onCatalogRadioChange() {
+        const checked = this.els.courseCatalogList.querySelector('input[name="catalog-course"]:checked');
+        const hasLabs = checked && checked.dataset.hasLabs === '1';
+        this.els.courseLabSection.classList.toggle('hidden', !hasLabs);
+
+        if (hasLabs) {
+            const code = checked.dataset.code;
+            const course = COURSE_CATALOG.find(c => c.code === code);
+            const select = this.els.courseLabSelect;
+            select.innerHTML = '';
+            if (course && course.labs) {
+                for (const lab of course.labs) {
+                    const opt = document.createElement('option');
+                    opt.value = lab.section;
+                    opt.textContent = `Lab ${lab.section} — ${this._daysToString(lab.days)} ${lab.startTime}-${lab.endTime}`;
+                    select.appendChild(opt);
+                }
+            }
+        }
+    }
+
+    // ═══════════════════════════════════════════
     //  COURSE MANAGEMENT
     // ═══════════════════════════════════════════
     _addCourse() {
-        const code = this.els.courseCode.value.trim();
-        const name = this.els.courseName.value.trim();
-        if (!code || !name) return;
+        const difficulty = document.querySelector('input[name="c-difficulty"]:checked')?.value || 'medium';
+        let code, name, credits, mode, days, startTime, endTime, location;
 
-        const daysStr = this.els.courseDays.value;
-        const startTime = this.els.courseStart.value;
-        const endTime = this.els.courseEnd.value;
-        const location = this.els.courseLocation.value.trim();
-        const difficulty = document.querySelector('input[name="difficulty"]:checked')?.value || 'medium';
-        const credits = parseInt(this.els.courseCredits.value) || 3;
-        const mode = this.els.courseMode.value || 'lecture';
+        const catalog = this._getSelectedCatalogCourse();
+        if (catalog && !this.els.courseNotListed.checked) {
+            // Check if a lab is required but not selected
+            if (catalog.course.labs && catalog.course.labs.length > 0 && !catalog.labSection) {
+                alert('This course requires a lab section. Please select one from the dropdown.');
+                return;
+            }
+            // From catalog
+            code = catalog.course.code;
+            name = catalog.course.name;
+            credits = catalog.course.credits;
+            mode = catalog.course.mode || 'lecture';
+            days = catalog.section.days || [];
+            startTime = catalog.section.startTime;
+            endTime = catalog.section.endTime;
+            location = catalog.section.location || '';
+        } else {
+            // Manual entry
+            code = this.els.courseCode.value.trim();
+            name = this.els.courseName.value.trim();
+            if (!code || !name) return;
+            credits = parseInt(this.els.courseCredits.value) || 3;
+            mode = this.els.courseMode.value || 'lecture';
+            days = this._parseDays(this.els.courseDays.value);
+            startTime = this.els.courseStart.value;
+            endTime = this.els.courseEnd.value;
+            location = this.els.courseLocation.value.trim();
+        }
 
         const course = {
             id: ++this.eventIdCounter,
-            code,
-            name,
-            days: this._parseDays(daysStr),
-            startTime,
-            endTime,
+            code, name, days, startTime, endTime,
             startHour: this._timeToDecimal(startTime),
             endHour: this._timeToDecimal(endTime),
-            location,
-            difficulty,
-            credits,
-            mode,
+            location, difficulty, credits, mode,
         };
 
         this.courses.push(course);
         this._scheduleCourse(course);
-        this._renderAll();
 
-        // Clear form
-        this.els.courseCode.value = '';
-        this.els.courseName.value = '';
-        this.els.courseLocation.value = '';
-        this.els.courseCredits.value = '3';
-        this.els.courseMode.value = 'lecture';
-        this.els.courseCode.focus();
+        // If a lab section was selected, schedule that too
+        if (catalog && catalog.labSection) {
+            const labCourse = {
+                id: ++this.eventIdCounter,
+                code: catalog.course.code + ' Lab',
+                name: catalog.course.name + ' Lab',
+                days: catalog.labSection.days,
+                startTime: catalog.labSection.startTime,
+                endTime: catalog.labSection.endTime,
+                startHour: this._timeToDecimal(catalog.labSection.startTime),
+                endHour: this._timeToDecimal(catalog.labSection.endTime),
+                location: catalog.labSection.location || '',
+                difficulty,
+                credits: catalog.course.labCredits || 1,
+                mode: 'lab',
+            };
+            this.courses.push(labCourse);
+            this._scheduleCourse(labCourse);
+        }
+
+        this._closeCourseModal();
+        this._renderAll();
     }
 
     _scheduleCourse(course) {
@@ -555,20 +707,31 @@ class CalendarApp {
         this._renderAll();
     }
 
+    _getDeptClass(code) {
+        const prefix = (code || '').split(' ')[0].toUpperCase();
+        const deptMap = {
+            'BIO': 'dept-bioeng', 'CHE': 'dept-che', 'CE': 'dept-ce',
+            'ENGR': 'dept-engr', 'ME': 'dept-me', 'MSE': 'dept-mse',
+            'CPT_S': 'dept-cpts', 'E_E': 'dept-ee', 'MATH': 'dept-math',
+            'PHYSICS': 'dept-physics', 'CHEM': 'dept-chem'
+        };
+        return deptMap[prefix] || 'dept-default';
+    }
+
     _renderCourseList() {
         if (this.courses.length === 0) {
             this.els.courseList.innerHTML = '<p style="color:#777;font-size:0.8rem;text-align:center;padding:10px;">No courses added yet</p>';
             return;
         }
 
-        const modeLabels = { lecture: '📖', lab: '🔬', studio: '🎨' };
+        const modeLabels = { lecture: 'Lec', lab: 'Lab', studio: 'Stu' };
 
         let html = '';
         for (const c of this.courses) {
             const modeLabel = modeLabels[c.mode] || '';
             const creditsStr = (c.credits || 3) + 'cr';
             html += `
-                <div class="course-item ${c.difficulty}">
+                <div class="course-item ${this._getDeptClass(c.code)}">
                     <div class="course-info">
                         <div class="course-code">${this._escHtml(c.code)}</div>
                         <div class="course-meta">${modeLabel} ${creditsStr} · ${this._escHtml(c.name)} · ${c.startTime}–${c.endTime}</div>
@@ -658,7 +821,7 @@ class CalendarApp {
 
             // Locked events (scheduled from courses) can't be dragged or resized
             if (ev.locked) {
-                e.preventDefault(); // suppress click so new-event modal doesn't open
+                e.preventDefault();
                 this._showLockToast(eventBlock);
                 return;
             }
@@ -746,13 +909,14 @@ class CalendarApp {
     _onDragEnd(e) {
         if (!this.dragState.active) return;
 
-        // Remove dragging class
         const block = this.els.eventsLayer.querySelector(`[data-event-id="${this.dragState.eventId}"]`);
         if (block) block.classList.remove('dragging');
 
+        const didMove = this._dragMoved;
         this.dragState.active = false;
-        this._justDragged = this._dragMoved;
-        this._renderEvents();
+        this._justDragged = didMove;
+        // Only re-render if the drag actually moved something
+        if (didMove) this._renderEvents();
     }
 
     _mouseToGrid(e) {
@@ -776,15 +940,13 @@ class CalendarApp {
         this._modalTrigger = document.activeElement;
         this._editingEventId = null;
         const startH = Math.floor(hour);
-        const startM = Math.round((hour - startH) * 60);
         const endH = startH + 1;
-        const endM = startM;
 
         this.els.modalTitle.textContent = 'New Event';
         this.els.eventTitle.value = '';
         this.els.eventType.value = 'study';
-        this.els.eventStart.value = this._decimalToTimeString(startH + startM / 60);
-        this.els.eventEnd.value = this._decimalToTimeString(endH + endM / 60);
+        this.els.eventStart.value = this._decimalToTimeString(startH);
+        this.els.eventEnd.value = this._decimalToTimeString(endH);
         this.els.eventLocation.value = '';
         this.els.eventNotes.value = '';
         this.els.deleteEventBtn.classList.add('hidden');
@@ -794,6 +956,8 @@ class CalendarApp {
         this.els.eventTitle.disabled = false;
 
         this._pendingDay = day;
+        const notice = this.els.modal.querySelector('.modal-lock-notice');
+        if (notice) notice.style.display = 'none';
         this.els.modal.classList.remove('hidden');
         this.els.eventTitle.focus();
     }
@@ -823,6 +987,8 @@ class CalendarApp {
         this.els.eventTitle.disabled = ev.locked;
 
         this.els.modal.classList.remove('hidden');
+        const notice = this.els.modal.querySelector('.modal-lock-notice');
+        if (notice) notice.style.display = ev.locked ? 'block' : 'none';
         this.els.eventTitle.focus();
     }
 
@@ -1224,6 +1390,43 @@ class CalendarApp {
     // ═══════════════════════════════════════════
     //  EXPORT / IMPORT
     // ═══════════════════════════════════════════
+    _preparePrint() {
+        const el = document.getElementById('print-wellness');
+        if (!el) return;
+
+        // Quick wellness summary
+        const totalCredits = this.courses.reduce((s, c) => s + (c.credits || 3), 0);
+        let workH = 0, mealH = 0, sleepH = 0, studyH = 0, classH = 0, freeH = 0;
+        for (const ev of this.events) {
+            const d = ev.endHour - ev.startHour;
+            if (ev.type === 'work') workH += d;
+            if (ev.type === 'meal') mealH += d;
+            if (ev.type === 'sleep') sleepH += d;
+            if (ev.type === 'study' || ev.type === 'office') studyH += d;
+            if (ev.type === 'class') classH += d;
+            if (ev.type === 'free') freeH += d;
+        }
+
+        // Conflicts
+        let conflicts = 0;
+        for (let i = 0; i < this.events.length; i++)
+            for (let j = i + 1; j < this.events.length; j++)
+                if (this.events[i].day === this.events[j].day && this.events[i].startHour < this.events[j].endHour && this.events[j].startHour < this.events[i].endHour)
+                    conflicts++;
+
+        el.innerHTML = `
+            <strong>Courses:</strong> ${this.courses.length} (${totalCredits}cr) &nbsp;|&nbsp;
+            <strong>Class:</strong> ${classH.toFixed(0)}h &nbsp;|&nbsp;
+            <strong>Study:</strong> ${studyH.toFixed(0)}h &nbsp;|&nbsp;
+            <strong>Work:</strong> ${workH.toFixed(0)}h &nbsp;|&nbsp;
+            <strong>Sleep:</strong> ${sleepH.toFixed(0)}h &nbsp;|&nbsp;
+            <strong>Meals:</strong> ${mealH.toFixed(0)}h &nbsp;|&nbsp;
+            <strong>Free:</strong> ${freeH.toFixed(0)}h
+            ${conflicts > 0 ? ` &nbsp;|&nbsp; <span style="color:#991B1B;">⚠ ${conflicts} conflict(s)</span>` : ''}
+            &nbsp;|&nbsp; <em>☐ = check off as completed</em>
+        `;
+    }
+
     _exportData() {
         const data = {
             version: 1,
