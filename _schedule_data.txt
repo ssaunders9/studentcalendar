@@ -447,3 +447,48 @@ BIOLOGY SUMMARY
 ================================================================================
 All biology labs are single ~2h50m blocks — NO same-day splits.
 Flat dict format with days array is correct.
+
+
+================================================================================
+BIO_ENG — Pullman Fall 2026
+================================================================================
+BIO_ENG 140 Introduction to Bioengineering — F 4:10-5:00 SEH 210 ✅
+BIO_ENG 201 Chemical Process Principles — MWF 3:10-4:00 WEGN G0001 ✅
+BIO_ENG 210 Bioengineering Problem Solving — MWF 11:10-12:00 WEGN 205 ✅
+BIO_ENG 305 Bioengineering Ethics — MWF 10:10-11:00 WEGN 205 ✅
+BIO_ENG 310 Bioengineering Transport — MWF 3:10-4:00 WEGN G070C ✅
+BIO_ENG 315 Thermodynamics/Kinetics — TU,TH 12:05-1:20 WEGN 205 ✅
+BIO_ENG 410/420/430/475/476 — NOT ADDED (400-level)
+
+All single meetings, no splits. Flat format correct.
+Existing 6 courses verified against schedule — all match.
+
+================================================================================
+CHE — Pullman Fall 2026
+================================================================================
+CHE 101 Overview of Chemical Engineering — F 4:10-5:00 WEGN G0001 ✅
+CHE 201 Chemical Process Principles — MWF 3:10-4:00 WEGN G0001 ✅
+CHE 211 Process Simulation — MWF 11:10-12:00 WEGN G070C ✅
+CHE 301 Chemical Engineering Thermodynamics — MWF 9:10-10:00 WEGN G0001 ✅
+CHE 310 Introduction to Transport Processes — MWF 3:10-4:00 CUE 219 ✅
+
+All single meetings, no splits. Flat format correct.
+All verified against schedule.
+
+================================================================================
+CE — Pullman Fall 2026
+================================================================================
+CE 211 Statics — Sec 01 MWF 10:10-11:00 SEH G0005, Sec 02 MWF 10:10-11:00 TODD 411 ✅
+CE 215 Mechanics of Materials — Sec 01 MWF 2:10-3:00 SEH G0005, Sec 02 MWF 2:10-3:00 SPRK 235 ✅
+CE 302 Introduction to Surveying — M 12:10-1:00 CLEV 30 + 4 lab sections ✅
+CE 315 Fluid Mechanics — MWF 1:10-2:00 SLOA 169 ✅
+CE 317 Geotechnical Engineering I — MWF 10:10-11:00 COLL 125 + 3 lab sections ✅
+CE 322 Transportation Engineering — TU,TH 9:10-10:25 SLOA 167 ✅
+CE 330 Introduction to Structural Engineering — TU,TH 1:30-2:45 TODD 307 ✅
+CE 341 Introduction to Environmental Engineering — MWF 11:10-12:00 SLOA 169 ✅
+CE 351 Water Resources Engineering — MWF 1:10-2:00 SLOA 9 ✅
+
+CE 320/321/400 — NOT ADDED (400-level or not in original catalog)
+
+All single meetings, no same-day splits. Labs are on different days from lectures.
+Flat format correct. All verified against schedule.

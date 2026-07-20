@@ -90,6 +90,7 @@ add('ME 212','Dynamics',3,'lecture',[{'section':'01','days':[0,2,4],'startTime':
 add('ME 216','Integrated CAD Design',3,'lab',[{'section':'02','days':[1,3],'startTime':'08:10','endTime':'11:00','location':'ETRL 249'},{'section':'03','days':[1,3],'startTime':'14:55','endTime':'17:45','location':'ETRL 249'}])
 add('ME 220','Materials Laboratory',2,'lecture',[{'section':'01','days':[0],'startTime':'16:10','endTime':'17:00','location':'SEH G0005'}],
     labs=[{'section':'01','days':[1],'startTime':'07:45','endTime':'10:35','location':'SEH G0005'},{'section':'02','days':[1],'startTime':'14:55','endTime':'17:45','location':'SEH G0005'},{'section':'03','days':[3],'startTime':'14:55','endTime':'17:45','location':'SEH G0005'},{'section':'04','days':[3],'startTime':'12:05','endTime':'14:55','location':'SEH G0005'},{'section':'05','days':[1],'startTime':'12:05','endTime':'14:55','location':'SEH G0005'}])
+add('ME 241','Engineering Computations',3,'lecture',[{'section':'01','meetings':[{'days':[0,4],'startTime':'15:10','endTime':'16:00','location':'SEH G0005'},{'days':[2],'startTime':'15:10','endTime':'18:00','location':'SEH G0005'}]}])
 add('ME 301','Fundamentals of Thermodynamics',3,'lecture',[{'section':'01','days':[0,2,4],'startTime':'13:10','endTime':'14:00','location':'SEH G0005'}])
 add('ME 303','Fluid Mechanics',3,'lecture',[{'section':'01','days':[0,2,4],'startTime':'10:10','endTime':'11:00','location':'GTZN 21'}])
 add('ME 304','Heat Transfer',3,'lecture',[{'section':'01','days':[0,2,4],'startTime':'12:10','endTime':'13:00','location':'SLOA 175'}])

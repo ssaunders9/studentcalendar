@@ -1523,6 +1523,36 @@ const COURSE_CATALOG = [
     "labCredits": 1
   },
   {
+    "code": "ME 241",
+    "name": "Engineering Computations",
+    "credits": 3,
+    "mode": "lecture",
+    "sections": [
+      {
+        "section": "01",
+        "meetings": [
+          {
+            "days": [
+              0,
+              4
+            ],
+            "startTime": "15:10",
+            "endTime": "16:00",
+            "location": "SEH G0005"
+          },
+          {
+            "days": [
+              2
+            ],
+            "startTime": "15:10",
+            "endTime": "18:00",
+            "location": "SEH G0005"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "code": "ME 301",
     "name": "Fundamentals of Thermodynamics",
     "credits": 3,
