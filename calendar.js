@@ -1513,6 +1513,17 @@ class CalendarApp {
             if (fh < 1.5) lowFreeDays++;
         }
 
+        // Marathon study check — any study/office block >2h
+        let marathon = false;
+        for (const ev of this.events) {
+            if ((ev.type === 'study' || ev.type === 'office') && (ev.endHour - ev.startHour) > 2) {
+                marathon = true; break;
+            }
+        }
+
+        // Busy hours check
+        const busyHours = classH + workH + studyH;
+
         let conflicts = 0;
         for (let i = 0; i < this.events.length; i++)
             for (let j = i + 1; j < this.events.length; j++)
@@ -1526,17 +1537,22 @@ class CalendarApp {
             `<strong>Work:</strong> ${workH.toFixed(0)}h`,
             `<strong>Sleep:</strong> ${sleepH.toFixed(0)}h`,
             `<strong>Meals:</strong> ${mealH.toFixed(0)}h`,
-            `<strong>Free:</strong> ${freeH.toFixed(0)}h`,
             `<strong>Exercise:</strong> ${exerciseH.toFixed(0)}h`,
             `<strong>Clubs:</strong> ${clubH.toFixed(0)}h`,
-            mealH < 10 ? '<span style="color:#991B1B;">⚠ Meals &lt;10h</span>' : '<span style="color:#2E7D32;">✓ Meals</span>',
-            sleepH < 49 ? '<span style="color:#991B1B;">⚠ Sleep &lt;7h/d</span>' : '<span style="color:#2E7D32;">✓ Sleep</span>',
-            studyH < totalCredits * 1.5 ? '<span style="color:#991B1B;">⚠ Study low</span>' : '<span style="color:#2E7D32;">✓ Study</span>',
+            `<strong>Self-care:</strong> ${careH.toFixed(0)}h`,
+            `<strong>Free:</strong> ${freeH.toFixed(0)}h`,
+            mealH < 10 ? '<span style="color:#991B1B;">⚠ Meals</span>' : '<span style="color:#2E7D32;">✓ Meals</span>',
+            sleepH < 49 ? '<span style="color:#991B1B;">⚠ Sleep</span>' : '<span style="color:#2E7D32;">✓ Sleep</span>',
+            studyH < totalCredits * 1.5 ? '<span style="color:#991B1B;">⚠ Study</span>' : '<span style="color:#2E7D32;">✓ Study</span>',
             this.workSettings.active && workH > 20 ? '<span style="color:#991B1B;">⚠ Work &gt;20h</span>' : '',
-            exerciseH < 2 ? '<span style="color:#991B1B;">⚠ Exercise &lt;2h</span>' : '<span style="color:#2E7D32;">✓ Exercise</span>',
-            clubH < 3 ? '<span style="color:#991B1B;">⚠ Clubs &lt;3h</span>' : '<span style="color:#2E7D32;">✓ Clubs</span>',
-            lateNight.length > 0 ? `<span style="color:#991B1B;">⚠ Late study</span>` : '<span style="color:#2E7D32;">✓ No late nights</span>',
-            lowFreeDays >= 3 ? '<span style="color:#991B1B;">⚠ Low free time</span>' : '<span style="color:#2E7D32;">✓ Free time</span>',
+            totalCredits > 18 ? '<span style="color:#991B1B;">⚠ Credits &gt;18</span>' : '',
+            busyHours > 55 ? '<span style="color:#991B1B;">⚠ Overloaded</span>' : '',
+            exerciseH < 2 ? '<span style="color:#991B1B;">⚠ Exercise</span>' : '<span style="color:#2E7D32;">✓ Exercise</span>',
+            clubH < 3 ? '<span style="color:#991B1B;">⚠ Clubs</span>' : '<span style="color:#2E7D32;">✓ Clubs</span>',
+            careH < 3.5 ? '<span style="color:#991B1B;">⚠ Self-care</span>' : '<span style="color:#2E7D32;">✓ Self-care</span>',
+            lateNight.length > 0 ? '<span style="color:#991B1B;">⚠ Late study</span>' : '<span style="color:#2E7D32;">✓ No lates</span>',
+            marathon ? '<span style="color:#991B1B;">⚠ Marathon</span>' : '<span style="color:#2E7D32;">✓ Paced</span>',
+            lowFreeDays >= 3 ? '<span style="color:#991B1B;">⚠ Free time</span>' : '<span style="color:#2E7D32;">✓ Free time</span>',
             conflicts > 0 ? `<span style="color:#991B1B;">⚠ ${conflicts} conflicts</span>` : '<span style="color:#2E7D32;">✓ No conflicts</span>',
         ].filter(Boolean).join(' &nbsp;|&nbsp; ') + ' &nbsp;|&nbsp; <em>☐ = done</em>';
 
