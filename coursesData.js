@@ -3268,138 +3268,318 @@ const COURSE_CATALOG = [
     "labs": [
       {
         "section": "01",
-        "days": [
-          1
-        ],
-        "startTime": "08:10",
-        "endTime": "11:00",
-        "location": "FLMA 225"
+        "meetings": [
+          {
+            "days": [
+              1
+            ],
+            "startTime": "08:10",
+            "endTime": "09:00",
+            "location": "FLMA 225"
+          },
+          {
+            "days": [
+              1
+            ],
+            "startTime": "09:10",
+            "endTime": "11:00",
+            "location": "FLMA 225"
+          }
+        ]
       },
       {
         "section": "02",
-        "days": [
-          1
-        ],
-        "startTime": "11:00",
-        "endTime": "13:50",
-        "location": "COLL 135"
+        "meetings": [
+          {
+            "days": [
+              1
+            ],
+            "startTime": "11:00",
+            "endTime": "11:50",
+            "location": "COLL 135"
+          },
+          {
+            "days": [
+              1
+            ],
+            "startTime": "12:00",
+            "endTime": "13:50",
+            "location": "COLL 135"
+          }
+        ]
       },
       {
         "section": "03",
-        "days": [
-          1
-        ],
-        "startTime": "13:55",
-        "endTime": "16:45",
-        "location": "FLMA 225"
+        "meetings": [
+          {
+            "days": [
+              1
+            ],
+            "startTime": "13:55",
+            "endTime": "14:45",
+            "location": "FLMA 225"
+          },
+          {
+            "days": [
+              1
+            ],
+            "startTime": "14:55",
+            "endTime": "16:45",
+            "location": "FLMA 225"
+          }
+        ]
       },
       {
         "section": "04",
-        "days": [
-          1
-        ],
-        "startTime": "17:45",
-        "endTime": "20:35",
-        "location": "TODD 304"
+        "meetings": [
+          {
+            "days": [
+              1
+            ],
+            "startTime": "17:45",
+            "endTime": "18:35",
+            "location": "TODD 304"
+          },
+          {
+            "days": [
+              1
+            ],
+            "startTime": "18:45",
+            "endTime": "20:35",
+            "location": "TODD 304"
+          }
+        ]
       },
       {
         "section": "05",
-        "days": [
-          2
-        ],
-        "startTime": "14:10",
-        "endTime": "17:00",
-        "location": "CUE 412"
+        "meetings": [
+          {
+            "days": [
+              2
+            ],
+            "startTime": "14:10",
+            "endTime": "15:00",
+            "location": "CUE 412"
+          },
+          {
+            "days": [
+              2
+            ],
+            "startTime": "15:10",
+            "endTime": "17:00",
+            "location": "CUE 412"
+          }
+        ]
       },
       {
         "section": "06",
-        "days": [
-          2
-        ],
-        "startTime": "17:10",
-        "endTime": "20:00",
-        "location": "CUE 407"
+        "meetings": [
+          {
+            "days": [
+              2
+            ],
+            "startTime": "17:10",
+            "endTime": "18:00",
+            "location": "CUE 407"
+          },
+          {
+            "days": [
+              2
+            ],
+            "startTime": "18:10",
+            "endTime": "20:00",
+            "location": "CUE 407"
+          }
+        ]
       },
       {
         "section": "07",
-        "days": [
-          3
-        ],
-        "startTime": "11:00",
-        "endTime": "13:50",
-        "location": "CUE 407"
+        "meetings": [
+          {
+            "days": [
+              3
+            ],
+            "startTime": "11:00",
+            "endTime": "11:50",
+            "location": "CUE 407"
+          },
+          {
+            "days": [
+              3
+            ],
+            "startTime": "12:00",
+            "endTime": "13:50",
+            "location": "CUE 407"
+          }
+        ]
       },
       {
         "section": "08",
-        "days": [
-          3
-        ],
-        "startTime": "11:00",
-        "endTime": "13:50",
-        "location": "COLL 135"
+        "meetings": [
+          {
+            "days": [
+              3
+            ],
+            "startTime": "11:00",
+            "endTime": "11:50",
+            "location": "COLL 135"
+          },
+          {
+            "days": [
+              3
+            ],
+            "startTime": "12:00",
+            "endTime": "13:50",
+            "location": "COLL 135"
+          }
+        ]
       },
       {
         "section": "09",
-        "days": [
-          3
-        ],
-        "startTime": "13:55",
-        "endTime": "16:45",
-        "location": "CUE 412"
+        "meetings": [
+          {
+            "days": [
+              3
+            ],
+            "startTime": "13:55",
+            "endTime": "14:45",
+            "location": "CUE 412"
+          },
+          {
+            "days": [
+              3
+            ],
+            "startTime": "14:55",
+            "endTime": "16:45",
+            "location": "CUE 412"
+          }
+        ]
       },
       {
         "section": "12",
-        "days": [
-          1
-        ],
-        "startTime": "13:55",
-        "endTime": "16:45",
-        "location": "TROY G0005"
+        "meetings": [
+          {
+            "days": [
+              1
+            ],
+            "startTime": "13:55",
+            "endTime": "14:45",
+            "location": "TROY G0005"
+          },
+          {
+            "days": [
+              1
+            ],
+            "startTime": "14:55",
+            "endTime": "16:45",
+            "location": "TROY G0005"
+          }
+        ]
       },
       {
         "section": "13",
-        "days": [
-          1
-        ],
-        "startTime": "17:45",
-        "endTime": "20:35",
-        "location": "TODD 211"
+        "meetings": [
+          {
+            "days": [
+              1
+            ],
+            "startTime": "17:45",
+            "endTime": "18:35",
+            "location": "TODD 211"
+          },
+          {
+            "days": [
+              1
+            ],
+            "startTime": "18:45",
+            "endTime": "20:35",
+            "location": "TODD 211"
+          }
+        ]
       },
       {
         "section": "14",
-        "days": [
-          2
-        ],
-        "startTime": "14:10",
-        "endTime": "17:00",
-        "location": "CUE 216"
+        "meetings": [
+          {
+            "days": [
+              2
+            ],
+            "startTime": "14:10",
+            "endTime": "15:00",
+            "location": "CUE 216"
+          },
+          {
+            "days": [
+              2
+            ],
+            "startTime": "15:10",
+            "endTime": "17:00",
+            "location": "CUE 216"
+          }
+        ]
       },
       {
         "section": "15",
-        "days": [
-          2
-        ],
-        "startTime": "17:10",
-        "endTime": "20:00",
-        "location": "CUE 416"
+        "meetings": [
+          {
+            "days": [
+              2
+            ],
+            "startTime": "17:10",
+            "endTime": "18:00",
+            "location": "CUE 416"
+          },
+          {
+            "days": [
+              2
+            ],
+            "startTime": "18:10",
+            "endTime": "20:00",
+            "location": "CUE 416"
+          }
+        ]
       },
       {
         "section": "18",
-        "days": [
-          3
-        ],
-        "startTime": "13:55",
-        "endTime": "16:45",
-        "location": "SLOA 163"
+        "meetings": [
+          {
+            "days": [
+              3
+            ],
+            "startTime": "13:55",
+            "endTime": "14:45",
+            "location": "SLOA 163"
+          },
+          {
+            "days": [
+              3
+            ],
+            "startTime": "14:55",
+            "endTime": "16:45",
+            "location": "SLOA 163"
+          }
+        ]
       },
       {
         "section": "19",
-        "days": [
-          1
-        ],
-        "startTime": "11:00",
-        "endTime": "13:50",
-        "location": "CUE 409"
+        "meetings": [
+          {
+            "days": [
+              1
+            ],
+            "startTime": "11:00",
+            "endTime": "11:50",
+            "location": "CUE 409"
+          },
+          {
+            "days": [
+              1
+            ],
+            "startTime": "12:00",
+            "endTime": "13:50",
+            "location": "CUE 409"
+          }
+        ]
       }
     ],
     "labCredits": 1
@@ -3425,111 +3605,255 @@ const COURSE_CATALOG = [
     "labs": [
       {
         "section": "01",
-        "days": [
-          0
-        ],
-        "startTime": "15:10",
-        "endTime": "17:00",
-        "location": "WEBS B0008"
+        "meetings": [
+          {
+            "days": [
+              0
+            ],
+            "startTime": "15:10",
+            "endTime": "16:00",
+            "location": "WEBS B0008"
+          },
+          {
+            "days": [
+              0
+            ],
+            "startTime": "16:10",
+            "endTime": "17:00",
+            "location": "WEBS B0008"
+          }
+        ]
       },
       {
         "section": "02",
-        "days": [
-          0
-        ],
-        "startTime": "15:10",
-        "endTime": "17:00",
-        "location": "TODD 202"
+        "meetings": [
+          {
+            "days": [
+              0
+            ],
+            "startTime": "15:10",
+            "endTime": "16:00",
+            "location": "TODD 202"
+          },
+          {
+            "days": [
+              0
+            ],
+            "startTime": "16:10",
+            "endTime": "17:00",
+            "location": "TODD 202"
+          }
+        ]
       },
       {
         "section": "03",
-        "days": [
-          0
-        ],
-        "startTime": "16:10",
-        "endTime": "18:00",
-        "location": "CUE 216"
+        "meetings": [
+          {
+            "days": [
+              0
+            ],
+            "startTime": "16:10",
+            "endTime": "17:00",
+            "location": "CUE 216"
+          },
+          {
+            "days": [
+              0
+            ],
+            "startTime": "17:10",
+            "endTime": "18:00",
+            "location": "CUE 216"
+          }
+        ]
       },
       {
         "section": "05",
-        "days": [
-          1
-        ],
-        "startTime": "13:30",
-        "endTime": "15:20",
-        "location": "MURR 229"
+        "meetings": [
+          {
+            "days": [
+              1
+            ],
+            "startTime": "13:30",
+            "endTime": "14:20",
+            "location": "MURR 229"
+          },
+          {
+            "days": [
+              1
+            ],
+            "startTime": "14:30",
+            "endTime": "15:20",
+            "location": "MURR 229"
+          }
+        ]
       },
       {
         "section": "06",
-        "days": [
-          1
-        ],
-        "startTime": "14:55",
-        "endTime": "16:45",
-        "location": "CUE 216"
+        "meetings": [
+          {
+            "days": [
+              1
+            ],
+            "startTime": "14:55",
+            "endTime": "15:45",
+            "location": "CUE 216"
+          },
+          {
+            "days": [
+              1
+            ],
+            "startTime": "15:55",
+            "endTime": "16:45",
+            "location": "CUE 216"
+          }
+        ]
       },
       {
         "section": "07",
-        "days": [
-          3
-        ],
-        "startTime": "16:20",
-        "endTime": "18:10",
-        "location": "TODD 202"
+        "meetings": [
+          {
+            "days": [
+              3
+            ],
+            "startTime": "16:20",
+            "endTime": "17:10",
+            "location": "TODD 202"
+          },
+          {
+            "days": [
+              3
+            ],
+            "startTime": "17:20",
+            "endTime": "18:10",
+            "location": "TODD 202"
+          }
+        ]
       },
       {
         "section": "08",
-        "days": [
-          1
-        ],
-        "startTime": "16:20",
-        "endTime": "18:10",
-        "location": "WEBS B0008"
+        "meetings": [
+          {
+            "days": [
+              1
+            ],
+            "startTime": "16:20",
+            "endTime": "17:10",
+            "location": "WEBS B0008"
+          },
+          {
+            "days": [
+              1
+            ],
+            "startTime": "17:20",
+            "endTime": "18:10",
+            "location": "WEBS B0008"
+          }
+        ]
       },
       {
         "section": "09",
-        "days": [
-          2
-        ],
-        "startTime": "15:10",
-        "endTime": "17:00",
-        "location": "CUE 412"
+        "meetings": [
+          {
+            "days": [
+              2
+            ],
+            "startTime": "15:10",
+            "endTime": "16:00",
+            "location": "CUE 412"
+          },
+          {
+            "days": [
+              2
+            ],
+            "startTime": "16:10",
+            "endTime": "17:00",
+            "location": "CUE 412"
+          }
+        ]
       },
       {
         "section": "10",
-        "days": [
-          2
-        ],
-        "startTime": "16:10",
-        "endTime": "18:00",
-        "location": "CUE 218"
+        "meetings": [
+          {
+            "days": [
+              2
+            ],
+            "startTime": "16:10",
+            "endTime": "17:00",
+            "location": "CUE 218"
+          },
+          {
+            "days": [
+              2
+            ],
+            "startTime": "17:10",
+            "endTime": "18:00",
+            "location": "CUE 218"
+          }
+        ]
       },
       {
         "section": "12",
-        "days": [
-          3
-        ],
-        "startTime": "14:55",
-        "endTime": "16:45",
-        "location": "WEBS B0008"
+        "meetings": [
+          {
+            "days": [
+              3
+            ],
+            "startTime": "14:55",
+            "endTime": "15:45",
+            "location": "WEBS B0008"
+          },
+          {
+            "days": [
+              3
+            ],
+            "startTime": "15:55",
+            "endTime": "16:45",
+            "location": "WEBS B0008"
+          }
+        ]
       },
       {
         "section": "13",
-        "days": [
-          3
-        ],
-        "startTime": "16:20",
-        "endTime": "18:10",
-        "location": "TODD 304"
+        "meetings": [
+          {
+            "days": [
+              3
+            ],
+            "startTime": "16:20",
+            "endTime": "17:10",
+            "location": "TODD 304"
+          },
+          {
+            "days": [
+              3
+            ],
+            "startTime": "17:20",
+            "endTime": "18:10",
+            "location": "TODD 304"
+          }
+        ]
       },
       {
         "section": "16",
-        "days": [
-          0
-        ],
-        "startTime": "17:10",
-        "endTime": "19:00",
-        "location": "CUE 218"
+        "meetings": [
+          {
+            "days": [
+              0
+            ],
+            "startTime": "17:10",
+            "endTime": "18:00",
+            "location": "CUE 218"
+          },
+          {
+            "days": [
+              0
+            ],
+            "startTime": "18:10",
+            "endTime": "19:00",
+            "location": "CUE 218"
+          }
+        ]
       }
     ],
     "labCredits": 1
@@ -3566,186 +3890,418 @@ const COURSE_CATALOG = [
     "labs": [
       {
         "section": "01",
-        "days": [
-          1
-        ],
-        "startTime": "08:45",
-        "endTime": "11:35",
-        "location": "AVER 8"
+        "meetings": [
+          {
+            "days": [
+              1
+            ],
+            "startTime": "08:45",
+            "endTime": "09:35",
+            "location": "AVER 8"
+          },
+          {
+            "days": [
+              1
+            ],
+            "startTime": "09:45",
+            "endTime": "11:35",
+            "location": "AVER 8"
+          }
+        ]
       },
       {
         "section": "02",
-        "days": [
-          1
-        ],
-        "startTime": "08:45",
-        "endTime": "11:35",
-        "location": "CUE 216"
+        "meetings": [
+          {
+            "days": [
+              1
+            ],
+            "startTime": "08:45",
+            "endTime": "09:35",
+            "location": "CUE 216"
+          },
+          {
+            "days": [
+              1
+            ],
+            "startTime": "09:45",
+            "endTime": "11:35",
+            "location": "CUE 216"
+          }
+        ]
       },
       {
         "section": "03",
-        "days": [
-          1
-        ],
-        "startTime": "08:45",
-        "endTime": "11:35",
-        "location": "CUE 412"
+        "meetings": [
+          {
+            "days": [
+              1
+            ],
+            "startTime": "08:45",
+            "endTime": "09:35",
+            "location": "CUE 412"
+          },
+          {
+            "days": [
+              1
+            ],
+            "startTime": "09:45",
+            "endTime": "11:35",
+            "location": "CUE 412"
+          }
+        ]
       },
       {
         "section": "04",
-        "days": [
-          1
-        ],
-        "startTime": "11:00",
-        "endTime": "13:50",
-        "location": "FLMA 225"
+        "meetings": [
+          {
+            "days": [
+              1
+            ],
+            "startTime": "11:00",
+            "endTime": "11:50",
+            "location": "FLMA 225"
+          },
+          {
+            "days": [
+              1
+            ],
+            "startTime": "12:00",
+            "endTime": "13:50",
+            "location": "FLMA 225"
+          }
+        ]
       },
       {
         "section": "05",
-        "days": [
-          1
-        ],
-        "startTime": "11:00",
-        "endTime": "13:50",
-        "location": "WEBS B0012"
+        "meetings": [
+          {
+            "days": [
+              1
+            ],
+            "startTime": "11:00",
+            "endTime": "11:50",
+            "location": "WEBS B0012"
+          },
+          {
+            "days": [
+              1
+            ],
+            "startTime": "12:00",
+            "endTime": "13:50",
+            "location": "WEBS B0012"
+          }
+        ]
       },
       {
         "section": "06",
-        "days": [
-          1
-        ],
-        "startTime": "11:00",
-        "endTime": "13:50",
-        "location": "AVER 12"
+        "meetings": [
+          {
+            "days": [
+              1
+            ],
+            "startTime": "11:00",
+            "endTime": "11:50",
+            "location": "AVER 12"
+          },
+          {
+            "days": [
+              1
+            ],
+            "startTime": "12:00",
+            "endTime": "13:50",
+            "location": "AVER 12"
+          }
+        ]
       },
       {
         "section": "07",
-        "days": [
-          2
-        ],
-        "startTime": "14:10",
-        "endTime": "17:00",
-        "location": "CUE 407"
+        "meetings": [
+          {
+            "days": [
+              2
+            ],
+            "startTime": "14:10",
+            "endTime": "15:00",
+            "location": "CUE 407"
+          },
+          {
+            "days": [
+              2
+            ],
+            "startTime": "15:10",
+            "endTime": "17:00",
+            "location": "CUE 407"
+          }
+        ]
       },
       {
         "section": "08",
-        "days": [
-          1
-        ],
-        "startTime": "13:55",
-        "endTime": "16:45",
-        "location": "MURR 242"
+        "meetings": [
+          {
+            "days": [
+              1
+            ],
+            "startTime": "13:55",
+            "endTime": "14:45",
+            "location": "MURR 242"
+          },
+          {
+            "days": [
+              1
+            ],
+            "startTime": "14:55",
+            "endTime": "16:45",
+            "location": "MURR 242"
+          }
+        ]
       },
       {
         "section": "09",
-        "days": [
-          1
-        ],
-        "startTime": "13:55",
-        "endTime": "16:45",
-        "location": "CUE 412"
+        "meetings": [
+          {
+            "days": [
+              1
+            ],
+            "startTime": "13:55",
+            "endTime": "14:45",
+            "location": "CUE 412"
+          },
+          {
+            "days": [
+              1
+            ],
+            "startTime": "14:55",
+            "endTime": "16:45",
+            "location": "CUE 412"
+          }
+        ]
       },
       {
         "section": "10",
-        "days": [
-          1
-        ],
-        "startTime": "13:55",
-        "endTime": "16:45",
-        "location": "AVER 8"
+        "meetings": [
+          {
+            "days": [
+              1
+            ],
+            "startTime": "13:55",
+            "endTime": "14:45",
+            "location": "AVER 8"
+          },
+          {
+            "days": [
+              1
+            ],
+            "startTime": "14:55",
+            "endTime": "16:45",
+            "location": "AVER 8"
+          }
+        ]
       },
       {
         "section": "11",
-        "days": [
-          2
-        ],
-        "startTime": "17:10",
-        "endTime": "20:00",
-        "location": "TODD 211"
+        "meetings": [
+          {
+            "days": [
+              2
+            ],
+            "startTime": "17:10",
+            "endTime": "18:00",
+            "location": "TODD 211"
+          },
+          {
+            "days": [
+              2
+            ],
+            "startTime": "18:10",
+            "endTime": "20:00",
+            "location": "TODD 211"
+          }
+        ]
       },
       {
         "section": "12",
-        "days": [
-          1
-        ],
-        "startTime": "17:45",
-        "endTime": "20:35",
-        "location": "TODD 202"
+        "meetings": [
+          {
+            "days": [
+              1
+            ],
+            "startTime": "17:45",
+            "endTime": "18:35",
+            "location": "TODD 202"
+          },
+          {
+            "days": [
+              1
+            ],
+            "startTime": "18:45",
+            "endTime": "20:35",
+            "location": "TODD 202"
+          }
+        ]
       },
       {
         "section": "13",
-        "days": [
-          1
-        ],
-        "startTime": "17:45",
-        "endTime": "20:35",
-        "location": "FLMA 150"
+        "meetings": [
+          {
+            "days": [
+              1
+            ],
+            "startTime": "17:45",
+            "endTime": "18:35",
+            "location": "FLMA 150"
+          },
+          {
+            "days": [
+              1
+            ],
+            "startTime": "18:45",
+            "endTime": "20:35",
+            "location": "FLMA 150"
+          }
+        ]
       },
       {
         "section": "14",
-        "days": [
-          1
-        ],
-        "startTime": "17:45",
-        "endTime": "20:35",
-        "location": "CUE 216"
+        "meetings": [
+          {
+            "days": [
+              1
+            ],
+            "startTime": "17:45",
+            "endTime": "18:35",
+            "location": "CUE 216"
+          },
+          {
+            "days": [
+              1
+            ],
+            "startTime": "18:45",
+            "endTime": "20:35",
+            "location": "CUE 216"
+          }
+        ]
       },
       {
         "section": "15",
-        "days": [
-          2
-        ],
-        "startTime": "14:10",
-        "endTime": "17:00",
-        "location": "AVER 104"
+        "meetings": [
+          {
+            "days": [
+              2
+            ],
+            "startTime": "14:10",
+            "endTime": "15:00",
+            "location": "AVER 104"
+          },
+          {
+            "days": [
+              2
+            ],
+            "startTime": "15:10",
+            "endTime": "17:00",
+            "location": "AVER 104"
+          }
+        ]
       },
       {
         "section": "16",
-        "days": [
-          2
-        ],
-        "startTime": "14:10",
-        "endTime": "17:00",
-        "location": "AVER 102"
+        "meetings": [
+          {
+            "days": [
+              2
+            ],
+            "startTime": "14:10",
+            "endTime": "15:00",
+            "location": "AVER 102"
+          },
+          {
+            "days": [
+              2
+            ],
+            "startTime": "15:10",
+            "endTime": "17:00",
+            "location": "AVER 102"
+          }
+        ]
       },
       {
         "section": "17",
-        "days": [
-          2
-        ],
-        "startTime": "17:10",
-        "endTime": "20:00",
-        "location": "TODD 304"
+        "meetings": [
+          {
+            "days": [
+              2
+            ],
+            "startTime": "17:10",
+            "endTime": "18:00",
+            "location": "TODD 304"
+          },
+          {
+            "days": [
+              2
+            ],
+            "startTime": "18:10",
+            "endTime": "20:00",
+            "location": "TODD 304"
+          }
+        ]
       },
       {
         "section": "19",
-        "days": [
-          3
-        ],
-        "startTime": "08:45",
-        "endTime": "11:35",
-        "location": "BRYN 406"
+        "meetings": [
+          {
+            "days": [
+              3
+            ],
+            "startTime": "08:45",
+            "endTime": "09:35",
+            "location": "BRYN 406"
+          },
+          {
+            "days": [
+              3
+            ],
+            "startTime": "09:45",
+            "endTime": "11:35",
+            "location": "BRYN 406"
+          }
+        ]
       },
       {
         "section": "20",
-        "days": [
-          3
-        ],
-        "startTime": "08:45",
-        "endTime": "11:35",
-        "location": "TODD 202"
+        "meetings": [
+          {
+            "days": [
+              3
+            ],
+            "startTime": "08:45",
+            "endTime": "09:35",
+            "location": "TODD 202"
+          },
+          {
+            "days": [
+              3
+            ],
+            "startTime": "09:45",
+            "endTime": "11:35",
+            "location": "TODD 202"
+          }
+        ]
       },
       {
         "section": "21",
         "meetings": [
           {
-            "days": [3],
+            "days": [
+              3
+            ],
             "startTime": "08:45",
             "endTime": "09:35",
             "location": "CUE 409"
           },
           {
-            "days": [3],
+            "days": [
+              3
+            ],
             "startTime": "09:45",
             "endTime": "11:35",
             "location": "CUE 409"
@@ -3754,93 +4310,213 @@ const COURSE_CATALOG = [
       },
       {
         "section": "22",
-        "days": [
-          3
-        ],
-        "startTime": "11:00",
-        "endTime": "13:50",
-        "location": "FLMA 225"
+        "meetings": [
+          {
+            "days": [
+              3
+            ],
+            "startTime": "11:00",
+            "endTime": "11:50",
+            "location": "FLMA 225"
+          },
+          {
+            "days": [
+              3
+            ],
+            "startTime": "12:00",
+            "endTime": "13:50",
+            "location": "FLMA 225"
+          }
+        ]
       },
       {
         "section": "23",
-        "days": [
-          3
-        ],
-        "startTime": "11:00",
-        "endTime": "13:50",
-        "location": "FLMA 438"
+        "meetings": [
+          {
+            "days": [
+              3
+            ],
+            "startTime": "11:00",
+            "endTime": "11:50",
+            "location": "FLMA 438"
+          },
+          {
+            "days": [
+              3
+            ],
+            "startTime": "12:00",
+            "endTime": "13:50",
+            "location": "FLMA 438"
+          }
+        ]
       },
       {
         "section": "24",
-        "days": [
-          3
-        ],
-        "startTime": "11:00",
-        "endTime": "13:50",
-        "location": "FLMA 150"
+        "meetings": [
+          {
+            "days": [
+              3
+            ],
+            "startTime": "11:00",
+            "endTime": "11:50",
+            "location": "FLMA 150"
+          },
+          {
+            "days": [
+              3
+            ],
+            "startTime": "12:00",
+            "endTime": "13:50",
+            "location": "FLMA 150"
+          }
+        ]
       },
       {
         "section": "25",
-        "days": [
-          3
-        ],
-        "startTime": "13:55",
-        "endTime": "16:45",
-        "location": "SLOA 167"
+        "meetings": [
+          {
+            "days": [
+              3
+            ],
+            "startTime": "13:55",
+            "endTime": "14:45",
+            "location": "SLOA 167"
+          },
+          {
+            "days": [
+              3
+            ],
+            "startTime": "14:55",
+            "endTime": "16:45",
+            "location": "SLOA 167"
+          }
+        ]
       },
       {
         "section": "26",
-        "days": [
-          3
-        ],
-        "startTime": "13:55",
-        "endTime": "16:45",
-        "location": "AVER 8"
+        "meetings": [
+          {
+            "days": [
+              3
+            ],
+            "startTime": "13:55",
+            "endTime": "14:45",
+            "location": "AVER 8"
+          },
+          {
+            "days": [
+              3
+            ],
+            "startTime": "14:55",
+            "endTime": "16:45",
+            "location": "AVER 8"
+          }
+        ]
       },
       {
         "section": "27",
-        "days": [
-          3
-        ],
-        "startTime": "13:55",
-        "endTime": "16:45",
-        "location": "FLMA 150"
+        "meetings": [
+          {
+            "days": [
+              3
+            ],
+            "startTime": "13:55",
+            "endTime": "14:45",
+            "location": "FLMA 150"
+          },
+          {
+            "days": [
+              3
+            ],
+            "startTime": "14:55",
+            "endTime": "16:45",
+            "location": "FLMA 150"
+          }
+        ]
       },
       {
         "section": "28",
-        "days": [
-          2
-        ],
-        "startTime": "10:10",
-        "endTime": "13:00",
-        "location": "FLMA 150"
+        "meetings": [
+          {
+            "days": [
+              2
+            ],
+            "startTime": "10:10",
+            "endTime": "11:00",
+            "location": "FLMA 150"
+          },
+          {
+            "days": [
+              2
+            ],
+            "startTime": "11:10",
+            "endTime": "13:00",
+            "location": "FLMA 150"
+          }
+        ]
       },
       {
         "section": "29",
-        "days": [
-          2
-        ],
-        "startTime": "10:10",
-        "endTime": "13:00",
-        "location": "CUE 209"
+        "meetings": [
+          {
+            "days": [
+              2
+            ],
+            "startTime": "10:10",
+            "endTime": "11:00",
+            "location": "CUE 209"
+          },
+          {
+            "days": [
+              2
+            ],
+            "startTime": "11:10",
+            "endTime": "13:00",
+            "location": "CUE 209"
+          }
+        ]
       },
       {
         "section": "40",
-        "days": [
-          1
-        ],
-        "startTime": "08:10",
-        "endTime": "11:00",
-        "location": "TODD 202"
+        "meetings": [
+          {
+            "days": [
+              1
+            ],
+            "startTime": "08:10",
+            "endTime": "09:00",
+            "location": "TODD 202"
+          },
+          {
+            "days": [
+              1
+            ],
+            "startTime": "09:10",
+            "endTime": "11:00",
+            "location": "TODD 202"
+          }
+        ]
       },
       {
         "section": "41",
-        "days": [
-          2
-        ],
-        "startTime": "17:10",
-        "endTime": "20:00",
-        "location": "AVER 102"
+        "meetings": [
+          {
+            "days": [
+              2
+            ],
+            "startTime": "17:10",
+            "endTime": "18:00",
+            "location": "AVER 102"
+          },
+          {
+            "days": [
+              2
+            ],
+            "startTime": "18:10",
+            "endTime": "20:00",
+            "location": "AVER 102"
+          }
+        ]
       }
     ],
     "labCredits": 1
@@ -3866,129 +4542,297 @@ const COURSE_CATALOG = [
     "labs": [
       {
         "section": "01",
-        "days": [
-          1
-        ],
-        "startTime": "08:10",
-        "endTime": "11:00",
-        "location": "TODD 304"
+        "meetings": [
+          {
+            "days": [
+              1
+            ],
+            "startTime": "08:10",
+            "endTime": "09:00",
+            "location": "TODD 304"
+          },
+          {
+            "days": [
+              1
+            ],
+            "startTime": "09:10",
+            "endTime": "11:00",
+            "location": "TODD 304"
+          }
+        ]
       },
       {
         "section": "02",
-        "days": [
-          1
-        ],
-        "startTime": "10:35",
-        "endTime": "13:20",
-        "location": "CUE 407"
+        "meetings": [
+          {
+            "days": [
+              1
+            ],
+            "startTime": "10:35",
+            "endTime": "11:25",
+            "location": "CUE 407"
+          },
+          {
+            "days": [
+              1
+            ],
+            "startTime": "11:35",
+            "endTime": "13:20",
+            "location": "CUE 407"
+          }
+        ]
       },
       {
         "section": "03",
-        "days": [
-          1
-        ],
-        "startTime": "12:30",
-        "endTime": "15:20",
-        "location": "TODD 202"
+        "meetings": [
+          {
+            "days": [
+              1
+            ],
+            "startTime": "12:30",
+            "endTime": "13:20",
+            "location": "TODD 202"
+          },
+          {
+            "days": [
+              1
+            ],
+            "startTime": "13:30",
+            "endTime": "15:20",
+            "location": "TODD 202"
+          }
+        ]
       },
       {
         "section": "04",
-        "days": [
-          1
-        ],
-        "startTime": "14:55",
-        "endTime": "18:10",
-        "location": "TODD 211"
+        "meetings": [
+          {
+            "days": [
+              1
+            ],
+            "startTime": "14:55",
+            "endTime": "15:45",
+            "location": "TODD 211"
+          },
+          {
+            "days": [
+              1
+            ],
+            "startTime": "15:55",
+            "endTime": "18:10",
+            "location": "TODD 211"
+          }
+        ]
       },
       {
         "section": "05",
-        "days": [
-          1
-        ],
-        "startTime": "17:20",
-        "endTime": "20:10",
-        "location": "COLL 235"
+        "meetings": [
+          {
+            "days": [
+              1
+            ],
+            "startTime": "17:20",
+            "endTime": "18:10",
+            "location": "COLL 235"
+          },
+          {
+            "days": [
+              1
+            ],
+            "startTime": "18:20",
+            "endTime": "20:10",
+            "location": "COLL 235"
+          }
+        ]
       },
       {
         "section": "06",
-        "days": [
-          2
-        ],
-        "startTime": "14:10",
-        "endTime": "17:00",
-        "location": "TODD 202"
+        "meetings": [
+          {
+            "days": [
+              2
+            ],
+            "startTime": "14:10",
+            "endTime": "15:00",
+            "location": "TODD 202"
+          },
+          {
+            "days": [
+              2
+            ],
+            "startTime": "15:10",
+            "endTime": "17:00",
+            "location": "TODD 202"
+          }
+        ]
       },
       {
         "section": "07",
-        "days": [
-          2
-        ],
-        "startTime": "16:10",
-        "endTime": "19:00",
-        "location": "AVER 8"
+        "meetings": [
+          {
+            "days": [
+              2
+            ],
+            "startTime": "16:10",
+            "endTime": "17:00",
+            "location": "AVER 8"
+          },
+          {
+            "days": [
+              2
+            ],
+            "startTime": "17:10",
+            "endTime": "19:00",
+            "location": "AVER 8"
+          }
+        ]
       },
       {
         "section": "08",
-        "days": [
-          2
-        ],
-        "startTime": "18:10",
-        "endTime": "21:00",
-        "location": "TODD 304"
+        "meetings": [
+          {
+            "days": [
+              2
+            ],
+            "startTime": "18:10",
+            "endTime": "19:00",
+            "location": "TODD 304"
+          },
+          {
+            "days": [
+              2
+            ],
+            "startTime": "19:10",
+            "endTime": "21:00",
+            "location": "TODD 304"
+          }
+        ]
       },
       {
         "section": "09",
-        "days": [
-          3
-        ],
-        "startTime": "08:10",
-        "endTime": "11:00",
-        "location": "CUE 218"
+        "meetings": [
+          {
+            "days": [
+              3
+            ],
+            "startTime": "08:10",
+            "endTime": "09:00",
+            "location": "CUE 218"
+          },
+          {
+            "days": [
+              3
+            ],
+            "startTime": "09:10",
+            "endTime": "11:00",
+            "location": "CUE 218"
+          }
+        ]
       },
       {
         "section": "10",
-        "days": [
-          3
-        ],
-        "startTime": "10:35",
-        "endTime": "13:20",
-        "location": "AVER 12"
+        "meetings": [
+          {
+            "days": [
+              3
+            ],
+            "startTime": "10:35",
+            "endTime": "11:25",
+            "location": "AVER 12"
+          },
+          {
+            "days": [
+              3
+            ],
+            "startTime": "11:35",
+            "endTime": "13:20",
+            "location": "AVER 12"
+          }
+        ]
       },
       {
         "section": "11",
-        "days": [
-          3
-        ],
-        "startTime": "12:30",
-        "endTime": "15:20",
-        "location": "TODD 202"
+        "meetings": [
+          {
+            "days": [
+              3
+            ],
+            "startTime": "12:30",
+            "endTime": "13:20",
+            "location": "TODD 202"
+          },
+          {
+            "days": [
+              3
+            ],
+            "startTime": "13:30",
+            "endTime": "15:20",
+            "location": "TODD 202"
+          }
+        ]
       },
       {
         "section": "12",
-        "days": [
-          3
-        ],
-        "startTime": "14:55",
-        "endTime": "18:10",
-        "location": "TODD 211"
+        "meetings": [
+          {
+            "days": [
+              3
+            ],
+            "startTime": "14:55",
+            "endTime": "15:45",
+            "location": "TODD 211"
+          },
+          {
+            "days": [
+              3
+            ],
+            "startTime": "15:55",
+            "endTime": "18:10",
+            "location": "TODD 211"
+          }
+        ]
       },
       {
         "section": "13",
-        "days": [
-          3
-        ],
-        "startTime": "14:55",
-        "endTime": "18:10",
-        "location": "TODD 202"
+        "meetings": [
+          {
+            "days": [
+              3
+            ],
+            "startTime": "14:55",
+            "endTime": "15:45",
+            "location": "TODD 202"
+          },
+          {
+            "days": [
+              3
+            ],
+            "startTime": "15:55",
+            "endTime": "18:10",
+            "location": "TODD 202"
+          }
+        ]
       },
       {
         "section": "14",
-        "days": [
-          2
-        ],
-        "startTime": "16:10",
-        "endTime": "19:00",
-        "location": "FLMA 225"
+        "meetings": [
+          {
+            "days": [
+              2
+            ],
+            "startTime": "16:10",
+            "endTime": "17:00",
+            "location": "FLMA 225"
+          },
+          {
+            "days": [
+              2
+            ],
+            "startTime": "17:10",
+            "endTime": "19:00",
+            "location": "FLMA 225"
+          }
+        ]
       }
     ],
     "labCredits": 1
@@ -4124,147 +4968,339 @@ const COURSE_CATALOG = [
     "labs": [
       {
         "section": "01",
-        "days": [
-          0
-        ],
-        "startTime": "14:10",
-        "endTime": "17:00",
-        "location": "FLMA 438"
+        "meetings": [
+          {
+            "days": [
+              0
+            ],
+            "startTime": "14:10",
+            "endTime": "15:00",
+            "location": "FLMA 438"
+          },
+          {
+            "days": [
+              0
+            ],
+            "startTime": "15:10",
+            "endTime": "17:00",
+            "location": "FLMA 438"
+          }
+        ]
       },
       {
         "section": "02",
-        "days": [
-          1
-        ],
-        "startTime": "12:50",
-        "endTime": "15:45",
-        "location": "FLMA 438"
+        "meetings": [
+          {
+            "days": [
+              1
+            ],
+            "startTime": "12:50",
+            "endTime": "13:40",
+            "location": "FLMA 438"
+          },
+          {
+            "days": [
+              1
+            ],
+            "startTime": "13:50",
+            "endTime": "15:45",
+            "location": "FLMA 438"
+          }
+        ]
       },
       {
         "section": "03",
-        "days": [
-          1
-        ],
-        "startTime": "08:30",
-        "endTime": "11:25",
-        "location": "FLMA 438"
+        "meetings": [
+          {
+            "days": [
+              1
+            ],
+            "startTime": "08:30",
+            "endTime": "09:20",
+            "location": "FLMA 438"
+          },
+          {
+            "days": [
+              1
+            ],
+            "startTime": "09:30",
+            "endTime": "11:25",
+            "location": "FLMA 438"
+          }
+        ]
       },
       {
         "section": "04",
-        "days": [
-          0
-        ],
-        "startTime": "14:10",
-        "endTime": "17:00",
-        "location": "FLMA 438"
+        "meetings": [
+          {
+            "days": [
+              0
+            ],
+            "startTime": "14:10",
+            "endTime": "15:00",
+            "location": "FLMA 438"
+          },
+          {
+            "days": [
+              0
+            ],
+            "startTime": "15:10",
+            "endTime": "17:00",
+            "location": "FLMA 438"
+          }
+        ]
       },
       {
         "section": "05",
-        "days": [
-          3
-        ],
-        "startTime": "12:50",
-        "endTime": "15:45",
-        "location": "FLMA 438"
+        "meetings": [
+          {
+            "days": [
+              3
+            ],
+            "startTime": "12:50",
+            "endTime": "13:40",
+            "location": "FLMA 438"
+          },
+          {
+            "days": [
+              3
+            ],
+            "startTime": "13:50",
+            "endTime": "15:45",
+            "location": "FLMA 438"
+          }
+        ]
       },
       {
         "section": "06",
-        "days": [
-          2
-        ],
-        "startTime": "18:10",
-        "endTime": "21:00",
-        "location": "FLMA 438"
+        "meetings": [
+          {
+            "days": [
+              2
+            ],
+            "startTime": "18:10",
+            "endTime": "19:00",
+            "location": "FLMA 438"
+          },
+          {
+            "days": [
+              2
+            ],
+            "startTime": "19:10",
+            "endTime": "21:00",
+            "location": "FLMA 438"
+          }
+        ]
       },
       {
         "section": "07",
-        "days": [
-          1
-        ],
-        "startTime": "12:50",
-        "endTime": "15:45",
-        "location": "FLMA 438"
+        "meetings": [
+          {
+            "days": [
+              1
+            ],
+            "startTime": "12:50",
+            "endTime": "13:40",
+            "location": "FLMA 438"
+          },
+          {
+            "days": [
+              1
+            ],
+            "startTime": "13:50",
+            "endTime": "15:45",
+            "location": "FLMA 438"
+          }
+        ]
       },
       {
         "section": "08",
-        "days": [
-          1
-        ],
-        "startTime": "08:30",
-        "endTime": "11:25",
-        "location": "FLMA 438"
+        "meetings": [
+          {
+            "days": [
+              1
+            ],
+            "startTime": "08:30",
+            "endTime": "09:20",
+            "location": "FLMA 438"
+          },
+          {
+            "days": [
+              1
+            ],
+            "startTime": "09:30",
+            "endTime": "11:25",
+            "location": "FLMA 438"
+          }
+        ]
       },
       {
         "section": "09",
-        "days": [
-          3
-        ],
-        "startTime": "12:50",
-        "endTime": "15:45",
-        "location": "FLMA 438"
+        "meetings": [
+          {
+            "days": [
+              3
+            ],
+            "startTime": "12:50",
+            "endTime": "13:40",
+            "location": "FLMA 438"
+          },
+          {
+            "days": [
+              3
+            ],
+            "startTime": "13:50",
+            "endTime": "15:45",
+            "location": "FLMA 438"
+          }
+        ]
       },
       {
         "section": "10",
-        "days": [
-          2
-        ],
-        "startTime": "18:10",
-        "endTime": "21:00",
-        "location": "FLMA 438"
+        "meetings": [
+          {
+            "days": [
+              2
+            ],
+            "startTime": "18:10",
+            "endTime": "19:00",
+            "location": "FLMA 438"
+          },
+          {
+            "days": [
+              2
+            ],
+            "startTime": "19:10",
+            "endTime": "21:00",
+            "location": "FLMA 438"
+          }
+        ]
       },
       {
         "section": "11",
-        "days": [
-          2
-        ],
-        "startTime": "14:10",
-        "endTime": "17:00",
-        "location": "FLMA 438"
+        "meetings": [
+          {
+            "days": [
+              2
+            ],
+            "startTime": "14:10",
+            "endTime": "15:00",
+            "location": "FLMA 438"
+          },
+          {
+            "days": [
+              2
+            ],
+            "startTime": "15:10",
+            "endTime": "17:00",
+            "location": "FLMA 438"
+          }
+        ]
       },
       {
         "section": "12",
-        "days": [
-          1
-        ],
-        "startTime": "12:50",
-        "endTime": "15:45",
-        "location": "FLMA 438"
+        "meetings": [
+          {
+            "days": [
+              1
+            ],
+            "startTime": "12:50",
+            "endTime": "13:40",
+            "location": "FLMA 438"
+          },
+          {
+            "days": [
+              1
+            ],
+            "startTime": "13:50",
+            "endTime": "15:45",
+            "location": "FLMA 438"
+          }
+        ]
       },
       {
         "section": "13",
-        "days": [
-          3
-        ],
-        "startTime": "12:50",
-        "endTime": "15:45",
-        "location": "FLMA 438"
+        "meetings": [
+          {
+            "days": [
+              3
+            ],
+            "startTime": "12:50",
+            "endTime": "13:40",
+            "location": "FLMA 438"
+          },
+          {
+            "days": [
+              3
+            ],
+            "startTime": "13:50",
+            "endTime": "15:45",
+            "location": "FLMA 438"
+          }
+        ]
       },
       {
         "section": "14",
-        "days": [
-          0
-        ],
-        "startTime": "14:10",
-        "endTime": "17:00",
-        "location": "FLMA 438"
+        "meetings": [
+          {
+            "days": [
+              0
+            ],
+            "startTime": "14:10",
+            "endTime": "15:00",
+            "location": "FLMA 438"
+          },
+          {
+            "days": [
+              0
+            ],
+            "startTime": "15:10",
+            "endTime": "17:00",
+            "location": "FLMA 438"
+          }
+        ]
       },
       {
         "section": "15",
-        "days": [
-          2
-        ],
-        "startTime": "14:10",
-        "endTime": "17:00",
-        "location": "FLMA 438"
+        "meetings": [
+          {
+            "days": [
+              2
+            ],
+            "startTime": "14:10",
+            "endTime": "15:00",
+            "location": "FLMA 438"
+          },
+          {
+            "days": [
+              2
+            ],
+            "startTime": "15:10",
+            "endTime": "17:00",
+            "location": "FLMA 438"
+          }
+        ]
       },
       {
         "section": "16",
-        "days": [
-          2
-        ],
-        "startTime": "18:10",
-        "endTime": "21:00",
-        "location": "FULM 438"
+        "meetings": [
+          {
+            "days": [
+              2
+            ],
+            "startTime": "18:10",
+            "endTime": "19:00",
+            "location": "FULM 438"
+          },
+          {
+            "days": [
+              2
+            ],
+            "startTime": "19:10",
+            "endTime": "21:00",
+            "location": "FULM 438"
+          }
+        ]
       }
     ],
     "labCredits": 1
@@ -4290,102 +5326,234 @@ const COURSE_CATALOG = [
     "labs": [
       {
         "section": "01",
-        "days": [
-          2
-        ],
-        "startTime": "15:10",
-        "endTime": "17:00",
-        "location": "FULM 401"
+        "meetings": [
+          {
+            "days": [
+              2
+            ],
+            "startTime": "15:10",
+            "endTime": "16:00",
+            "location": "FULM 401"
+          },
+          {
+            "days": [
+              2
+            ],
+            "startTime": "16:10",
+            "endTime": "17:00",
+            "location": "FULM 401"
+          }
+        ]
       },
       {
         "section": "02",
-        "days": [
-          3
-        ],
-        "startTime": "14:55",
-        "endTime": "16:45",
-        "location": "FULM 401"
+        "meetings": [
+          {
+            "days": [
+              3
+            ],
+            "startTime": "14:55",
+            "endTime": "15:45",
+            "location": "FULM 401"
+          },
+          {
+            "days": [
+              3
+            ],
+            "startTime": "15:55",
+            "endTime": "16:45",
+            "location": "FULM 401"
+          }
+        ]
       },
       {
         "section": "03",
-        "days": [
-          4
-        ],
-        "startTime": "10:10",
-        "endTime": "12:00",
-        "location": "FULM 401"
+        "meetings": [
+          {
+            "days": [
+              4
+            ],
+            "startTime": "10:10",
+            "endTime": "11:00",
+            "location": "FULM 401"
+          },
+          {
+            "days": [
+              4
+            ],
+            "startTime": "11:10",
+            "endTime": "12:00",
+            "location": "FULM 401"
+          }
+        ]
       },
       {
         "section": "04",
-        "days": [
-          2
-        ],
-        "startTime": "14:10",
-        "endTime": "16:00",
-        "location": "FULM 401"
+        "meetings": [
+          {
+            "days": [
+              2
+            ],
+            "startTime": "14:10",
+            "endTime": "15:00",
+            "location": "FULM 401"
+          },
+          {
+            "days": [
+              2
+            ],
+            "startTime": "15:10",
+            "endTime": "16:00",
+            "location": "FULM 401"
+          }
+        ]
       },
       {
         "section": "05",
-        "days": [
-          2
-        ],
-        "startTime": "15:10",
-        "endTime": "17:00",
-        "location": "FULM 401"
+        "meetings": [
+          {
+            "days": [
+              2
+            ],
+            "startTime": "15:10",
+            "endTime": "16:00",
+            "location": "FULM 401"
+          },
+          {
+            "days": [
+              2
+            ],
+            "startTime": "16:10",
+            "endTime": "17:00",
+            "location": "FULM 401"
+          }
+        ]
       },
       {
         "section": "06",
-        "days": [
-          2
-        ],
-        "startTime": "16:10",
-        "endTime": "18:00",
-        "location": "WEBS B0008"
+        "meetings": [
+          {
+            "days": [
+              2
+            ],
+            "startTime": "16:10",
+            "endTime": "17:00",
+            "location": "WEBS B0008"
+          },
+          {
+            "days": [
+              2
+            ],
+            "startTime": "17:10",
+            "endTime": "18:00",
+            "location": "WEBS B0008"
+          }
+        ]
       },
       {
         "section": "07",
-        "days": [
-          3
-        ],
-        "startTime": "13:30",
-        "endTime": "15:20",
-        "location": "FULM 401"
+        "meetings": [
+          {
+            "days": [
+              3
+            ],
+            "startTime": "13:30",
+            "endTime": "14:20",
+            "location": "FULM 401"
+          },
+          {
+            "days": [
+              3
+            ],
+            "startTime": "14:30",
+            "endTime": "15:20",
+            "location": "FULM 401"
+          }
+        ]
       },
       {
         "section": "08",
-        "days": [
-          4
-        ],
-        "startTime": "11:10",
-        "endTime": "13:00",
-        "location": "FULM 401"
+        "meetings": [
+          {
+            "days": [
+              4
+            ],
+            "startTime": "11:10",
+            "endTime": "12:00",
+            "location": "FULM 401"
+          },
+          {
+            "days": [
+              4
+            ],
+            "startTime": "12:10",
+            "endTime": "13:00",
+            "location": "FULM 401"
+          }
+        ]
       },
       {
         "section": "09",
-        "days": [
-          3
-        ],
-        "startTime": "14:55",
-        "endTime": "16:45",
-        "location": "CUE 216"
+        "meetings": [
+          {
+            "days": [
+              3
+            ],
+            "startTime": "14:55",
+            "endTime": "15:45",
+            "location": "CUE 216"
+          },
+          {
+            "days": [
+              3
+            ],
+            "startTime": "15:55",
+            "endTime": "16:45",
+            "location": "CUE 216"
+          }
+        ]
       },
       {
         "section": "10",
-        "days": [
-          2
-        ],
-        "startTime": "14:10",
-        "endTime": "16:00",
-        "location": "FULM 401"
+        "meetings": [
+          {
+            "days": [
+              2
+            ],
+            "startTime": "14:10",
+            "endTime": "15:00",
+            "location": "FULM 401"
+          },
+          {
+            "days": [
+              2
+            ],
+            "startTime": "15:10",
+            "endTime": "16:00",
+            "location": "FULM 401"
+          }
+        ]
       },
       {
         "section": "11",
-        "days": [
-          3
-        ],
-        "startTime": "13:30",
-        "endTime": "15:20",
-        "location": "FULM 401"
+        "meetings": [
+          {
+            "days": [
+              3
+            ],
+            "startTime": "13:30",
+            "endTime": "14:20",
+            "location": "FULM 401"
+          },
+          {
+            "days": [
+              3
+            ],
+            "startTime": "14:30",
+            "endTime": "15:20",
+            "location": "FULM 401"
+          }
+        ]
       }
     ],
     "labCredits": 1
