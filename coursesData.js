@@ -448,7 +448,7 @@ const COURSE_CATALOG = [
   {
     "code": "BIOLOGY 107",
     "name": "Introductory Biology: Cell Biology and Genetics",
-    "credits": 4,
+    "credits": 3,
     "mode": "lecture",
     "sections": [
       {
