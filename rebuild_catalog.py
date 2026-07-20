@@ -141,6 +141,7 @@ add('E_E 234','Microprocessor Systems',3,'lecture',[{'section':'01','days':[0,2,
     labs=[{'section':'01','days':[1],'startTime':'13:30','endTime':'16:20','location':'EME 56'},{'section':'02','days':[3],'startTime':'13:30','endTime':'16:20','location':'EME 56'}])
 add('E_E 261','Electrical Circuits I',3,'lecture',[{'section':'01','days':[0,2,4],'startTime':'11:10','endTime':'12:00','location':'SEH 105'}])
 add('E_E 262','Electrical Circuits Laboratory I',1,'lab',[{'section':'01','days':[0],'startTime':'15:10','endTime':'18:00','location':'EME 34'},{'section':'02','days':[1],'startTime':'07:45','endTime':'10:35','location':'EME 34'},{'section':'03','days':[2],'startTime':'15:10','endTime':'18:00','location':'EME 34'},{'section':'05','days':[4],'startTime':'15:10','endTime':'18:00','location':'EME 34'}])
+add('E_E 302','Professional Skills in Computing and Engineering',3,'lecture',[{'section':'01','days':[1,3],'startTime':'13:30','endTime':'14:45','location':'SEH G0005'}])
 add('E_E 311','Electronics',3,'lecture',[{'section':'01','days':[0,2,4],'startTime':'12:10','endTime':'13:00','location':'SLOA 9'}])
 add('E_E 321','Electrical Circuits II',3,'lecture',[{'section':'01','days':[0,2,4],'startTime':'13:10','endTime':'14:00','location':'SLOA 46'}])
 add('E_E 324','Fundamentals of Digital Systems',3,'lecture',[{'section':'01','days':[0,2,4],'startTime':'10:10','endTime':'11:00','location':'SLOA 5'}],

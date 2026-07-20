@@ -2566,6 +2566,24 @@ const COURSE_CATALOG = [
     ]
   },
   {
+    "code": "E_E 302",
+    "name": "Professional Skills in Computing and Engineering",
+    "credits": 3,
+    "mode": "lecture",
+    "sections": [
+      {
+        "section": "01",
+        "days": [
+          1,
+          3
+        ],
+        "startTime": "13:30",
+        "endTime": "14:45",
+        "location": "SEH G0005"
+      }
+    ]
+  },
+  {
     "code": "E_E 311",
     "name": "Electronics",
     "credits": 3,
