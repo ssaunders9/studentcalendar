@@ -1391,8 +1391,13 @@ class CalendarApp {
     //  EXPORT / IMPORT
     // ═══════════════════════════════════════════
     _preparePrint() {
+        // Re-render events at print scale
+        const savedHourH = this.HOUR_HEIGHT;
+        this.HOUR_HEIGHT = 24;
+        this._renderEvents();
+
         const el = document.getElementById('print-wellness');
-        if (!el) return;
+        if (!el) { this.HOUR_HEIGHT = savedHourH; return; }
 
         // Quick wellness summary
         const totalCredits = this.courses.reduce((s, c) => s + (c.credits || 3), 0);
@@ -1407,7 +1412,6 @@ class CalendarApp {
             if (ev.type === 'free') freeH += d;
         }
 
-        // Conflicts
         let conflicts = 0;
         for (let i = 0; i < this.events.length; i++)
             for (let j = i + 1; j < this.events.length; j++)
@@ -1425,9 +1429,15 @@ class CalendarApp {
             mealH < 10 ? '<span style="color:#991B1B;">⚠ Meals</span>' : '<span style="color:#2E7D32;">✓ Meals</span>',
             sleepH < 49 ? '<span style="color:#991B1B;">⚠ Sleep</span>' : '<span style="color:#2E7D32;">✓ Sleep</span>',
             studyH < totalCredits * 1.5 ? '<span style="color:#991B1B;">⚠ Study</span>' : '<span style="color:#2E7D32;">✓ Study</span>',
-            this.workSettings.active && totalWorkHours > 20 ? '<span style="color:#991B1B;">⚠ Work >20h</span>' : '',
+            this.workSettings.active && workH > 20 ? '<span style="color:#991B1B;">⚠ Work >20h</span>' : '',
             conflicts > 0 ? `<span style="color:#991B1B;">⚠ ${conflicts} conflicts</span>` : '<span style="color:#2E7D32;">✓ No conflicts</span>',
         ].filter(Boolean).join(' &nbsp;|&nbsp; ') + ' &nbsp;|&nbsp; <em>☐ = done</em>';
+
+        // Restore after print
+        setTimeout(() => {
+            this.HOUR_HEIGHT = savedHourH;
+            this._renderEvents();
+        }, 500);
     }
 
     _exportData() {
