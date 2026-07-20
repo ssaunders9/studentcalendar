@@ -340,6 +340,24 @@ class CalendarApp {
             ev._conflict = this._findConflicts(ev).length > 0;
         }
 
+        // Detect identical-position events and assign stagger offsets
+        const posMap = new Map(); // key: "day|startHour|endHour" → count
+        for (const ev of this.events) {
+            const key = `${ev.day}|${ev.startHour}|${ev.endHour}`;
+            posMap.set(key, (posMap.get(key) || 0) + 1);
+        }
+        const staggerIdx = new Map();
+        for (const ev of this.events) {
+            const key = `${ev.day}|${ev.startHour}|${ev.endHour}`;
+            if (posMap.get(key) > 1) {
+                const idx = staggerIdx.get(key) || 0;
+                ev._stagger = idx;
+                staggerIdx.set(key, idx + 1);
+            } else {
+                ev._stagger = 0;
+            }
+        }
+
         this.els.eventsLayer.innerHTML = '';
 
         for (const ev of this.events) {
@@ -392,6 +410,13 @@ class CalendarApp {
         }
         el.style.top = top + 'px';
         el.style.height = Math.max(height, 24) + 'px';
+
+        // Stagger identical-position events so they don't fully hide each other
+        if (ev._stagger > 0) {
+            el.style.marginLeft = (ev._stagger * 8) + 'px';
+            el.style.marginTop = (ev._stagger * 4) + 'px';
+            el.style.zIndex = (4 + ev._stagger);
+        }
 
         // Content
         const timeStr = this._formatTimeRange(ev.startHour, ev.endHour);
@@ -655,6 +680,12 @@ class CalendarApp {
             code, name, meetings, location,
             difficulty, credits, mode,
         };
+
+        // Check if this exact course + section combo is already added
+        const dup = this.courses.find(c => c.code === course.code);
+        if (dup) {
+            if (!confirm(`${course.code} is already in your schedule. Add it again?`)) return;
+        }
 
         this.courses.push(course);
         this._scheduleCourse(course);
