@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "exportedAt": "2026-07-17T21:42:50.395Z",
+  "events": [
+    {
+      "id": 2,
+      "title": "CHE 101: Intro to CHE",
+      "type": "class",
+      "difficulty": "easy",
+      "day": 4,
+      "startHour": 16.166666666666668,
+      "endHour": 17,
+      "location": "Wegner G5",
+      "courseId": 1,
+      "notes": ""
+    }
+  ],
+  "courses": [
+    {
+      "id": 1,
+      "code": "CHE 101",
+      "name": "Intro to CHE",
+      "days": [
+        4
+      ],
+      "startTime": "16:10",
+      "endTime": "17:00",
+      "startHour": 16.166666666666668,
+      "endHour": 17,
+      "location": "Wegner G5",
+      "difficulty": "easy",
+      "credits": 3,
+      "mode": "lecture"
+    }
+  ],
+  "workSettings": {
+    "active": false,
+    "label": "",
+    "days": [],
+    "start": "17:00",
+    "end": "21:00"
+  },
+  "eventIdCounter": 2
+}

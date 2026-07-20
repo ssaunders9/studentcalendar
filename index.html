@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Week Scheduler</title>
+    <link rel="stylesheet" href="calendar.css?v=71">
+</head>
+<body>
+    <a href="#calendar-main" class="skip-link">Skip to calendar</a>
+    <div id="app">
+        <!-- Sidebar -->
+        <aside id="sidebar">
+            <div id="sidebar-header">
+                <h1>Week Scheduler</h1>
+            </div>
+
+            <!-- Course Input -->
+            <section id="course-section">
+                <h2><span aria-hidden="true">📚</span> Courses</h2>
+                <button type="button" id="add-course-btn">+ Add Course</button>
+                <div id="course-list"></div>
+            </section>
+
+            <!-- Work Toggle -->
+            <section id="work-section">
+                <h2><span aria-hidden="true">💼</span> Work</h2>
+                <label class="toggle-row">
+                    <input type="checkbox" id="work-toggle">
+                    <span>I work outside of school</span>
+                </label>
+                <div id="work-details" class="hidden">
+                    <div class="form-row">
+                        <label for="work-hours">I plan to work</label>
+                        <input type="number" id="work-hours" min="0" max="80" value="15" style="width:60px" aria-label="Planned work hours per week">
+                        <span>hours each week</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quick Add -->
+            <section id="quick-add-section">
+                <h2><span aria-hidden="true">⚡</span> Quick Add</h2>
+                <div class="quick-buttons">
+                    <button class="quick-btn meal" data-type="meal">Meal Block</button>
+                    <button class="quick-btn sleep" data-type="sleep">Sleep</button>
+                    <button class="quick-btn care" data-type="care">Personal Care</button>
+                    <button class="quick-btn study" data-type="study">Study Block</button>
+                    <button class="quick-btn office" data-type="office">Office Hours</button>
+                    <button class="quick-btn exercise" data-type="exercise">Exercise</button>
+                    <button class="quick-btn club" data-type="club">Club/Activity</button>
+                    <button class="quick-btn work" data-type="work">Work Shift</button>
+                    <button class="quick-btn free" data-type="free">Free Time</button>
+                </div>
+            </section>
+
+            <!-- Wellness Check -->
+            <section id="wellness-section">
+                <h2><span aria-hidden="true">💚</span> Wellness Check</h2>
+                <button type="button" id="wellness-btn">Run Check-In</button>
+                <div id="wellness-results" class="hidden" role="status" aria-live="polite" aria-atomic="true"></div>
+            </section>
+
+            <!-- Save/Load -->
+            <section id="save-section">
+                <h2><span aria-hidden="true">💾</span> Save & Load</h2>
+                <div class="save-buttons">
+                    <button type="button" id="export-btn">Export</button>
+                    <label for="import-file" class="import-label">Import</label>
+                    <input type="file" id="import-file" accept=".json" hidden>
+                </div>
+                <button type="button" id="print-btn" class="print-btn">Export PDF</button>
+                <button type="button" id="clear-btn" class="clear-btn">Clear All</button>
+            </section>
+        </aside>
+
+        <!-- Main Calendar -->
+        <main id="calendar-main">
+            <nav id="calendar-header" aria-label="Calendar navigation">
+                <button id="prev-week" title="Previous week" aria-label="Previous week">◀</button>
+                <h2 id="week-label" aria-live="polite"></h2>
+                <button id="next-week" title="Next week" aria-label="Next week">▶</button>
+                <button id="today-btn" aria-label="Go to today">Today</button>
+            </nav>
+            <div id="calendar-grid-wrapper" role="region" aria-label="Weekly calendar">
+                <div id="calendar-grid">
+                    <div id="time-axis" aria-hidden="true"></div>
+                    <div id="days-container"></div>
+                    <div id="events-layer"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Print-only wellness summary -->
+    <div id="print-wellness" class="print-only"></div>
+
+    <!-- Add Course Modal -->
+    <div id="course-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="course-modal-title">
+        <div class="modal-content">
+            <h3 id="course-modal-title">Add Course</h3>
+            <button type="button" class="modal-close-btn" aria-label="Close dialog">×</button>
+
+            <div class="form-row">
+                <label for="course-prefix">Prefix</label>
+                <select id="course-prefix">
+                    <option value="">-- Select prefix --</option>
+                </select>
+            </div>
+            <div id="course-catalog-list" class="course-catalog-list"></div>
+            <div id="course-lab-section" class="hidden">
+                <div class="form-row">
+                    <label for="course-lab-select">Select lab section</label>
+                    <select id="course-lab-select"></select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label class="toggle-row">
+                    <input type="checkbox" id="course-not-listed">
+                    <span>Course not listed — enter manually</span>
+                </label>
+            </div>
+            <div id="course-manual" class="hidden">
+                <div class="form-row">
+                    <input type="text" id="course-code" placeholder="Course code (e.g. CHE 101)" required>
+                    <input type="text" id="course-name" placeholder="Course name" required>
+                </div>
+                <div class="form-row">
+                    <select id="course-days">
+                        <option value="MWF">Mon/Wed/Fri</option>
+                        <option value="TTh">Tue/Thu</option>
+                        <option value="MW">Mon/Wed</option>
+                        <option value="M">Monday only</option>
+                        <option value="T">Tuesday only</option>
+                        <option value="W">Wednesday only</option>
+                        <option value="Th">Thursday only</option>
+                        <option value="F">Friday only</option>
+                        <option value="MTWThF">Every day</option>
+                    </select>
+                </div>
+                <div class="form-row time-row">
+                    <input type="time" id="course-start" value="09:00" required>
+                    <span>to</span>
+                    <input type="time" id="course-end" value="09:50" required>
+                </div>
+                <div class="form-row">
+                    <input type="number" id="course-credits" placeholder="Credits" min="1" max="6" value="3" required>
+                    <select id="course-mode">
+                        <option value="lecture">Lecture</option>
+                        <option value="lab">Lab</option>
+                        <option value="studio">Studio</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <input type="text" id="course-location" placeholder="Location">
+                </div>
+            </div>
+
+            <fieldset class="form-row">
+                <legend>Difficulty</legend>
+                <div class="difficulty-selector">
+                    <label class="diff-option"><input type="radio" name="c-difficulty" value="easy"> Easy</label>
+                    <label class="diff-option"><input type="radio" name="c-difficulty" value="medium" checked> Medium</label>
+                    <label class="diff-option"><input type="radio" name="c-difficulty" value="hard"> Hard</label>
+                </div>
+            </fieldset>
+
+            <div class="modal-actions">
+                <button type="button" id="cancel-course-btn">Cancel</button>
+                <button type="button" id="confirm-course-btn">Add Course</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Event Edit Modal -->
+    <div id="event-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-desc">
+        <div class="modal-content">
+            <h3 id="modal-title">Edit Event</h3>
+            <p id="modal-desc" class="sr-only">Edit the event details below. Press Escape to close.</p>
+            <p class="modal-lock-notice" style="display:none;background:#FEF3C7;color:#92400E;padding:8px 12px;border-radius:6px;margin-bottom:12px;font-size:0.8rem;">🔒 This event is set by your course schedule. Remove the course and re-add it to change the time.</p>
+            <button type="button" class="modal-close-btn" aria-label="Close dialog">×</button>
+            <div class="form-row">
+                <label for="event-title" class="sr-only">Event title</label>
+                <input type="text" id="event-title" placeholder="Event title" required>
+            </div>
+            <div class="form-row">
+                <label for="event-type" class="sr-only">Event type</label>
+                <select id="event-type">
+                    <option value="class">Class</option>
+                    <option value="meal">Meal</option>
+                    <option value="sleep">Sleep</option>
+                    <option value="work">Work</option>
+                    <option value="club">Club</option>
+                    <option value="study">Study</option>
+                    <option value="office">Office Hours</option>
+                    <option value="exercise">Exercise</option>
+                    <option value="care">Personal Care</option>
+                    <option value="free">Free Time</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="form-row time-row">
+                <label for="event-start" class="sr-only">Start time</label>
+                <input type="time" id="event-start" required>
+                <span aria-hidden="true">to</span>
+                <label for="event-end" class="sr-only">End time</label>
+                <input type="time" id="event-end" required>
+            </div>
+            <div class="form-row">
+                <label for="event-location" class="sr-only">Location</label>
+                <input type="text" id="event-location" placeholder="Location (optional)">
+            </div>
+            <div class="form-row">
+                <label for="event-notes" class="sr-only">Notes</label>
+                <textarea id="event-notes" placeholder="Notes (optional)" rows="2"></textarea>
+            </div>
+            <div class="modal-actions">
+                <button type="button" id="delete-event-btn" class="danger-btn">Delete</button>
+                <button type="button" id="cancel-event-btn">Cancel</button>
+                <button type="button" id="save-event-btn">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="coursesData.js?v=17"></script>
+    <script src="calendar.js?v=71"></script>
+</body>
+</html>
