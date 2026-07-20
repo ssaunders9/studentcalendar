@@ -725,7 +725,7 @@ button:focus-visible, .import-label:focus-visible, select:focus-visible, input:f
     .time-label { font-size: 7pt; }
     .hour-slot { height: 40px; }
     #events-layer { top: 26px; }
-    #events-layer { top: 24px; }
+    #now-line { display: none !important; }
     .print-only { display: block !important; }
     #print-wellness {
         padding: 3px 0; border-top: 1px solid #ccc; margin-top: 3px;
