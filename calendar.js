@@ -692,8 +692,10 @@ class CalendarApp {
             difficulty, credits, mode,
         };
 
+        // Schedule lecture — returns false if user cancelled conflict dialog
+        if (this._scheduleCourse(course) === false) return;
+
         this.courses.push(course);
-        this._scheduleCourse(course);
 
         // If a lab section was selected, schedule that too
         if (catalog && catalog.labSection) {
@@ -707,8 +709,14 @@ class CalendarApp {
                 credits: catalog.course.labCredits || 1,
                 mode: 'lab',
             };
+            const labConflicts = this._scheduleCourse(labCourse);
+            if (labConflicts === false) {
+                // Roll back: remove lecture events and course
+                this.events = this.events.filter(ev => ev.courseId !== course.id);
+                this.courses = this.courses.filter(c => c.id !== course.id);
+                return;
+            }
             this.courses.push(labCourse);
-            this._scheduleCourse(labCourse);
         }
 
         this._closeCourseModal();
@@ -767,13 +775,13 @@ class CalendarApp {
         }
 
         if (unique.length > 0) {
-            const msg = unique.join('\n');
-            if (!confirm(`⚠️ Schedule conflict:\n\n${msg}\n\nAdd anyway?`)) return;
+            if (!confirm(`⚠️ Time conflict:\n\n${unique.join('\n')}\n\nAdd anyway?`)) return false;
         }
 
         for (const ev of eventsToAdd) {
             this.events.push(ev);
         }
+        return true; // events added successfully
     }
 
     _removeCourse(courseId) {
