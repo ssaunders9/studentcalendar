@@ -1393,7 +1393,7 @@ class CalendarApp {
     _preparePrint() {
         // Re-render events at print scale
         const savedHourH = this.HOUR_HEIGHT;
-        this.HOUR_HEIGHT = 24;
+        this.HOUR_HEIGHT = 20;
         this._renderEvents();
 
         const el = document.getElementById('print-wellness');
