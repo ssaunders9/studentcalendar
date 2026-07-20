@@ -1533,8 +1533,8 @@ class CalendarApp {
         el.innerHTML = [
             mealH >= 10 ? '<span style="color:#2E7D32;">✓ Meals</span>' : '<span style="color:#991B1B;">⚠ Meals</span>',
             sleepH >= 49 ? '<span style="color:#2E7D32;">✓ Sleep</span>' : '<span style="color:#991B1B;">⚠ Sleep</span>',
-            studyH >= totalCredits * 2 ? '<span style="color:#2E7D32;">✓ Study</span>' : '<span style="color:#991B1B;">⚠ Study</span>',
-            (!this.workSettings.active || workH <= 20) ? '<span style="color:#2E7D32;">✓ Work</span>' : '<span style="color:#991B1B;">⚠ Work</span>',
+            (totalCredits === 0 || studyH >= totalCredits * 2) ? '<span style="color:#2E7D32;">✓ Study</span>' : '<span style="color:#991B1B;">⚠ Study</span>',
+            (!this.workSettings.active || workH >= this.workSettings.plannedHours * 0.9) ? '<span style="color:#2E7D32;">✓ Work</span>' : '<span style="color:#991B1B;">⚠ Work</span>',
             totalCredits <= 18 ? '<span style="color:#2E7D32;">✓ Credits</span>' : '<span style="color:#991B1B;">⚠ Credits</span>',
             busyHours <= 55 ? '<span style="color:#2E7D32;">✓ Load</span>' : '<span style="color:#991B1B;">⚠ Overloaded</span>',
             exerciseH >= 2 ? '<span style="color:#2E7D32;">✓ Exercise</span>' : '<span style="color:#991B1B;">⚠ Exercise</span>',
