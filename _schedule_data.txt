@@ -253,3 +253,93 @@ MATH SUMMARY
 All MATH labs are two-day recitation/tutorial blocks (NO same-day splits).
 Flat dict format with days array is correct — no split_lab needed.
 MATH 172: added missing labs 04, 06, 09 (were not in original catalog).
+
+
+================================================================================
+PHYSICS — Pullman Fall 2026
+================================================================================
+
+PHYSICS 201 [PSCI] Physics for Scientists and Engineers I
+--------------------------------------------------------------------------------
+$01 02412 3 M,W,F 12:10-1:00; F 3:10-4:25 WEBS 16 — N Cerruti 80/57
+$02 02413 3 M,W,F 9:10-10:00; TH 2:55-4:10 WEBS 16 — A Guy 80/43
+$03 12065 3 M,W,F 12:10-1:00; W 3:10-4:25 WEBS 16 — N Cerruti 80/58
+$04 12066 3 M,W,F 9:10-10:00; TU 2:55-4:10 WEBS 16 — A Guy 80/67
+
+NOTE: Sections 01 & 03 have SAME-DAY splits (Fri & Wed).
+Section 01: MWF lecture + Fri recitation
+Section 02: MWF lecture + Thu recitation
+Section 03: MWF lecture + Wed recitation
+Section 04: MWF lecture + Tue recitation
+ALL converted to meetings arrays.
+
+PHYSICS 202 Physics for Scientists and Engineers II
+--------------------------------------------------------------------------------
+$01 02414 3 TU,TH 2:55-4:10 WEBS 16 — M Duez 176/177
+SINGLE meeting — flat format.
+
+PHYSICS 205 Physics for Scientists and Engineers I - Honors
+--------------------------------------------------------------------------------
+01 06231 5 M,W,F 9:10-10:00 WEBS 11 — Y Gu 24/24
+01 Lab 06252 0 TU,TH 5:45-8:25 WEBS 422 — 24/24
+SINGLE blocks — flat format.
+
+PHYSICS 206 Physics for Scientists and Engineers II - Honors
+--------------------------------------------------------------------------------
+$01 02415 5 M,W,F 10:10-11:00 WEBS 11 — F Gittes 24/16
+01 Lab 02416 0 TU,TH 5:45-8:25 WEBS 441 — 24/16
+SINGLE blocks — flat format.
+
+PHYSICS 211 [PSCI] Physics Lab for Scientists and Engineers
+--------------------------------------------------------------------------------
+$01 02446 1 TU 9:10-11:50 WEBS 432
+$03 02448 1 TU 12:05-2:45 WEBS 432
+$04 02449 1 TU 12:05-2:45 WEBS 422 — ADDED (was missing)
+$05 02450 1 TU 2:55-5:35 WEBS 432
+$09 02454 1 W 9:10-11:50 WEBS 432
+$11 02456 1 W 12:10-3:00 WEBS 432
+$13 02458 1 W 3:10-6:00 WEBS 432
+$14 06137 1 W 3:10-6:00 WEBS 422 — ADDED (was missing)
+$16 06139 1 TH 9:10-11:50 WEBS 422
+$20 06143 1 TH 2:55-5:45 WEBS 422
+$21 06144 1 TH 2:55-5:35 WEBS 432
+ALL single blocks — flat format.
+
+PHYSICS 212 Physics Lab for Scientists and Engineers II
+--------------------------------------------------------------------------------
+$01 02465 1 TU 9:10-11:50 WEBS 441
+$02 02466 1 TU 12:05-2:45 WEBS 441
+$04 02468 1 W 12:10-3:00 WEBS 449 — ADDED (was missing)
+$05 02469 1 W 9:10-12:00 WEBS 441
+$06 06149 1 W 12:10-3:00 WEBS 441
+$07 06150 1 W 3:10-6:00 WEBS 441
+$09 06152 1 TH 9:10-11:50 WEBS 441
+$10 06153 1 TH 12:05-2:55 WEBS 441
+ALL single blocks — flat format.
+
+PHYSICS 303 Modern Physics I
+--------------------------------------------------------------------------------
+01 02417 3 M,W,F 1:10-2:00 WEBS 11 — F Gittes 40/29
+
+PHYSICS 320 Mechanics
+--------------------------------------------------------------------------------
+01 02418 3 M,W,F 12:10-1:00 WEBS 941 — Y Gu 30/22
+
+PHYSICS 322 [PSCI] Sound Waves and Music
+--------------------------------------------------------------------------------
+01 06111 4 M,W,F 12:10-1:00 WEBS B0012 — G Worthey 30/6
+01 Lab 06250 0 M 4:10-7:00 WEBS 249 — 30/6
+
+PHYSICS 341 Electricity and Magnetism I
+--------------------------------------------------------------------------------
+01 02419 3 M,W,F 11:10-12:00 WEBS 11 — N Cerruti 25/20
+
+================================================================================
+PHYSICS SUMMARY
+================================================================================
+PHYSICS 201: Sections 01 & 03 have SAME-DAY splits (lecture + recitation on Fri/Wed).
+  All 4 sections now use meetings arrays.
+PHYSICS 211/212: Added missing sections (04, 14 for 211; 04 for 212).
+  All single blocks — flat format.
+PHYSICS 205/206: Labs are 2h40m on TU,TH — flat format.
+All other physics courses: single meetings — flat format.

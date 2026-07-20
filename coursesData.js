@@ -115,6 +115,624 @@ const COURSE_CATALOG = [
     ]
   },
   {
+    "code": "BIOLOGY 102",
+    "name": "Exploring Biology",
+    "credits": 3,
+    "mode": "lecture",
+    "sections": [
+      {
+        "section": "01",
+        "days": [
+          0,
+          2,
+          4
+        ],
+        "startTime": "10:10",
+        "endTime": "11:00",
+        "location": "TODD 116"
+      }
+    ],
+    "labs": [
+      {
+        "section": "01",
+        "days": [
+          1
+        ],
+        "startTime": "09:10",
+        "endTime": "12:00",
+        "location": "EAST 166"
+      },
+      {
+        "section": "02",
+        "days": [
+          1
+        ],
+        "startTime": "09:10",
+        "endTime": "12:00",
+        "location": "EAST 192"
+      },
+      {
+        "section": "03",
+        "days": [
+          1
+        ],
+        "startTime": "12:05",
+        "endTime": "14:55",
+        "location": "EAST 166"
+      },
+      {
+        "section": "04",
+        "days": [
+          1
+        ],
+        "startTime": "12:05",
+        "endTime": "14:55",
+        "location": "EAST 192"
+      },
+      {
+        "section": "05",
+        "days": [
+          1
+        ],
+        "startTime": "14:55",
+        "endTime": "17:45",
+        "location": "EAST 166"
+      },
+      {
+        "section": "06",
+        "days": [
+          1
+        ],
+        "startTime": "14:55",
+        "endTime": "17:45",
+        "location": "EAST 192"
+      },
+      {
+        "section": "08",
+        "days": [
+          2
+        ],
+        "startTime": "12:10",
+        "endTime": "15:00",
+        "location": "EAST 166"
+      },
+      {
+        "section": "10",
+        "days": [
+          2
+        ],
+        "startTime": "15:10",
+        "endTime": "18:00",
+        "location": "EAST 166"
+      },
+      {
+        "section": "12",
+        "days": [
+          3
+        ],
+        "startTime": "09:10",
+        "endTime": "12:00",
+        "location": "EAST 166"
+      },
+      {
+        "section": "13",
+        "days": [
+          3
+        ],
+        "startTime": "12:05",
+        "endTime": "14:55",
+        "location": "EAST 166"
+      },
+      {
+        "section": "14",
+        "days": [
+          3
+        ],
+        "startTime": "14:55",
+        "endTime": "17:45",
+        "location": "EAST 166"
+      }
+    ],
+    "labCredits": 1
+  },
+  {
+    "code": "BIOLOGY 105",
+    "name": "Hands-on Biology: A Laboratory Experience",
+    "credits": 4,
+    "mode": "lab",
+    "sections": [
+      {
+        "section": "01",
+        "days": [
+          3
+        ],
+        "startTime": "19:10",
+        "endTime": "22:00",
+        "location": "EAST 166"
+      }
+    ]
+  },
+  {
+    "code": "BIOLOGY 106",
+    "name": "Introductory Biology: Organismal Biology",
+    "credits": 4,
+    "mode": "lecture",
+    "sections": [
+      {
+        "section": "01",
+        "days": [
+          0,
+          2,
+          4
+        ],
+        "startTime": "11:10",
+        "endTime": "12:00",
+        "location": "TODD 116"
+      }
+    ],
+    "labs": [
+      {
+        "section": "01",
+        "days": [
+          1
+        ],
+        "startTime": "09:10",
+        "endTime": "12:00",
+        "location": "EAST G0088"
+      },
+      {
+        "section": "02",
+        "days": [
+          1
+        ],
+        "startTime": "09:10",
+        "endTime": "12:00",
+        "location": "EAST G0082"
+      },
+      {
+        "section": "03",
+        "days": [
+          1
+        ],
+        "startTime": "12:05",
+        "endTime": "14:55",
+        "location": "EAST G0088"
+      },
+      {
+        "section": "04",
+        "days": [
+          1
+        ],
+        "startTime": "12:05",
+        "endTime": "14:55",
+        "location": "EAST G0082"
+      },
+      {
+        "section": "05",
+        "days": [
+          1
+        ],
+        "startTime": "14:55",
+        "endTime": "17:45",
+        "location": "EAST G0088"
+      },
+      {
+        "section": "06",
+        "days": [
+          1
+        ],
+        "startTime": "14:55",
+        "endTime": "17:45",
+        "location": "EAST G0082"
+      },
+      {
+        "section": "07",
+        "days": [
+          1
+        ],
+        "startTime": "19:10",
+        "endTime": "22:00",
+        "location": "EAST G0088"
+      },
+      {
+        "section": "09",
+        "days": [
+          2
+        ],
+        "startTime": "12:10",
+        "endTime": "15:00",
+        "location": "EAST G0088"
+      },
+      {
+        "section": "10",
+        "days": [
+          2
+        ],
+        "startTime": "12:10",
+        "endTime": "15:00",
+        "location": "EAST G0082"
+      },
+      {
+        "section": "11",
+        "days": [
+          2
+        ],
+        "startTime": "15:10",
+        "endTime": "18:00",
+        "location": "EAST G0088"
+      },
+      {
+        "section": "12",
+        "days": [
+          2
+        ],
+        "startTime": "15:10",
+        "endTime": "18:00",
+        "location": "EAST G0082"
+      },
+      {
+        "section": "13",
+        "days": [
+          2
+        ],
+        "startTime": "19:10",
+        "endTime": "22:00",
+        "location": "EAST G0088"
+      },
+      {
+        "section": "14",
+        "days": [
+          3
+        ],
+        "startTime": "09:10",
+        "endTime": "12:00",
+        "location": "EAST G0088"
+      },
+      {
+        "section": "15",
+        "days": [
+          3
+        ],
+        "startTime": "09:10",
+        "endTime": "12:00",
+        "location": "EAST G0082"
+      },
+      {
+        "section": "16",
+        "days": [
+          3
+        ],
+        "startTime": "12:05",
+        "endTime": "14:55",
+        "location": "EAST G0088"
+      },
+      {
+        "section": "17",
+        "days": [
+          3
+        ],
+        "startTime": "12:05",
+        "endTime": "14:55",
+        "location": "EAST G0082"
+      },
+      {
+        "section": "18",
+        "days": [
+          3
+        ],
+        "startTime": "14:55",
+        "endTime": "17:45",
+        "location": "EAST G0088"
+      },
+      {
+        "section": "19",
+        "days": [
+          3
+        ],
+        "startTime": "14:55",
+        "endTime": "17:45",
+        "location": "EAST G0082"
+      },
+      {
+        "section": "20",
+        "days": [
+          3
+        ],
+        "startTime": "19:10",
+        "endTime": "22:00",
+        "location": "EAST G0088"
+      }
+    ],
+    "labCredits": 1
+  },
+  {
+    "code": "BIOLOGY 107",
+    "name": "Introductory Biology: Cell Biology and Genetics",
+    "credits": 4,
+    "mode": "lecture",
+    "sections": [
+      {
+        "section": "01",
+        "days": [
+          0,
+          2,
+          4
+        ],
+        "startTime": "13:10",
+        "endTime": "14:00",
+        "location": "TODD 116"
+      }
+    ],
+    "labs": [
+      {
+        "section": "01",
+        "days": [
+          1
+        ],
+        "startTime": "09:10",
+        "endTime": "12:00",
+        "location": "MCOY 152"
+      },
+      {
+        "section": "02",
+        "days": [
+          1
+        ],
+        "startTime": "09:10",
+        "endTime": "12:00",
+        "location": "MCOY 153"
+      },
+      {
+        "section": "03",
+        "days": [
+          1
+        ],
+        "startTime": "12:05",
+        "endTime": "14:55",
+        "location": "MCOY 152"
+      },
+      {
+        "section": "04",
+        "days": [
+          1
+        ],
+        "startTime": "12:05",
+        "endTime": "14:55",
+        "location": "MCOY 153"
+      },
+      {
+        "section": "05",
+        "days": [
+          1
+        ],
+        "startTime": "14:55",
+        "endTime": "17:45",
+        "location": "MCOY 152"
+      },
+      {
+        "section": "06",
+        "days": [
+          1
+        ],
+        "startTime": "14:55",
+        "endTime": "17:45",
+        "location": "MCOY 153"
+      },
+      {
+        "section": "07",
+        "days": [
+          1
+        ],
+        "startTime": "19:10",
+        "endTime": "22:00",
+        "location": "MCOY 152"
+      },
+      {
+        "section": "08",
+        "days": [
+          1
+        ],
+        "startTime": "19:10",
+        "endTime": "22:00",
+        "location": "MCOY 153"
+      },
+      {
+        "section": "09",
+        "days": [
+          2
+        ],
+        "startTime": "15:10",
+        "endTime": "18:00",
+        "location": "MCOY 152"
+      },
+      {
+        "section": "10",
+        "days": [
+          2
+        ],
+        "startTime": "15:10",
+        "endTime": "18:00",
+        "location": "MCOY 153"
+      },
+      {
+        "section": "11",
+        "days": [
+          2
+        ],
+        "startTime": "19:10",
+        "endTime": "22:00",
+        "location": "MCOY 152"
+      },
+      {
+        "section": "12",
+        "days": [
+          2
+        ],
+        "startTime": "19:10",
+        "endTime": "22:00",
+        "location": "MCOY 153"
+      },
+      {
+        "section": "13",
+        "days": [
+          3
+        ],
+        "startTime": "09:10",
+        "endTime": "12:00",
+        "location": "MCOY 152"
+      },
+      {
+        "section": "14",
+        "days": [
+          3
+        ],
+        "startTime": "09:10",
+        "endTime": "12:00",
+        "location": "MCOY 153"
+      },
+      {
+        "section": "15",
+        "days": [
+          3
+        ],
+        "startTime": "12:05",
+        "endTime": "14:55",
+        "location": "MCOY 152"
+      },
+      {
+        "section": "16",
+        "days": [
+          3
+        ],
+        "startTime": "12:05",
+        "endTime": "14:55",
+        "location": "MCOY 153"
+      },
+      {
+        "section": "17",
+        "days": [
+          3
+        ],
+        "startTime": "14:55",
+        "endTime": "17:45",
+        "location": "MCOY 152"
+      },
+      {
+        "section": "18",
+        "days": [
+          3
+        ],
+        "startTime": "14:55",
+        "endTime": "17:45",
+        "location": "MCOY 153"
+      },
+      {
+        "section": "19",
+        "days": [
+          3
+        ],
+        "startTime": "19:10",
+        "endTime": "22:00",
+        "location": "MCOY 152"
+      },
+      {
+        "section": "20",
+        "days": [
+          3
+        ],
+        "startTime": "19:10",
+        "endTime": "22:00",
+        "location": "MCOY 153"
+      },
+      {
+        "section": "21",
+        "days": [
+          4
+        ],
+        "startTime": "15:10",
+        "endTime": "18:00",
+        "location": "MCOY 152"
+      }
+    ],
+    "labCredits": 1
+  },
+  {
+    "code": "BIOLOGY 120",
+    "name": "Biology of Plants",
+    "credits": 4,
+    "mode": "lecture",
+    "sections": [
+      {
+        "section": "01",
+        "days": [
+          0,
+          2,
+          4
+        ],
+        "startTime": "10:10",
+        "endTime": "11:00",
+        "location": "CARP 102"
+      }
+    ],
+    "labs": [
+      {
+        "section": "01",
+        "days": [
+          1
+        ],
+        "startTime": "09:10",
+        "endTime": "12:00",
+        "location": "EAST G0099"
+      },
+      {
+        "section": "02",
+        "days": [
+          1
+        ],
+        "startTime": "14:55",
+        "endTime": "17:45",
+        "location": "EAST G0099"
+      },
+      {
+        "section": "03",
+        "days": [
+          1
+        ],
+        "startTime": "19:05",
+        "endTime": "21:55",
+        "location": "EAST G0099"
+      },
+      {
+        "section": "04",
+        "days": [
+          3
+        ],
+        "startTime": "14:55",
+        "endTime": "17:45",
+        "location": "EAST G0099"
+      }
+    ],
+    "labCredits": 1
+  },
+  {
+    "code": "BIOLOGY 140",
+    "name": "The Power of Food, The Science of Nutrition",
+    "credits": 3,
+    "mode": "lecture",
+    "sections": [
+      {
+        "section": "01",
+        "days": [
+          1,
+          3
+        ],
+        "startTime": "13:30",
+        "endTime": "14:45",
+        "location": "TODD 116"
+      }
+    ]
+  },
+  {
     "code": "CHE 101",
     "name": "Overview of Chemical Engineering",
     "credits": 1,
