@@ -1476,7 +1476,7 @@ class CalendarApp {
     _preparePrint() {
         // Re-render events at print scale with percentage positioning
         const savedHourH = this.HOUR_HEIGHT;
-        this.HOUR_HEIGHT = 30;
+        this.HOUR_HEIGHT = 36;
         this._printing = true;
         this._renderEvents();
 
