@@ -137,8 +137,8 @@ body {
     padding: 8px; font-size: 0.8rem; border-radius: var(--radius-sm);
 }
 #onboarding-start-btn:hover { background: var(--brand-dark); }
-#onboarding-dismiss-btn { width: 100%; text-align: center; cursor: pointer; border: none; }
-#onboarding-reopen-btn { cursor: pointer; width: 100%; text-align: left; border: none; }
+#onboarding-dismiss-btn { width: 100%; text-align: center; cursor: pointer; border: none; color: var(--brand-dark); }
+#onboarding-reopen-btn { cursor: pointer; width: 100%; text-align: left; border: none; color: #E8A0AD; }
 #onboarding-content.hidden { display: none; }
 #onboarding-reopen-btn.hidden { display: none; }
 
