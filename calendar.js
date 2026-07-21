@@ -109,6 +109,12 @@ class CalendarApp {
             prevWeek: id('prev-week'),
             nextWeek: id('next-week'),
             todayBtn: id('today-btn'),
+
+            // Onboarding
+            onboardingContent: id('onboarding-content'),
+            onboardingDismiss: id('onboarding-dismiss-btn'),
+            onboardingReopen: id('onboarding-reopen-btn'),
+            onboardingStart: id('onboarding-start-btn'),
         };
     }
 
@@ -160,6 +166,9 @@ class CalendarApp {
             setTimeout(() => window.print(), 100);
         });
         this.els.clearBtn.addEventListener('click', () => this._clearAll());
+
+        // Onboarding
+        this._initOnboarding();
 
         // Modal
         this.els.saveEventBtn.addEventListener('click', () => this._saveEventFromModal());
@@ -1734,6 +1743,60 @@ class CalendarApp {
         };
 
         reader.readAsText(file);
+    }
+
+    // ═══════════════════════════════════════════
+    //  ONBOARDING
+    // ═══════════════════════════════════════════
+    _initOnboarding() {
+        const STORAGE_KEY = 'wsu_calendar_onboarded';
+        if (localStorage.getItem(STORAGE_KEY)) {
+            // Already onboarded — show compact reopen button
+            this.els.onboardingContent.classList.add('hidden');
+            this.els.onboardingReopen.classList.remove('hidden');
+        } else {
+            // First visit — show full onboarding
+            this.els.onboardingReopen.classList.add('hidden');
+        }
+
+        this.els.onboardingDismiss.addEventListener('click', () => {
+            this.els.onboardingContent.classList.add('hidden');
+            this.els.onboardingReopen.classList.remove('hidden');
+            localStorage.setItem(STORAGE_KEY, '1');
+        });
+
+        this.els.onboardingReopen.addEventListener('click', () => {
+            this.els.onboardingContent.classList.remove('hidden');
+            this.els.onboardingReopen.classList.add('hidden');
+        });
+
+        this.els.onboardingStart.addEventListener('click', () => this._loadBasics());
+    }
+
+    _loadBasics() {
+        // Pre-load Sleep, Meals, and Personal Care for all 7 days
+        const add = (ev) => { this.events.push({ id: ++this.eventIdCounter, ...ev }); };
+
+        const dayNames = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+        // Sleep: 11 PM – 7 AM each day
+        for (let d = 0; d < 7; d++) {
+            add({ title: 'Sleep (' + dayNames[d] + ')', type: 'sleep', day: d, startHour: 23, endHour: 24, location: '', notes: '' });
+            add({ title: 'Sleep (' + dayNames[(d+1)%7] + ')', type: 'sleep', day: (d+1)%7, startHour: 0, endHour: 7, location: '', notes: '' });
+        }
+        // Meals: 1h blocks around noon and evening
+        for (let d = 0; d < 7; d++) {
+            add({ title: 'Lunch', type: 'meal', day: d, startHour: 12, endHour: 13, location: '', notes: '' });
+            add({ title: 'Dinner', type: 'meal', day: d, startHour: 18, endHour: 19, location: '', notes: '' });
+        }
+        // Personal care: 30 min each morning
+        for (let d = 0; d < 7; d++) {
+            add({ title: 'Personal Care', type: 'care', day: d, startHour: 7, endHour: 7.5, location: '', notes: '' });
+        }
+
+        this._renderAll();
+        this.els.onboardingContent.classList.add('hidden');
+        this.els.onboardingReopen.classList.remove('hidden');
+        localStorage.setItem('wsu_calendar_onboarded', '1');
     }
 
     _clearAll() {

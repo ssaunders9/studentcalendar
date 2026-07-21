@@ -116,6 +116,32 @@ body {
 }
 #sidebar-header h1::before { content: '📅'; font-size: 1.3rem; }
 
+/* Onboarding */
+#onboarding-section {
+    background: var(--brand-light);
+    border: 1px solid rgba(152,30,50,.2);
+    border-radius: var(--radius-sm);
+    padding: 14px 18px;
+    margin: 0 0 8px 0;
+    color: var(--brand-dark);
+}
+#onboarding-section h2 {
+    font-size: 0.82rem; color: var(--brand-dark); margin-bottom: 6px;
+    border: none; padding: 0; text-transform: none; letter-spacing: 0;
+}
+#onboarding-section p { font-size: 0.78rem; margin-bottom: 4px; line-height: 1.4; }
+#onboarding-section li { margin-bottom: 2px; }
+#onboarding-start-btn {
+    width: 100%; margin-top: 8px;
+    background: var(--brand); color: #fff; font-weight: 600;
+    padding: 8px; font-size: 0.8rem; border-radius: var(--radius-sm);
+}
+#onboarding-start-btn:hover { background: var(--brand-dark); }
+#onboarding-dismiss-btn { width: 100%; text-align: center; cursor: pointer; border: none; }
+#onboarding-reopen-btn { cursor: pointer; width: 100%; text-align: left; border: none; }
+#onboarding-content.hidden { display: none; }
+#onboarding-reopen-btn.hidden { display: none; }
+
 #sidebar section {
     padding: 16px 20px;
     border-bottom: 1px solid var(--sidebar-border);

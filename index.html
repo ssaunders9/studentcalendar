@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Week Scheduler</title>
-    <link rel="stylesheet" href="calendar.css?v=91">
+    <link rel="stylesheet" href="calendar.css?v=92">
 </head>
 <body>
     <a href="#calendar-main" class="skip-link">Skip to calendar</a>
@@ -14,6 +14,24 @@
             <div id="sidebar-header">
                 <h1>Week Scheduler</h1>
             </div>
+
+            <!-- Onboarding -->
+            <section id="onboarding-section" aria-labelledby="onboarding-heading">
+                <h2 id="onboarding-heading">🎓 Welcome, Coug!</h2>
+                <div id="onboarding-content">
+                    <p>Your goal: <strong>build a weekly schedule that gets all greens ✓</strong> on the Wellness Check.</p>
+                    <ol style="padding-left:16px;margin:8px 0;font-size:0.8rem;line-height:1.5;">
+                        <li><strong>Add your courses</strong> — use the catalog below</li>
+                        <li><strong>Fill in your week</strong> — Quick Add meals, sleep, study time, clubs, exercise</li>
+                        <li><strong>Run Wellness Check</strong> — fix any ⚠ warnings until everything is ✓</li>
+                        <li><strong>Export PDF</strong> to turn in and carry a paper copy</li>
+                        <li><strong>Save your work</strong> (Export JSON) so you can come back later</li>
+                    </ol>
+                    <button type="button" id="onboarding-start-btn">🚀 Load Basics (Sleep, Meals, Care)</button>
+                    <button type="button" id="onboarding-dismiss-btn" style="background:none;color:#8E959C;font-size:0.75rem;margin-top:6px;">Dismiss</button>
+                </div>
+                <button type="button" id="onboarding-reopen-btn" class="hidden" style="background:none;color:var(--brand);font-size:0.75rem;padding:0;" aria-label="Show instructions">📖 How do I use this?</button>
+            </section>
 
             <!-- Course Input -->
             <section id="course-section" aria-labelledby="courses-heading">
@@ -229,6 +247,6 @@
     </div>
 
     <script src="coursesData.js?v=28"></script>
-    <script src="calendar.js?v=96"></script>
+    <script src="calendar.js?v=97"></script>
 </body>
 </html>
