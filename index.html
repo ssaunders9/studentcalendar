@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Week Scheduler</title>
-    <link rel="stylesheet" href="calendar.css?v=90">
+    <link rel="stylesheet" href="calendar.css?v=91">
 </head>
 <body>
     <a href="#calendar-main" class="skip-link">Skip to calendar</a>
@@ -16,15 +16,15 @@
             </div>
 
             <!-- Course Input -->
-            <section id="course-section">
-                <h2><span aria-hidden="true">📚</span> Courses</h2>
+            <section id="course-section" aria-labelledby="courses-heading">
+                <h2 id="courses-heading"><span aria-hidden="true">📚</span> Courses</h2>
                 <button type="button" id="add-course-btn">+ Add Course</button>
                 <div id="course-list"></div>
             </section>
 
             <!-- Work Toggle -->
-            <section id="work-section">
-                <h2><span aria-hidden="true">💼</span> Work</h2>
+            <section id="work-section" aria-labelledby="work-heading">
+                <h2 id="work-heading"><span aria-hidden="true">💼</span> Work</h2>
                 <label class="toggle-row">
                     <input type="checkbox" id="work-toggle">
                     <span>I work outside of school</span>
@@ -39,8 +39,8 @@
             </section>
 
             <!-- Quick Add -->
-            <section id="quick-add-section">
-                <h2><span aria-hidden="true">⚡</span> Quick Add</h2>
+            <section id="quick-add-section" aria-labelledby="quickadd-heading">
+                <h2 id="quickadd-heading"><span aria-hidden="true">⚡</span> Quick Add</h2>
                 <div class="quick-buttons">
                     <button class="quick-btn meal" data-type="meal">Meal Block</button>
                     <button class="quick-btn sleep" data-type="sleep">Sleep</button>
@@ -55,15 +55,15 @@
             </section>
 
             <!-- Wellness Check -->
-            <section id="wellness-section">
-                <h2><span aria-hidden="true">💚</span> Wellness Check</h2>
+            <section id="wellness-section" aria-labelledby="wellness-heading">
+                <h2 id="wellness-heading"><span aria-hidden="true">💚</span> Wellness Check</h2>
                 <button type="button" id="wellness-btn">Run Check-In</button>
                 <div id="wellness-results" class="hidden" role="status" aria-live="polite" aria-atomic="true"></div>
             </section>
 
             <!-- Save/Load -->
-            <section id="save-section">
-                <h2><span aria-hidden="true">💾</span> Save & Load</h2>
+            <section id="save-section" aria-labelledby="save-heading">
+                <h2 id="save-heading"><span aria-hidden="true">💾</span> Save & Load</h2>
                 <div class="save-buttons">
                     <button type="button" id="export-btn">Export</button>
                     <label for="import-file" class="import-label" tabindex="0" role="button" aria-label="Import schedule file">Import</label>
@@ -107,7 +107,10 @@
                     <option value="">-- Select prefix --</option>
                 </select>
             </div>
-            <div id="course-catalog-list" class="course-catalog-list"></div>
+            <fieldset id="course-catalog-fieldset" style="border:none;padding:0;margin:0;">
+                <legend class="sr-only">Select a course section</legend>
+                <div id="course-catalog-list" class="course-catalog-list" role="radiogroup" aria-label="Course sections"></div>
+            </fieldset>
             <div id="course-lab-section" class="hidden">
                 <div class="form-row">
                     <label for="course-lab-select">Select lab section</label>
@@ -226,6 +229,6 @@
     </div>
 
     <script src="coursesData.js?v=28"></script>
-    <script src="calendar.js?v=95"></script>
+    <script src="calendar.js?v=96"></script>
 </body>
 </html>

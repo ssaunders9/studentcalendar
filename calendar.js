@@ -176,7 +176,10 @@ class CalendarApp {
 
         // Keyboard
         document.addEventListener('keydown', e => {
-            if (e.key === 'Escape') this._closeModal();
+            if (e.key === 'Escape') {
+                if (!this.els.courseModal.classList.contains('hidden')) this._closeCourseModal();
+                if (!this.els.modal.classList.contains('hidden')) this._closeModal();
+            }
         });
 
         // Re-render events on window resize (column positions change)
@@ -447,12 +450,15 @@ class CalendarApp {
 
         // Content
         const timeStr = this._formatTimeRange(ev.startHour, ev.endHour);
-        let html = `<div class="event-title">${this._escHtml(ev.title)} <span class="event-time">${timeStr}</span></div>`;
+        const conflictIcon = ev._conflict ? ' ⚠' : '';
+        let html = `<div class="event-title">${this._escHtml(ev.title)}${conflictIcon} <span class="event-time">${timeStr}</span></div>`;
         if (ev.location) {
             html += `<div class="event-location">📍 ${this._escHtml(ev.location)}</div>`;
         }
         // Quick-delete button
-        html += `<button class="event-delete-btn" title="Delete ${this._escHtml(ev.title)}" aria-label="Delete ${this._escHtml(ev.title)}">×</button>`;
+        const dayNames = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+        const delLabel = `Delete ${ev.title} (${dayNames[ev.day]})`;
+        html += `<button class="event-delete-btn" title="${delLabel}" aria-label="${delLabel}">×</button>`;
         el.innerHTML = html;
 
         // Delete button click handler
