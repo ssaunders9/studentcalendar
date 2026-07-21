@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Week Scheduler</title>
-    <link rel="stylesheet" href="calendar.css?v=88">
+    <link rel="stylesheet" href="calendar.css?v=89">
 </head>
 <body>
     <a href="#calendar-main" class="skip-link">Skip to calendar</a>
@@ -123,11 +123,11 @@
             </div>
             <div id="course-manual" class="hidden">
                 <div class="form-row">
-                    <input type="text" id="course-code" placeholder="Course code (e.g. CHE 101)" required>
-                    <input type="text" id="course-name" placeholder="Course name" required>
+                    <input type="text" id="course-code" placeholder="Course code (e.g. CHE 101)" aria-label="Course code" required>
+                    <input type="text" id="course-name" placeholder="Course name" aria-label="Course name" required>
                 </div>
                 <div class="form-row">
-                    <select id="course-days">
+                    <select id="course-days" aria-label="Meeting days">
                         <option value="MWF">Mon/Wed/Fri</option>
                         <option value="TTh">Tue/Thu</option>
                         <option value="MW">Mon/Wed</option>
@@ -140,20 +140,20 @@
                     </select>
                 </div>
                 <div class="form-row time-row">
-                    <input type="time" id="course-start" value="09:00" required>
+                    <input type="time" id="course-start" value="09:00" aria-label="Start time" required>
                     <span>to</span>
-                    <input type="time" id="course-end" value="09:50" required>
+                    <input type="time" id="course-end" value="09:50" aria-label="End time" required>
                 </div>
                 <div class="form-row">
-                    <input type="number" id="course-credits" placeholder="Credits" min="1" max="6" value="3" required>
-                    <select id="course-mode">
+                    <input type="number" id="course-credits" placeholder="Credits" min="1" max="6" value="3" aria-label="Credits" required>
+                    <select id="course-mode" aria-label="Course mode">
                         <option value="lecture">Lecture</option>
                         <option value="lab">Lab</option>
                         <option value="studio">Studio</option>
                     </select>
                 </div>
                 <div class="form-row">
-                    <input type="text" id="course-location" placeholder="Location">
+                    <input type="text" id="course-location" placeholder="Location" aria-label="Location">
                 </div>
             </div>
 
@@ -226,6 +226,6 @@
     </div>
 
     <script src="coursesData.js?v=28"></script>
-    <script src="calendar.js?v=93"></script>
+    <script src="calendar.js?v=94"></script>
 </body>
 </html>

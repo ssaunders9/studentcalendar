@@ -287,8 +287,8 @@ button:active { transform: scale(0.97); }
 .course-item .course-code { font-weight: 700; color: #E0E2F2; }
 .course-item .course-meta { font-size: 0.71rem; color: var(--sidebar-heading); margin-top: 2px; }
 .course-item .remove-course {
-    background: none; color: #F87171; padding: 4px 8px;
-    font-size: 0.85rem; border-radius: 4px; opacity: 0.7;
+    background: none; color: #FCA5A5; padding: 4px 8px;
+    font-size: 0.85rem; border-radius: 4px; opacity: 0.85;
     transition: opacity 0.15s, background 0.15s;
 }
 .course-item:hover .remove-course { opacity: 1; }

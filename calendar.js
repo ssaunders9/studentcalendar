@@ -361,7 +361,9 @@ class CalendarApp {
 
         this.els.eventsLayer.innerHTML = '';
 
-        for (const ev of this.events) {
+        // Sort events by day then startHour so tab order follows visual layout
+        const sorted = [...this.events].sort((a, b) => a.day - b.day || a.startHour - b.startHour);
+        for (const ev of sorted) {
             const el = this._createEventElement(ev);
             this.els.eventsLayer.appendChild(el);
         }
@@ -427,7 +429,7 @@ class CalendarApp {
             html += `<div class="event-location">📍 ${this._escHtml(ev.location)}</div>`;
         }
         // Quick-delete button
-        html += '<button class="event-delete-btn" title="Delete event" aria-label="Delete event">×</button>';
+        html += `<button class="event-delete-btn" title="Delete ${this._escHtml(ev.title)}" aria-label="Delete ${this._escHtml(ev.title)}">×</button>`;
         el.innerHTML = html;
 
         // Delete button click handler
@@ -808,20 +810,21 @@ class CalendarApp {
 
         const modeLabels = { lecture: 'Lec', lab: 'Lab', studio: 'Stu' };
 
-        let html = '';
+        let html = '<ul style="list-style:none;padding:0;margin:0;" role="list">';
         for (const c of this.courses) {
             const modeLabel = modeLabels[c.mode] || '';
             const creditsStr = (c.credits || 3) + 'cr';
             const timeStr = this._meetingsToString(c.meetings);
             html += `
-                <div class="course-item ${this._getDeptClass(c.code)}">
+                <li class="course-item ${this._getDeptClass(c.code)}">
                     <div class="course-info">
                         <div class="course-code">${this._escHtml(c.code)}</div>
                         <div class="course-meta">${modeLabel} ${creditsStr} · ${this._escHtml(c.name)} · ${timeStr}</div>
                     </div>
-                    <button class="remove-course" data-course-id="${c.id}" title="Remove course">✕</button>
-                </div>`;
+                    <button class="remove-course" data-course-id="${c.id}" title="Remove ${this._escHtml(c.code)}" aria-label="Remove ${this._escHtml(c.code)}">✕</button>
+                </li>`;
         }
+        html += '</ul>';
         this.els.courseList.innerHTML = html;
 
         // Bind remove buttons
