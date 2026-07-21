@@ -1,6 +1,33 @@
-# Copilot Instructions — Student Week Scheduler
+# Copilot Instructions
 
-## Overview
+## Workspace Context
+
+This repo is part of a larger faculty workspace for teaching, department service, and research at WSU's Voiland School of Chemical Engineering and Bioengineering (VSCEB). The parent workspace repo is at `https://github.com/ssaunders9/workspace`.
+
+## Naming Conventions (Strictly Enforced)
+
+- **Underscores only, never spaces**: `CHE_441/`, `retention_analysis.py`, `syllabus_2026.pdf`
+- **Meta/non-primary folders prefixed with `_`**: `_Archive/`, `_Drafts/`, `_Scripts/`
+- **Content folders unprefixed**: `Syllabus/`, `Assets/`, `Canvas_Pages/`
+- **Course codes**: space in code (`CHE 101`), underscore in folder name (`CHE_441/`)
+
+## Python Environment
+
+When running Python scripts (e.g., `rebuild_catalog.py`): use `.venv/bin/python` from the workspace root. Key packages: `pandas`, `numpy`, `scipy`, `matplotlib`, `python-docx`, `openpyxl`, `Pillow`, `cv2`, `pytesseract`, `rdkit`, `pymupdf`.
+
+## Response Style
+
+**When asked what to work on, or when a session involves a multi-step task, always respond with a numbered list.** Each item should be one actionable thing. Do not combine multiple changes into one list item. The list is the working agenda — the user picks items from it to execute one at a time.
+
+## Patterns & Conventions
+
+- **Backups are component-local with timestamped names** — never overwrite an existing backup.
+- **`_Archive/` and `_Drafts/` are not authoritative** — always edit the non-prefixed sibling.
+- **Before editing, inspect the nearby README, local scripts, and canonical source file** so changes match local conventions.
+- **Do not consolidate duplicated images, reorganize archives, or clean generated files** unless explicitly asked.
+- **Check before re-running a long or resource-heavy script** — confirm it isn't already running, rather than launching another one reflexively.
+
+## Project: Student Week Scheduler
 
 A draggable weekly calendar app for WSU engineering students to plan their semester schedule. Single-page web app served statically — no build step, no framework.
 
