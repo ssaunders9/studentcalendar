@@ -145,6 +145,16 @@ class CalendarApp {
         // Save/Load
         this.els.exportBtn.addEventListener('click', () => this._exportData());
         this.els.importFile.addEventListener('change', e => this._importData(e));
+        // Make import label keyboard-activatable
+        const importLabel = document.querySelector('.import-label');
+        if (importLabel) {
+            importLabel.addEventListener('keydown', e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.els.importFile.click();
+                }
+            });
+        }
         this.els.printBtn.addEventListener('click', () => {
             try { this._preparePrint(); } catch(e) {}
             setTimeout(() => window.print(), 100);
@@ -240,10 +250,23 @@ class CalendarApp {
         const closeBtn = this.els.modal.querySelector('.modal-close-btn');
         if (closeBtn) closeBtn.addEventListener('click', () => this._closeModal());
 
-        // Focus trap in modal
+        // Focus trap in event modal
         this.els.modal.addEventListener('keydown', e => {
             if (e.key !== 'Tab' || this.els.modal.classList.contains('hidden')) return;
             const focusable = this.els.modal.querySelectorAll(
+                'input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+            );
+            if (focusable.length === 0) return;
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+            if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+            else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        });
+
+        // Focus trap in course modal
+        this.els.courseModal.addEventListener('keydown', e => {
+            if (e.key !== 'Tab' || this.els.courseModal.classList.contains('hidden')) return;
+            const focusable = this.els.courseModal.querySelectorAll(
                 'input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex]:not([tabindex="-1"])'
             );
             if (focusable.length === 0) return;
