@@ -100,6 +100,7 @@ class CalendarApp {
             eventStart: id('event-start'),
             eventEnd: id('event-end'),
             eventLocation: id('event-location'),
+            eventCourse: id('event-course'),
             eventNotes: id('event-notes'),
             saveEventBtn: id('save-event-btn'),
             cancelEventBtn: id('cancel-event-btn'),
@@ -1103,6 +1104,7 @@ class CalendarApp {
         this.els.eventStart.value = this._decimalToTimeString(startH);
         this.els.eventEnd.value = this._decimalToTimeString(endH);
         this.els.eventLocation.value = '';
+        this._populateEventCourses('');
         this.els.eventNotes.value = '';
         this.els.deleteEventBtn.classList.add('hidden');
         this.els.eventStart.disabled = false;
@@ -1132,6 +1134,7 @@ class CalendarApp {
         this.els.eventStart.value = this._decimalToTimeString(ev.startHour);
         this.els.eventEnd.value = this._decimalToTimeString(ev.endHour);
         this.els.eventLocation.value = ev.location || '';
+        this._populateEventCourses(ev.courseId || '');
         this.els.eventNotes.value = ev.notes || '';
         this.els.deleteEventBtn.classList.remove('hidden');
 
@@ -1155,6 +1158,18 @@ class CalendarApp {
         if (this._modalTrigger) { this._modalTrigger.focus(); this._modalTrigger = null; }
     }
 
+    _populateEventCourses(selectedId) {
+        const select = this.els.eventCourse;
+        select.innerHTML = '<option value="">General / no specific course</option>';
+        for (const course of this.courses) {
+            const option = document.createElement('option');
+            option.value = course.id;
+            option.textContent = course.code;
+            option.selected = String(course.id) === String(selectedId);
+            select.appendChild(option);
+        }
+    }
+
     _saveEventFromModal() {
         const title = this.els.eventTitle.value.trim();
         if (!title) return;
@@ -1163,6 +1178,7 @@ class CalendarApp {
         const startHour = this._timeToDecimal(this.els.eventStart.value);
         const endHour = this._timeToDecimal(this.els.eventEnd.value);
         const location = this.els.eventLocation.value.trim();
+        const courseId = this.els.eventCourse.value ? parseInt(this.els.eventCourse.value, 10) : null;
         const notes = this.els.eventNotes.value.trim();
 
         if (endHour <= startHour) {
@@ -1179,6 +1195,7 @@ class CalendarApp {
                 ev.startHour = startHour;
                 ev.endHour = endHour;
                 ev.location = location;
+                ev.courseId = courseId;
                 ev.notes = notes;
             }
         } else {
@@ -1197,7 +1214,7 @@ class CalendarApp {
             this.events.push({
                 id: ++this.eventIdCounter,
                 title, type, day,
-                startHour, endHour, location, notes,
+                startHour, endHour, location, courseId, notes,
             });
         }
 
