@@ -231,13 +231,12 @@ class CalendarApp {
             } else if (e.key === 'Delete' || e.key === 'Backspace') {
                 e.preventDefault();
                 const event = this.events.find(ev => ev.id === eventId);
-                if (event?.locked) {
-                    this._showLockToast(block);
-                    return;
-                }
                 if (confirm('Delete this event?')) {
-                    this.events = this.events.filter(ev => ev.id !== eventId);
-                    this._renderAll();
+                    if (event?.courseId != null) this._removeCourse(event.courseId);
+                    else {
+                        this.events = this.events.filter(ev => ev.id !== eventId);
+                        this._renderAll();
+                    }
                 }
             } else if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
                 e.preventDefault();
@@ -469,23 +468,22 @@ class CalendarApp {
         if (ev.location) {
             html += `<div class="event-location">📍 ${this._escHtml(ev.location)}</div>`;
         }
-        // Quick-delete button is available only for user-created events.
-        if (!ev.locked) {
-            const dayNames = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-            const delLabel = `Delete ${ev.title} (${dayNames[ev.day]})`;
-            html += `<button class="event-delete-btn" title="${delLabel}" aria-label="${delLabel}">×</button>`;
-        }
+        // X removes a user event or the complete linked course registration.
+        const dayNames = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+        const delLabel = ev.courseId != null
+            ? `Remove course ${ev.title} (${dayNames[ev.day]})`
+            : `Delete ${ev.title} (${dayNames[ev.day]})`;
+        html += `<button class="event-delete-btn" title="${delLabel}" aria-label="${delLabel}">×</button>`;
         el.innerHTML = html;
 
         // Delete button click handler
         el.querySelector('.event-delete-btn').addEventListener('click', (e) => {
             e.stopPropagation();
-            if (ev.locked) {
-                this._showLockToast(el);
-                return;
+            if (ev.courseId != null) this._removeCourse(ev.courseId);
+            else {
+                this.events = this.events.filter(e => e.id !== ev.id);
+                this._renderAll();
             }
-            this.events = this.events.filter(e => e.id !== ev.id);
-            this._renderAll();
         });
 
         // Resize handle (only for non-locked events)
@@ -1135,7 +1133,7 @@ class CalendarApp {
         this.els.eventEnd.value = this._decimalToTimeString(ev.endHour);
         this.els.eventLocation.value = ev.location || '';
         this.els.eventNotes.value = ev.notes || '';
-        this.els.deleteEventBtn.classList.toggle('hidden', ev.locked);
+        this.els.deleteEventBtn.classList.remove('hidden');
 
         // Lock time/type fields for course-scheduled events
         this.els.eventStart.disabled = ev.locked;
@@ -1210,14 +1208,10 @@ class CalendarApp {
     _deleteEventFromModal() {
         if (this._editingEventId === null) return;
 
-        const event = this.events.find(ev => ev.id === this._editingEventId);
-        if (event?.locked) {
-            this._closeModal();
-            return;
-        }
-
         if (confirm('Delete this event?')) {
-            this.events = this.events.filter(ev => ev.id !== this._editingEventId);
+            const event = this.events.find(ev => ev.id === this._editingEventId);
+            if (event?.courseId != null) this._removeCourse(event.courseId);
+            else this.events = this.events.filter(ev => ev.id !== this._editingEventId);
             this._closeModal();
             this._renderAll();
         }
