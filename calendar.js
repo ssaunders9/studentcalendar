@@ -737,11 +737,9 @@ class CalendarApp {
             difficulty, credits, mode,
         };
 
-        this.courses.push(course);
-        const lectureConflicts = this._scheduleCourse(course);
+        const pendingCourses = [course];
 
         // Schedule lab if applicable
-        let labConflicts = null;
         if (catalog && catalog.labSection) {
             const labCourse = {
                 id: ++this.eventIdCounter,
@@ -753,12 +751,23 @@ class CalendarApp {
                 credits: catalog.course.labCredits || 1,
                 mode: 'lab',
             };
-            this.courses.push(labCourse);
-            labConflicts = this._scheduleCourse(labCourse);
+            pendingCourses.push(labCourse);
         }
 
+        // Build and validate the complete registration before committing either
+        // course records or events. Conflicts are warnings, not blockers.
+        const pendingEvents = [];
+        const allConflicts = [];
+        for (const pendingCourse of pendingCourses) {
+            const result = this._scheduleCourse(pendingCourse, [...this.events, ...pendingEvents]);
+            pendingEvents.push(...result.events);
+            allConflicts.push(...result.conflicts);
+        }
+
+        this.courses.push(...pendingCourses);
+        this.events.push(...pendingEvents);
+
         // If there were conflicts, show them in the modal — don't close it
-        const allConflicts = [...(lectureConflicts || []), ...(labConflicts || [])];
         if (allConflicts.length > 0) {
             this.els.courseModalMsg.innerHTML = '⚠️ Added with time conflict(s):<br>' + allConflicts.join('<br>');
             this.els.courseModalMsg.classList.remove('hidden');
@@ -771,7 +780,7 @@ class CalendarApp {
         this._renderAll();
     }
 
-    _scheduleCourse(course) {
+    _scheduleCourse(course, existingEvents = this.events) {
         const eventsToAdd = [];
         const meetings = course.meetings || [];
         for (const mtg of meetings) {
@@ -794,7 +803,7 @@ class CalendarApp {
         }
 
         // Check conflicts: new events vs existing AND new events vs each other
-        const allEvents = [...this.events];
+        const allEvents = [...existingEvents];
         const conflicts = [];
         const seenPairs = new Set();
         for (const ev of eventsToAdd) {
@@ -822,14 +831,7 @@ class CalendarApp {
             }
         }
 
-        if (unique.length > 0) {
-            return unique; // return conflicts for caller to display
-        }
-
-        for (const ev of eventsToAdd) {
-            this.events.push(ev);
-        }
-        return null; // no conflicts
+        return { events: eventsToAdd, conflicts: unique };
     }
 
     _removeCourse(courseId) {
