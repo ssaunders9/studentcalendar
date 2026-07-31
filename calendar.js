@@ -1261,12 +1261,11 @@ class CalendarApp {
             else if (ev.type === 'care') careH += d;
         }
 
-        // Expected study: lecture × 2, studio × 1, lab × 0
+        // Expected study: WSU mode standard × difficulty multiplier
         let expectedStudy = 0;
         for (const c of this.courses) {
             const cr = c.credits || 3;
-            if ((c.mode || 'lecture') === 'lecture') expectedStudy += cr * 2;
-            else if (c.mode === 'studio') expectedStudy += cr * 1;
+            expectedStudy += cr * this._outsidePerCredit(c.mode || 'lecture') * this._difficultyMultiplier(c.difficulty);
         }
 
         const totalCredits = this.courses.reduce((s, c) => s + (c.credits || 3), 0);
@@ -1292,6 +1291,19 @@ class CalendarApp {
         } else {
             checks.push({ label: 'Study', level: 'good' });
         }
+
+        // Office hours: count only explicitly associated events when possible.
+        const coursesNeedingOfficeHours = this.courses.filter(c => this._expectedOfficeHours(c.difficulty) > 0);
+        const officeHours = this.events.filter(ev => ev.type === 'office');
+        const missingOfficeHours = coursesNeedingOfficeHours.some(course => {
+            const required = this._expectedOfficeHours(course.difficulty);
+            const matching = officeHours.filter(ev =>
+                ev.courseId === course.id ||
+                (ev.courseId == null && (ev.title || '').toLowerCase().includes(course.code.toLowerCase()))
+            );
+            return matching.reduce((sum, ev) => sum + ev.endHour - ev.startHour, 0) < required * 0.5;
+        });
+        checks.push({ label: 'Office hours', level: missingOfficeHours ? 'warn' : 'good' });
 
         // Work
         if (this.workSettings.active) {
