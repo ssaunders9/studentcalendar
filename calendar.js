@@ -762,7 +762,15 @@ class CalendarApp {
                 invalid.focus();
                 return;
             }
-            credits = parseInt(this.els.courseCredits.value) || 3;
+            credits = Number(this.els.courseCredits.value);
+            if (!Number.isInteger(credits) || credits < 0 || credits > 6) {
+                this.els.courseCredits.setAttribute('aria-invalid', 'true');
+                this.els.courseModalMsg.textContent = 'Credits must be a whole number from 0 to 6.';
+                this.els.courseModalMsg.classList.remove('hidden');
+                this.els.courseCredits.focus();
+                return;
+            }
+            this.els.courseCredits.removeAttribute('aria-invalid');
             mode = this.els.courseMode.value || 'lecture';
             days = this._parseDays(this.els.courseDays.value);
             startTime = this.els.courseStart.value;
@@ -938,7 +946,7 @@ class CalendarApp {
         let html = '<ul style="list-style:none;padding:0;margin:0;" role="list">';
         for (const c of this.courses) {
             const modeLabel = modeLabels[c.mode] || '';
-            const creditsStr = (c.credits || 3) + 'cr';
+            const creditsStr = (c.credits ?? 3) + 'cr';
             const timeStr = this._meetingsToString(c.meetings);
             html += `
                 <li class="course-item ${this._getDeptClass(c.code)}">
@@ -1336,11 +1344,11 @@ class CalendarApp {
         // Expected study: WSU mode standard × difficulty multiplier
         let expectedStudy = 0;
         for (const c of this.courses) {
-            const cr = c.credits || 3;
+            const cr = c.credits ?? 3;
             expectedStudy += cr * this._outsidePerCredit(c.mode || 'lecture') * this._difficultyMultiplier(c.difficulty);
         }
 
-        const totalCredits = this.courses.reduce((s, c) => s + (c.credits || 3), 0);
+        const totalCredits = this.courses.reduce((s, c) => s + (c.credits ?? 3), 0);
         const busyHours = classH + workH + studyH;
 
         // Meals
@@ -1514,7 +1522,7 @@ class CalendarApp {
         const ohWarnings = [];
 
         for (const course of this.courses) {
-            const cr = course.credits || 3;
+            const cr = course.credits ?? 3;
             const outsidePerCr = this._outsidePerCredit(course.mode || 'lecture');
             const mult = this._difficultyMultiplier(course.difficulty);
             const expectedStudy = cr * outsidePerCr * mult;
@@ -1547,7 +1555,7 @@ class CalendarApp {
 
             let studyDetail = '';
             for (const course of this.courses) {
-                const cr = course.credits || 3;
+                const cr = course.credits ?? 3;
                 const exp = cr * this._outsidePerCredit(course.mode || 'lecture') * this._difficultyMultiplier(course.difficulty);
                 studyDetail += `${course.code}: ${exp.toFixed(1)}h/wk expected · `;
             }
@@ -1576,7 +1584,7 @@ class CalendarApp {
             const modeLabels = { lecture: 'Lecture', lab: 'Lab', studio: 'Studio' };
             const courseSummary = this.courses.map(c => {
                 const m = modeLabels[c.mode] || 'Lecture';
-                return `${c.code} (${m}, ${c.credits || 3}cr, ${c.difficulty})`;
+                return `${c.code} (${m}, ${c.credits ?? 3}cr, ${c.difficulty})`;
             }).join(' · ');
             results.push({ icon: '📚', text: '<strong>Courses:</strong> ' + courseSummary, level: 'good' });
         }
@@ -1590,7 +1598,7 @@ class CalendarApp {
         }
 
         // Credit load check
-        const totalCredits = this.courses.reduce((sum, c) => sum + (c.credits || 3), 0);
+        const totalCredits = this.courses.reduce((sum, c) => sum + (c.credits ?? 3), 0);
         if (totalCredits > 18) {
             results.push({ icon: '📚', text: `<strong>${totalCredits} credits</strong> exceeds the standard 18cr max. This is a heavy load — make sure you can handle it.`, level: 'warn' });
         } else if (totalCredits > 15 && this.workSettings.active && this.workSettings.plannedHours > 10) {

@@ -64,6 +64,15 @@ class CatalogRegressionTests(unittest.TestCase):
                 self.assertGreaterEqual(course.get("labCredits", 0), 0)
                 self.assertLessEqual(course["labCredits"], 6)
 
+    def test_manual_credit_validation_preserves_zero(self):
+        source = (ROOT / "calendar.js").read_text()
+        html = (ROOT / "index.html").read_text()
+        self.assertIn("credits = Number(this.els.courseCredits.value)", source)
+        self.assertIn("credits < 0 || credits > 6", source)
+        self.assertNotIn("parseInt(this.els.courseCredits.value) || 3", source)
+        self.assertIn('id="course-credits"', html)
+        self.assertIn('min="0"', html)
+
 
 if __name__ == "__main__":
     unittest.main()
