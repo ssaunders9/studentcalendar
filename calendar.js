@@ -450,11 +450,11 @@ class CalendarApp {
         el.style.top = top + 'px';
         el.style.height = Math.max(height, 24) + 'px';
 
-        // Stagger identical-position events so they don't fully hide each other
+        // Stagger overlapping events so they don't fully hide each other
         if (ev._stagger > 0) {
-            el.style.marginLeft = (ev._stagger * 8) + 'px';
-            el.style.marginTop = (ev._stagger * 4) + 'px';
-            el.style.zIndex = (4 + ev._stagger);
+            el.style.marginLeft = (ev._stagger * 14) + 'px';
+            el.style.marginTop = (ev._stagger * 8) + 'px';
+            el.style.zIndex = (6 + ev._stagger);
         }
 
         // Content
@@ -714,6 +714,11 @@ class CalendarApp {
             days = this._parseDays(this.els.courseDays.value);
             startTime = this.els.courseStart.value;
             endTime = this.els.courseEnd.value;
+            if (this._timeToDecimal(endTime) <= this._timeToDecimal(startTime)) {
+                this.els.courseModalMsg.textContent = 'End time must be after start time.';
+                this.els.courseModalMsg.classList.remove('hidden');
+                return;
+            }
             location = this.els.courseLocation.value.trim();
             meetings = [{ days, startTime, endTime, location }];
         }
@@ -733,8 +738,10 @@ class CalendarApp {
         };
 
         this.courses.push(course);
-        this._scheduleCourse(course);
+        const lectureConflicts = this._scheduleCourse(course);
 
+        // Schedule lab if applicable
+        let labConflicts = null;
         if (catalog && catalog.labSection) {
             const labCourse = {
                 id: ++this.eventIdCounter,
@@ -747,7 +754,17 @@ class CalendarApp {
                 mode: 'lab',
             };
             this.courses.push(labCourse);
-            this._scheduleCourse(labCourse);
+            labConflicts = this._scheduleCourse(labCourse);
+        }
+
+        // If there were conflicts, show them in the modal — don't close it
+        const allConflicts = [...(lectureConflicts || []), ...(labConflicts || [])];
+        if (allConflicts.length > 0) {
+            this.els.courseModalMsg.innerHTML = '⚠️ Added with time conflict(s):<br>' + allConflicts.join('<br>');
+            this.els.courseModalMsg.classList.remove('hidden');
+            // Don't close modal — let user see the warning and dismiss manually
+            this._renderAll();
+            return;
         }
 
         this._closeCourseModal();
@@ -806,19 +823,13 @@ class CalendarApp {
         }
 
         if (unique.length > 0) {
-            // Show warning in modal if it's open, otherwise alert
-            const msg = '⚠️ Time conflict: ' + unique.join('; ');
-            if (!this.els.courseModal.classList.contains('hidden')) {
-                this.els.courseModalMsg.innerHTML = msg;
-                this.els.courseModalMsg.classList.remove('hidden');
-            } else {
-                alert(msg);
-            }
+            return unique; // return conflicts for caller to display
         }
 
         for (const ev of eventsToAdd) {
             this.events.push(ev);
         }
+        return null; // no conflicts
     }
 
     _removeCourse(courseId) {
