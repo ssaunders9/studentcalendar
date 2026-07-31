@@ -399,6 +399,34 @@ class CalendarApp {
             }
         }
 
+        // Lay overlapping events side by side instead of hiding them in a stack.
+        for (let day = 0; day < 7; day++) {
+            const dayEvents = this.events.filter(ev => ev.day === day)
+                .sort((a, b) => a.startHour - b.startHour || a.endHour - b.endHour);
+            const components = [];
+            for (const ev of dayEvents) {
+                let component = components.find(group => group.some(other =>
+                    other.startHour < ev.endHour && ev.startHour < other.endHour
+                ));
+                if (!component) {
+                    component = [];
+                    components.push(component);
+                }
+                component.push(ev);
+            }
+            for (const component of components) {
+                const lanes = [];
+                for (const ev of component) {
+                    let lane = lanes.findIndex(end => end <= ev.startHour);
+                    if (lane < 0) { lane = lanes.length; lanes.push(ev.endHour); }
+                    else lanes[lane] = ev.endHour;
+                    ev._conflictLane = lane;
+                    ev._conflictLanes = lanes.length;
+                }
+                for (const ev of component) ev._conflictLanes = lanes.length;
+            }
+        }
+
         this.els.eventsLayer.innerHTML = '';
 
         // Sort events by day then startHour so tab order follows visual layout
@@ -451,6 +479,13 @@ class CalendarApp {
         } else {
             el.style.left = col.left + 'px';
             el.style.width = Math.max(col.width - 4, 20) + 'px';
+        }
+        if (!this._printing && ev._conflictLanes > 1) {
+            const laneWidth = col.width / ev._conflictLanes;
+            el.style.left = (col.left + ev._conflictLane * laneWidth) + 'px';
+            el.style.width = Math.max(laneWidth - 4, 20) + 'px';
+            el.style.marginLeft = '0';
+            el.style.marginTop = '0';
         }
         el.style.top = top + 'px';
         el.style.height = Math.max(height, 24) + 'px';
