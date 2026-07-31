@@ -1741,11 +1741,51 @@ class CalendarApp {
                     throw new Error('File does not contain a valid schedule (missing events array).');
                 }
 
-                // Validate event fields
-                for (const ev of data.events) {
-                    if (typeof ev.day !== 'number' || typeof ev.startHour !== 'number' || typeof ev.endHour !== 'number') {
-                        throw new Error('Events in file are missing required fields (day, startHour, endHour).');
+                const validTypes = new Set(['class', 'meal', 'sleep', 'work', 'club', 'study', 'office', 'exercise', 'care', 'free', 'other']);
+                const eventIds = new Set();
+                for (const importedEvent of data.events) {
+                    if (!Number.isInteger(importedEvent.id) || eventIds.has(importedEvent.id)) {
+                        throw new Error('Events must have unique integer IDs.');
                     }
+                    eventIds.add(importedEvent.id);
+                    if (!Number.isInteger(importedEvent.day) || importedEvent.day < 0 || importedEvent.day > 6) {
+                        throw new Error('Event days must be integers from 0 (Monday) through 6 (Sunday).');
+                    }
+                    if (!Number.isFinite(importedEvent.startHour) || !Number.isFinite(importedEvent.endHour) ||
+                        importedEvent.startHour < 0 || importedEvent.endHour > 24 ||
+                        importedEvent.endHour <= importedEvent.startHour) {
+                        throw new Error('Event times must be within 12 AM–12 AM and end after start.');
+                    }
+                    if (!validTypes.has(importedEvent.type) || typeof importedEvent.title !== 'string') {
+                        throw new Error('Events have an invalid type or title.');
+                    }
+                }
+
+                const importedCourses = data.courses || [];
+                if (!Array.isArray(importedCourses)) throw new Error('Courses must be an array.');
+                const courseIds = new Set();
+                for (const course of importedCourses) {
+                    if (!Number.isInteger(course.id) || courseIds.has(course.id) || typeof course.code !== 'string') {
+                        throw new Error('Courses must have unique integer IDs and course codes.');
+                    }
+                    courseIds.add(course.id);
+                    if (!Number.isFinite(course.credits) || course.credits < 0 || course.credits > 12) {
+                        throw new Error(`Invalid credits for ${course.code}.`);
+                    }
+                    if (!['lecture', 'lab', 'studio'].includes(course.mode)) {
+                        throw new Error(`Invalid course mode for ${course.code}.`);
+                    }
+                }
+                for (const importedEvent of data.events) {
+                    if (importedEvent.courseId != null && !courseIds.has(importedEvent.courseId)) {
+                        throw new Error(`Event ${importedEvent.id} references a missing course.`);
+                    }
+                }
+
+                const settings = data.workSettings || { active: false, plannedHours: 15 };
+                if (typeof settings.active !== 'boolean' || !Number.isFinite(settings.plannedHours) ||
+                    settings.plannedHours < 0 || settings.plannedHours > 80) {
+                    throw new Error('Work settings are invalid.');
                 }
 
                 this.events = data.events;
@@ -1753,9 +1793,10 @@ class CalendarApp {
                 for (const ev of this.events) {
                     if (ev.courseId != null) ev.locked = true;
                 }
-                this.courses = data.courses || [];
-                this.workSettings = data.workSettings || { active: false, plannedHours: 15 };
-                this.eventIdCounter = Math.max(data.eventIdCounter || 0, this.events.length);
+                this.courses = importedCourses;
+                this.workSettings = settings;
+                const maxEventId = this.events.reduce((max, item) => Math.max(max, item.id), 0);
+                this.eventIdCounter = Math.max(Number.isInteger(data.eventIdCounter) ? data.eventIdCounter : 0, maxEventId);
 
                 // Restore work toggle UI
                 if (this.workSettings.active) {
