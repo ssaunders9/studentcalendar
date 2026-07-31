@@ -718,17 +718,36 @@ class CalendarApp {
             // Manual entry
             code = this.els.courseCode.value.trim();
             name = this.els.courseName.value.trim();
-            if (!code || !name) return;
+            if (!code || !name) {
+                const invalid = !code ? this.els.courseCode : this.els.courseName;
+                invalid.setAttribute('aria-invalid', 'true');
+                this.els.courseModalMsg.textContent = !code ? 'Enter a course code.' : 'Enter a course name.';
+                this.els.courseModalMsg.classList.remove('hidden');
+                invalid.focus();
+                return;
+            }
             credits = parseInt(this.els.courseCredits.value) || 3;
             mode = this.els.courseMode.value || 'lecture';
             days = this._parseDays(this.els.courseDays.value);
             startTime = this.els.courseStart.value;
             endTime = this.els.courseEnd.value;
             if (this._timeToDecimal(endTime) <= this._timeToDecimal(startTime)) {
+                this.els.courseStart.setAttribute('aria-invalid', 'true');
+                this.els.courseEnd.setAttribute('aria-invalid', 'true');
                 this.els.courseModalMsg.textContent = 'End time must be after start time.';
                 this.els.courseModalMsg.classList.remove('hidden');
+                this.els.courseEnd.focus();
                 return;
             }
+            if (days.length === 0) {
+                this.els.courseDays.setAttribute('aria-invalid', 'true');
+                this.els.courseModalMsg.textContent = 'Select at least one meeting day.';
+                this.els.courseModalMsg.classList.remove('hidden');
+                this.els.courseDays.focus();
+                return;
+            }
+            [this.els.courseCode, this.els.courseName, this.els.courseStart,
+                this.els.courseEnd, this.els.courseDays].forEach(field => field.removeAttribute('aria-invalid'));
             location = this.els.courseLocation.value.trim();
             meetings = [{ days, startTime, endTime, location }];
         }

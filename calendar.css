@@ -180,6 +180,7 @@ body {
     border-color: var(--sidebar-focus);
     box-shadow: 0 0 0 3px rgba(196,18,48,.2);
 }
+[aria-invalid="true"] { border-color: #991B1B !important; box-shadow: 0 0 0 3px rgba(153,27,27,.2) !important; }
 .form-row input::placeholder { color: #7A7C98; }
 .form-row select option { background: #1E1F32; color: #D8DAE8; }
 
