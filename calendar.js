@@ -1848,23 +1848,32 @@ class CalendarApp {
     }
 
     _loadBasics() {
-        // Pre-load Sleep, Meals, and Personal Care for all 7 days
-        const add = (ev) => { this.events.push({ id: ++this.eventIdCounter, ...ev }); };
+        // Add only missing Sleep, Meals, and Personal Care blocks.
+        // Reopening onboarding and clicking this again must not duplicate them.
+        const addIfMissing = (ev) => {
+            const exists = this.events.some(existing =>
+                existing.type === ev.type &&
+                existing.day === ev.day &&
+                existing.startHour === ev.startHour &&
+                existing.endHour === ev.endHour
+            );
+            if (!exists) this.events.push({ id: ++this.eventIdCounter, ...ev });
+        };
 
         const dayNames = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
         // Sleep: 11 PM – 7 AM each day
         for (let d = 0; d < 7; d++) {
-            add({ title: 'Sleep (' + dayNames[d] + ')', type: 'sleep', day: d, startHour: 23, endHour: 24, location: '', notes: '' });
-            add({ title: 'Sleep (' + dayNames[(d+1)%7] + ')', type: 'sleep', day: (d+1)%7, startHour: 0, endHour: 7, location: '', notes: '' });
+            addIfMissing({ title: 'Sleep (' + dayNames[d] + ')', type: 'sleep', day: d, startHour: 23, endHour: 24, location: '', notes: '' });
+            addIfMissing({ title: 'Sleep (' + dayNames[(d+1)%7] + ')', type: 'sleep', day: (d+1)%7, startHour: 0, endHour: 7, location: '', notes: '' });
         }
         // Meals: 1h blocks around noon and evening
         for (let d = 0; d < 7; d++) {
-            add({ title: 'Lunch', type: 'meal', day: d, startHour: 12, endHour: 13, location: '', notes: '' });
-            add({ title: 'Dinner', type: 'meal', day: d, startHour: 18, endHour: 19, location: '', notes: '' });
+            addIfMissing({ title: 'Lunch', type: 'meal', day: d, startHour: 12, endHour: 13, location: '', notes: '' });
+            addIfMissing({ title: 'Dinner', type: 'meal', day: d, startHour: 18, endHour: 19, location: '', notes: '' });
         }
         // Personal care: 30 min each morning
         for (let d = 0; d < 7; d++) {
-            add({ title: 'Personal Care', type: 'care', day: d, startHour: 7, endHour: 7.5, location: '', notes: '' });
+            addIfMissing({ title: 'Personal Care', type: 'care', day: d, startHour: 7, endHour: 7.5, location: '', notes: '' });
         }
 
         this._renderAll();
