@@ -163,9 +163,10 @@ class CalendarApp {
             });
         }
         this.els.printBtn.addEventListener('click', () => {
-            try { this._preparePrint(); } catch(e) {}
-            setTimeout(() => window.print(), 100);
+            this._preparePrint();
+            window.print();
         });
+        window.addEventListener('afterprint', () => this._restorePrint());
         this.els.clearBtn.addEventListener('click', () => this._clearAll());
 
         // Onboarding
@@ -1775,11 +1776,14 @@ class CalendarApp {
         ).join(' &nbsp;|&nbsp; ') + ' &nbsp;|&nbsp; <em>☐ = done</em>';
 
         // Restore after print
-        setTimeout(() => {
-            this.HOUR_HEIGHT = savedHourH;
-            this._printing = false;
-            this._renderEvents();
-        }, 500);
+        this._printSavedHourH = savedHourH;
+    }
+
+    _restorePrint() {
+        if (!this._printing) return;
+        this.HOUR_HEIGHT = this._printSavedHourH || 64;
+        this._printing = false;
+        this._renderEvents();
     }
 
     _exportData() {
