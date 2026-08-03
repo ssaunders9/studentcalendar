@@ -437,9 +437,6 @@ class CalendarApp {
         // Sort events by day then startHour so tab order follows visual layout
         const sorted = [...this.events].sort((a, b) => a.day - b.day || a.startHour - b.startHour);
         for (const ev of sorted) {
-            // A sleep period can collapse entirely onto the late-night segment
-            // when wake time reaches midnight; do not render a zero-height peer.
-            if (ev.type === 'sleep' && ev.endHour <= ev.startHour) continue;
             const el = this._createEventElement(ev);
             this.els.eventsLayer.appendChild(el);
         }
@@ -1125,17 +1122,6 @@ class CalendarApp {
             const clampedStart = Math.round(newStart * 2) / 2;
             const clampedEnd = clampedStart + duration;
 
-            if (ev.type === 'sleep' && ev.sleepGroupId != null) {
-                // Move the complete logical sleep period, not just one segment.
-                const delta = clampedStart - this.dragState.origStart;
-                const sleepDelta = ev.sleepPart === 'morning'
-                    ? ((day - this.dragState.startDay) * 24) + (clampedStart - this.dragState.origStart)
-                    : delta;
-                this._moveSleepGroup(ev, sleepDelta);
-                this._renderEvents();
-                return;
-            }
-
             ev.day = day;
             ev.startHour = clampedStart;
             ev.endHour = Math.min(this.GRID_END, clampedEnd);
@@ -1154,19 +1140,12 @@ class CalendarApp {
             const snapHour = Math.round(hour * 2) / 2;
             const newEnd = Math.max(ev.startHour + 0.5, Math.min(this.GRID_END, snapHour));
             ev.endHour = newEnd;
-            if (ev.type === 'sleep' && ev.sleepGroupId != null && ev.sleepPart === 'morning') {
-                // The morning endpoint is the editable wake-up time.
-                ev.endHour = newEnd;
-            } else {
-                this._syncSleepGroup(ev);
-            }
+            this._syncSleepGroup(ev);
         } else if (this.dragState.type === 'resize-start') {
             const snapHour = Math.round(hour * 2) / 2;
             const newStart = Math.max(this.GRID_START, Math.min(ev.endHour - 0.5, snapHour));
             ev.startHour = newStart;
-            if (!(ev.type === 'sleep' && ev.sleepGroupId != null && ev.sleepPart === 'late')) {
-                this._syncSleepGroup(ev);
-            }
+            this._syncSleepGroup(ev);
         }
 
         this._renderEvents();
@@ -1183,25 +1162,6 @@ class CalendarApp {
             peer.day = (event.day + 6) % 7;
             peer.endHour = 24;
         }
-    }
-
-    _moveSleepGroup(event, delta) {
-        const group = this.events.filter(ev => ev.sleepGroupId === event.sleepGroupId);
-        const late = group.find(ev => ev.sleepPart === 'late');
-        const morning = group.find(ev => ev.sleepPart === 'morning');
-        if (!late || !morning) return;
-
-        const duration = (24 - late.startHour) + morning.endHour;
-        const bedtime = Math.max(0, Math.min(24 - duration, late.startHour + delta));
-        const wake = bedtime + duration;
-
-        // The split boundary is always midnight. The morning segment may
-        // collapse to zero height when the wake time reaches midnight.
-        late.startHour = bedtime;
-        late.endHour = 24;
-        morning.startHour = 0;
-        morning.endHour = Math.max(0, wake - 24);
-        morning.day = (late.day + 1) % 7;
     }
 
     _onDragEnd(e) {
