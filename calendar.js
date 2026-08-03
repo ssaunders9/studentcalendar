@@ -523,11 +523,17 @@ class CalendarApp {
             }
         });
 
-        // Resize handle (only for non-locked events)
+        // Resize handles (only for non-locked events)
         if (!ev.locked) {
-            const handle = document.createElement('div');
-            handle.className = 'resize-handle';
-            el.appendChild(handle);
+            const startHandle = document.createElement('div');
+            startHandle.className = 'resize-handle resize-handle-start';
+            startHandle.setAttribute('aria-label', 'Adjust start time');
+            el.appendChild(startHandle);
+
+            const endHandle = document.createElement('div');
+            endHandle.className = 'resize-handle resize-handle-end';
+            endHandle.setAttribute('aria-label', 'Adjust end time');
+            el.appendChild(endHandle);
         }
 
         return el;
@@ -1046,16 +1052,17 @@ class CalendarApp {
             }
 
             // Check if resize handle
-            if (target.closest('.resize-handle')) {
+            const resizeHandle = target.closest('.resize-handle');
+            if (resizeHandle) {
                 this.dragState = {
                     active: true,
-                    type: 'resize',
+                    type: resizeHandle.classList.contains('resize-handle-start') ? 'resize-start' : 'resize-end',
                     eventId,
                     startDay: ev.day,
                     startHour: ev.startHour,
                     startEndHour: ev.endHour,
                     currentDay: ev.day,
-                    currentHour: ev.endHour,
+                    currentHour: resizeHandle.classList.contains('resize-handle-start') ? ev.startHour : ev.endHour,
                     ghost: null,
                 };
                 eventBlock.classList.add('dragging');
@@ -1116,10 +1123,14 @@ class CalendarApp {
                 ev.startHour = this.GRID_START;
                 ev.endHour = Math.min(this.GRID_END, this.GRID_START + duration);
             }
-        } else if (this.dragState.type === 'resize') {
+        } else if (this.dragState.type === 'resize-end') {
             const snapHour = Math.round(hour * 2) / 2;
             const newEnd = Math.max(ev.startHour + 0.5, Math.min(this.GRID_END, snapHour));
             ev.endHour = newEnd;
+        } else if (this.dragState.type === 'resize-start') {
+            const snapHour = Math.round(hour * 2) / 2;
+            const newStart = Math.max(this.GRID_START, Math.min(ev.endHour - 0.5, snapHour));
+            ev.startHour = newStart;
         }
 
         this._renderEvents();
