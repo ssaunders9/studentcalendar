@@ -235,6 +235,10 @@ class CalendarApp {
                 const event = this.events.find(ev => ev.id === eventId);
                 if (confirm('Delete this event?')) {
                     if (event?.courseId != null) this._removeCourse(event.courseId);
+                    else if (event?.sleepGroupId != null) {
+                        this.events = this.events.filter(item => item.sleepGroupId !== event.sleepGroupId);
+                        this._renderAll();
+                    }
                     else {
                         this.events = this.events.filter(ev => ev.id !== eventId);
                         this._renderAll();
@@ -517,23 +521,30 @@ class CalendarApp {
         el.querySelector('.event-delete-btn').addEventListener('click', (e) => {
             e.stopPropagation();
             if (ev.courseId != null) this._removeCourse(ev.courseId);
+            else if (ev.sleepGroupId != null) {
+                this.events = this.events.filter(item => item.sleepGroupId !== ev.sleepGroupId);
+                this._renderAll();
+            }
             else {
                 this.events = this.events.filter(e => e.id !== ev.id);
                 this._renderAll();
             }
         });
 
-        // Resize handles (only for non-locked events)
+        // Resize handles (only for non-locked events). Midnight is fixed for sleep.
         if (!ev.locked) {
-            const startHandle = document.createElement('div');
-            startHandle.className = 'resize-handle resize-handle-start';
-            startHandle.setAttribute('aria-label', 'Adjust start time');
-            el.appendChild(startHandle);
-
-            const endHandle = document.createElement('div');
-            endHandle.className = 'resize-handle resize-handle-end';
-            endHandle.setAttribute('aria-label', 'Adjust end time');
-            el.appendChild(endHandle);
+            if (!(ev.type === 'sleep' && ev.sleepPart === 'morning')) {
+                const startHandle = document.createElement('div');
+                startHandle.className = 'resize-handle resize-handle-start';
+                startHandle.setAttribute('aria-label', 'Adjust start time');
+                el.appendChild(startHandle);
+            }
+            if (!(ev.type === 'sleep' && ev.sleepPart === 'late')) {
+                const endHandle = document.createElement('div');
+                endHandle.className = 'resize-handle resize-handle-end';
+                endHandle.setAttribute('aria-label', 'Adjust end time');
+                el.appendChild(endHandle);
+            }
         }
 
         return el;
@@ -1012,8 +1023,9 @@ class CalendarApp {
         if (type === 'sleep') {
             const days = weekTypes.includes(type) ? [0,1,2,3,4,5,6] : [0];
             for (const day of days) {
-                add({ title: d.title, type, day, startHour: d.startH, endHour: 24, location: d.location, notes: '' });
-                add({ title: d.title, type, day: (day + 1) % 7, startHour: 0, endHour: d.endH, location: d.location, notes: '' });
+                const sleepGroupId = ++this.eventIdCounter;
+                add({ sleepGroupId, sleepPart: 'late', title: d.title, type, day, startHour: d.startH, endHour: 24, location: d.location, notes: '' });
+                add({ sleepGroupId, sleepPart: 'morning', title: d.title, type, day: (day + 1) % 7, startHour: 0, endHour: d.endH, location: d.location, notes: '' });
             }
         } else if (weekTypes.includes(type)) {
             for (const day of [0,1,2,3,4,5,6]) {
@@ -1123,17 +1135,33 @@ class CalendarApp {
                 ev.startHour = this.GRID_START;
                 ev.endHour = Math.min(this.GRID_END, this.GRID_START + duration);
             }
+            this._syncSleepGroup(ev);
         } else if (this.dragState.type === 'resize-end') {
             const snapHour = Math.round(hour * 2) / 2;
             const newEnd = Math.max(ev.startHour + 0.5, Math.min(this.GRID_END, snapHour));
             ev.endHour = newEnd;
+            this._syncSleepGroup(ev);
         } else if (this.dragState.type === 'resize-start') {
             const snapHour = Math.round(hour * 2) / 2;
             const newStart = Math.max(this.GRID_START, Math.min(ev.endHour - 0.5, snapHour));
             ev.startHour = newStart;
+            this._syncSleepGroup(ev);
         }
 
         this._renderEvents();
+    }
+
+    _syncSleepGroup(event) {
+        if (event.type !== 'sleep' || event.sleepGroupId == null) return;
+        const peer = this.events.find(ev => ev.sleepGroupId === event.sleepGroupId && ev.id !== event.id);
+        if (!peer) return;
+        if (event.sleepPart === 'late') {
+            peer.day = (event.day + 1) % 7;
+            peer.startHour = 0;
+        } else if (event.sleepPart === 'morning') {
+            peer.day = (event.day + 6) % 7;
+            peer.endHour = 24;
+        }
     }
 
     _onDragEnd(e) {
@@ -1302,6 +1330,9 @@ class CalendarApp {
         if (confirm('Delete this event?')) {
             const event = this.events.find(ev => ev.id === this._editingEventId);
             if (event?.courseId != null) this._removeCourse(event.courseId);
+            else if (event?.sleepGroupId != null) {
+                this.events = this.events.filter(item => item.sleepGroupId !== event.sleepGroupId);
+            }
             else this.events = this.events.filter(ev => ev.id !== this._editingEventId);
             this._closeModal();
             this._renderAll();
@@ -1969,8 +2000,14 @@ class CalendarApp {
         const dayNames = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
         // Sleep: 11 PM – 7 AM each day
         for (let d = 0; d < 7; d++) {
-            addIfMissing({ title: 'Sleep (' + dayNames[d] + ')', type: 'sleep', day: d, startHour: 23, endHour: 24, location: '', notes: '' });
-            addIfMissing({ title: 'Sleep (' + dayNames[(d+1)%7] + ')', type: 'sleep', day: (d+1)%7, startHour: 0, endHour: 7, location: '', notes: '' });
+            const sleepGroupId = ++this.eventIdCounter;
+            const late = { sleepGroupId, sleepPart: 'late', title: 'Sleep (' + dayNames[d] + ')', type: 'sleep', day: d, startHour: 23, endHour: 24, location: '', notes: '' };
+            const morning = { sleepGroupId, sleepPart: 'morning', title: 'Sleep (' + dayNames[(d+1)%7] + ')', type: 'sleep', day: (d+1)%7, startHour: 0, endHour: 7, location: '', notes: '' };
+            const hasSleep = this.events.some(existing => existing.type === 'sleep' && existing.day === d && existing.startHour === 23 && existing.endHour === 24);
+            if (!hasSleep) {
+                this.events.push({ id: ++this.eventIdCounter, ...late });
+                this.events.push({ id: ++this.eventIdCounter, ...morning });
+            }
         }
         // Meals: 1h blocks around noon and evening
         for (let d = 0; d < 7; d++) {
