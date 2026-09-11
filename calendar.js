@@ -87,6 +87,7 @@ class CalendarApp {
 
             // Save
             exportBtn: id('export-btn'),
+            calendarExportBtn: id('calendar-export-btn'),
             importBtn: id('import-btn'),
             importFile: id('import-file'),
             printBtn: id('print-btn'),
@@ -151,6 +152,7 @@ class CalendarApp {
 
         // Save/Load
         this.els.exportBtn.addEventListener('click', () => this._exportData());
+        this.els.calendarExportBtn.addEventListener('click', () => this._exportCalendarData());
         this.els.importFile.addEventListener('change', e => this._importData(e));
         // Make import label keyboard-activatable
         const importLabel = document.querySelector('.import-label');
@@ -1824,6 +1826,62 @@ class CalendarApp {
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    _exportCalendarData() {
+        const pad = n => String(n).padStart(2, '0');
+        const icsEscape = value => String(value || '')
+            .replace(/\\/g, '\\\\')
+            .replace(/;/g, '\\;')
+            .replace(/,/g, '\\,')
+            .replace(/\r?\n/g, '\\n');
+        const formatLocal = (date, hour) => {
+            const d = new Date(date);
+            d.setHours(Math.floor(hour), Math.round((hour % 1) * 60), 0, 0);
+            return `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}T${pad(d.getHours())}${pad(d.getMinutes())}00`;
+        };
+        const events = [];
+        for (const ev of this.events) {
+            if (ev.day < 0 || ev.day > 6 || ev.endHour <= ev.startHour) continue;
+            const date = new Date(this.currentWeekStart);
+            date.setDate(date.getDate() + ev.day);
+            events.push([
+                'BEGIN:VEVENT',
+                `UID:student-calendar-${ev.id}@wsu`,
+                `DTSTAMP:${formatLocal(new Date(), new Date().getHours() + new Date().getMinutes() / 60)}`,
+                `DTSTART;TZID=America/Los_Angeles:${formatLocal(date, ev.startHour)}`,
+                `DTEND;TZID=America/Los_Angeles:${formatLocal(date, ev.endHour)}`,
+                `SUMMARY:${icsEscape(ev.title)}`,
+                ev.location ? `LOCATION:${icsEscape(ev.location)}` : '',
+                ev.notes ? `DESCRIPTION:${icsEscape(ev.notes)}` : '',
+                'END:VEVENT'
+            ].filter(Boolean).join('\r\n'));
+        }
+        const ics = [
+            'BEGIN:VCALENDAR',
+            'VERSION:2.0',
+            'PRODID:-//WSU Student Week Scheduler//EN',
+            'CALSCALE:GREGORIAN',
+            'METHOD:PUBLISH',
+            'X-WR-CALNAME:WSU Student Schedule',
+            'X-WR-TIMEZONE:America/Los_Angeles',
+            'BEGIN:VTIMEZONE',
+            'TZID:America/Los_Angeles',
+            'X-LIC-LOCATION:America/Los_Angeles',
+            'END:VTIMEZONE',
+            ...events,
+            'END:VCALENDAR',
+            ''
+        ].join('\r\n');
+        const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `schedule-${this._formatDate(this.currentWeekStart)}.ics`;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
         URL.revokeObjectURL(url);
     }
 

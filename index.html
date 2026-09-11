@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Week Scheduler</title>
-    <link rel="stylesheet" href="calendar.css?v=95">
+    <link rel="stylesheet" href="calendar.css?v=96">
 </head>
 <body>
     <a href="#calendar-main" class="skip-link">Skip to calendar</a>
@@ -87,6 +87,7 @@
                     <label for="import-file" class="import-label" tabindex="0" role="button" aria-label="Import schedule file">Import</label>
                     <input type="file" id="import-file" accept=".json" hidden>
                 </div>
+                <button type="button" id="calendar-export-btn" class="calendar-export-btn">Export Google Calendar (.ics)</button>
                 <button type="button" id="print-btn" class="print-btn">Export PDF</button>
                 <button type="button" id="clear-btn" class="clear-btn">Clear All</button>
             </section>
@@ -253,6 +254,6 @@
     </div>
 
     <script src="coursesData.js?v=28"></script>
-    <script src="calendar.js?v=111"></script>
+    <script src="calendar.js?v=112"></script>
 </body>
 </html>

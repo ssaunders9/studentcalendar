@@ -362,6 +362,13 @@ button:active { transform: scale(0.97); }
 }
 .print-btn:hover { background: var(--brand-dark) !important; }
 
+.calendar-export-btn {
+    width: 100%; margin-top: 8px;
+    background: #2563EB !important; color: #fff !important;
+    border: 1px solid #1D4ED8 !important; font-weight: 600 !important;
+}
+.calendar-export-btn:hover { background: #1D4ED8 !important; }
+
 .clear-btn {
     width: 100%; margin-top: 6px;
     background: #301A1A !important; color: #EF9A9A !important;
